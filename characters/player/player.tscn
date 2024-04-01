@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bipi44042cy2n"]
+
+[ext_resource type="Script" path="res://characters/player/Player.cs" id="1_3m1rv"]
+[ext_resource type="Texture2D" uid="uid://bffdpfjlgx1ln" path="res://art/characters/player/Player_sprite_shet.png" id="1_ealcd"]
+[ext_resource type="Texture2D" uid="uid://cmihcytu64o0i" path="res://art/Simple_shadow.png" id="2_i5e55"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_3m1rv")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, 6)
+texture = ExtResource("2_i5e55")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -29)
+texture = ExtResource("1_ealcd")
+hframes = 6
+vframes = 6

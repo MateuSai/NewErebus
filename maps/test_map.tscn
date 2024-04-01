@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bttv3nsynu7ip"]
+
+[ext_resource type="Texture2D" uid="uid://bdi368gdomqll" path="res://art/maps/Test_ground.png" id="1_58bbf"]
+[ext_resource type="PackedScene" uid="uid://bipi44042cy2n" path="res://characters/player/player.tscn" id="2_3btha"]
+
+[node name="TestMap" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_58bbf")
+centered = false
+
+[node name="Player" parent="." instance=ExtResource("2_3btha")]
+position = Vector2(281, 206)
