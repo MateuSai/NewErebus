@@ -1,8 +1,10 @@
+namespace Erebus.Characters;
+
 using Godot;
 
 public partial class Character : CharacterBody2D
 {
-    protected Vector2 movDirection = Vector2.Zero;
+    public Vector2 MovDirection = Vector2.Zero;
     protected int maxSpeed = 300;
 
 
@@ -10,6 +12,7 @@ public partial class Character : CharacterBody2D
     {
         base._PhysicsProcess(delta);
 
-        Position += movDirection.Normalized() * maxSpeed * (float)delta;
+        Velocity = MovDirection.Normalized() * maxSpeed;
+        MoveAndSlide();
     }
 }
