@@ -1,12 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://bipi44042cy2n"]
+[gd_scene load_steps=18 format=3 uid="uid://bipi44042cy2n"]
 
 [ext_resource type="Script" path="res://characters/player/Player.cs" id="1_3m1rv"]
 [ext_resource type="Texture2D" uid="uid://bffdpfjlgx1ln" path="res://art/characters/player/Player_sprite_shet.png" id="1_ealcd"]
-[ext_resource type="Texture2D" uid="uid://cmihcytu64o0i" path="res://art/Simple_shadow.png" id="2_i5e55"]
+[ext_resource type="Texture2D" uid="uid://c7o05w256inv7" path="res://art/New_simple_shadow.png" id="2_itcvd"]
 [ext_resource type="Texture2D" uid="uid://n5dgpybg7awf" path="res://art/characters/char_arms/Right_arm.png" id="3_331if"]
 [ext_resource type="Texture2D" uid="uid://bfse5m5ttjpgr" path="res://art/characters/char_arms/Left_forearm.png" id="3_qtt10"]
 [ext_resource type="Texture2D" uid="uid://bjbld6pbuidqc" path="res://art/characters/char_arms/Right_forearm.png" id="4_342y3"]
 [ext_resource type="Texture2D" uid="uid://4q46ei6s36co" path="res://art/characters/char_arms/Left_arm.png" id="4_ox27k"]
+[ext_resource type="Script" path="res://weapons/PlayerWeapons.cs" id="8_f8lgk"]
 
 [sub_resource type="Animation" id="Animation_j6qrv"]
 length = 0.001
@@ -129,7 +130,7 @@ script = ExtResource("1_3m1rv")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0, 6)
-texture = ExtResource("2_i5e55")
+texture = ExtResource("2_itcvd")
 
 [node name="LeftForearm" type="Polygon2D" parent="."]
 offset = Vector2(8, -31)
@@ -155,15 +156,6 @@ texture = ExtResource("1_ealcd")
 hframes = 6
 vframes = 6
 
-[node name="RightForearm" type="Polygon2D" parent="."]
-offset = Vector2(-13, -29)
-texture = ExtResource("4_342y3")
-skeleton = NodePath("../Skeleton")
-polygon = PackedVector2Array(4, 6, -4, 6, -4, -6, 4, -6)
-uv = PackedVector2Array(8, 12, 0, 12, 0, 0, 8, 0)
-polygons = [PackedInt32Array(0, 1, 2, 3)]
-bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
-
 [node name="RightArm" type="Polygon2D" parent="."]
 offset = Vector2(-13, -41)
 texture = ExtResource("3_331if")
@@ -173,8 +165,18 @@ uv = PackedVector2Array(10, 17, 0, 17, 0, 0, 10, 0)
 polygons = [PackedInt32Array(0, 1, 2, 3)]
 bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
 
+[node name="RightForearm" type="Polygon2D" parent="."]
+offset = Vector2(-13, -29)
+texture = ExtResource("4_342y3")
+skeleton = NodePath("../Skeleton")
+polygon = PackedVector2Array(4, 6, -4, 6, -4, -6, 4, -6)
+uv = PackedVector2Array(8, 12, 0, 12, 0, 0, 8, 0)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
+
 [node name="Weapons" type="Node2D" parent="."]
 position = Vector2(0, -42)
+script = ExtResource("8_f8lgk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -190,8 +192,9 @@ rotation = 1.5708
 rest = Transform2D(-3.61999e-06, 1, -1, -3.61999e-06, 0, -44)
 
 [node name="RightArm" type="Bone2D" parent="Skeleton/Torso"]
-position = Vector2(-2.99995, 13)
-scale = Vector2(0.999998, 0.999998)
+position = Vector2(0.999967, -9)
+rotation = -0.205395
+scale = Vector2(0.999987, 0.999987)
 rest = Transform2D(0.999998, 0, 0, 0.999998, -2.99995, 13)
 metadata/_local_pose_override_enabled_ = true
 
@@ -204,9 +207,14 @@ metadata/_local_pose_override_enabled_ = true
 [node name="RightHand" type="Bone2D" parent="Skeleton/Torso/RightArm/RightForearm"]
 position = Vector2(9, 0)
 rest = Transform2D(1, 0, 0, 1, 9, 0)
+auto_calculate_length_and_angle = false
+length = 8.0
+bone_angle = 0.0
 
 [node name="LeftArm" type="Bone2D" parent="Skeleton/Torso"]
-position = Vector2(-3.00003, -7.99999)
+position = Vector2(-3.99997, 9.00001)
+rotation = -0.0344691
+scale = Vector2(0.999995, 0.999995)
 rest = Transform2D(1, 0, 0, 1, -3.00003, -7.99999)
 metadata/_local_pose_override_enabled_ = true
 
@@ -218,9 +226,12 @@ metadata/_local_pose_override_enabled_ = true
 [node name="LeftHand" type="Bone2D" parent="Skeleton/Torso/LeftArm/LeftForearm"]
 position = Vector2(9, -3.25799e-05)
 rest = Transform2D(1, 0, 0, 1, 9, -3.25799e-05)
+auto_calculate_length_and_angle = false
+length = 8.0
+bone_angle = 0.0
 
 [node name="IKRightHandTarget" type="Node2D" parent="."]
-position = Vector2(-9, -29)
+position = Vector2(14, -19)
 
 [node name="IKLeftHandTarget" type="Node2D" parent="."]
-position = Vector2(21, -38)
+position = Vector2(-8, -19)

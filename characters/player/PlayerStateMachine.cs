@@ -52,12 +52,14 @@ public class PlayerStateMachine : StateMachine
         {
             case (int)Player.State.Idle:
                 //GD.Print("hi");
-                if (_player.MouseDirection.Y >= 0)
+                if (_player.MouseDirection.Y > 0)
                 {
+                    _player.UpdateShoulderBones(Player.ShouldersDir.Bottom);
                     _animationPlayer.Play("idle");
                 }
-                else
+                else if (_player.MouseDirection.Y < 0)
                 {
+                    _player.UpdateShoulderBones(Player.ShouldersDir.Top);
                     _animationPlayer.Play("idle_up");
                 }
                 break;
@@ -69,12 +71,14 @@ public class PlayerStateMachine : StateMachine
                     {
                         _moveAnimationState = MoveAnimationState.MoveBackwards;
                         _animationPlayer.PlayBackwards("move");
+                        _player.UpdateShoulderBones(Player.ShouldersDir.Bottom);
                     }
 
                     else if (((_player.MouseDirection.X >= 0 && _player.MovDirection.X >= 0) || (_player.MouseDirection.X <= 0 && _player.MovDirection.X <= 0)) && (_animationPlayer.CurrentAnimation != "move" || _moveAnimationState != MoveAnimationState.Move))
                     {
                         _moveAnimationState = MoveAnimationState.Move;
                         _animationPlayer.Play("move");
+                        _player.UpdateShoulderBones(Player.ShouldersDir.Bottom);
                     }
                 }
                 else
@@ -83,11 +87,13 @@ public class PlayerStateMachine : StateMachine
                     {
                         _moveAnimationState = MoveAnimationState.MoveUpBackwards;
                         _animationPlayer.PlayBackwards("move_up");
+                        _player.UpdateShoulderBones(Player.ShouldersDir.Top);
                     }
                     else if (((_player.MouseDirection.X >= 0 && _player.MovDirection.X >= 0) || (_player.MouseDirection.X <= 0 && _player.MovDirection.X <= 0)) && (_animationPlayer.CurrentAnimation != "move_up" || _moveAnimationState != MoveAnimationState.MoveUp))
                     {
                         _moveAnimationState = MoveAnimationState.MoveUp;
                         _animationPlayer.Play("move_up");
+                        _player.UpdateShoulderBones(Player.ShouldersDir.Top);
                     }
                 }
                 break;

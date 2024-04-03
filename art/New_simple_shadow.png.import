@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btt8mdsjnql2o"
-path="res://.godot/imported/Right_hand_fists.png-b4d859abef542321d6dcf7bcb724f3d7.ctex"
+uid="uid://c7o05w256inv7"
+path="res://.godot/imported/New_simple_shadow.png-e750ced65e4a63a8ea8e3209bb6e1dc8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/characters/hands/Right_hand_fists.png"
-dest_files=["res://.godot/imported/Right_hand_fists.png-b4d859abef542321d6dcf7bcb724f3d7.ctex"]
+source_file="res://art/New_simple_shadow.png"
+dest_files=["res://.godot/imported/New_simple_shadow.png-e750ced65e4a63a8ea8e3209bb6e1dc8.ctex"]
 
 [params]
 

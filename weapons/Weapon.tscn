@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnak4xa5kgwfg"]
+
+[ext_resource type="Texture2D" uid="uid://wylw2s3ipedx" path="res://art/characters/hands/Left_hand_fists.png" id="1_ri7i4"]
+[ext_resource type="Texture2D" uid="uid://btt8mdsjnql2o" path="res://art/characters/hands/Right_hand_fists.png" id="2_mfply"]
+
+[node name="Weapon" type="Node2D"]
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="LeftHand" type="Sprite2D" parent="Pivot"]
+texture = ExtResource("1_ri7i4")
+
+[node name="RightHand" type="Sprite2D" parent="Pivot"]
+texture = ExtResource("2_mfply")

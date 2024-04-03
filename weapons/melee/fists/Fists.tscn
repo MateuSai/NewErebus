@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dasthchgn5yht"]
+
+[ext_resource type="PackedScene" uid="uid://pkbne2608xm8" path="res://weapons/melee/MeleeWeapon.tscn" id="1_kd3a7"]
+[ext_resource type="Script" path="res://weapons/melee/fists/Fists.cs" id="2_6ygpt"]
+
+[node name="Fists" instance=ExtResource("1_kd3a7")]
+script = ExtResource("2_6ygpt")
+
+[node name="LeftHand" parent="Pivot" index="0"]
+position = Vector2(-4, -12)
+
+[node name="RightHand" parent="Pivot" index="1"]
+position = Vector2(1, 13)
