@@ -192,8 +192,8 @@ rotation = 1.5708
 rest = Transform2D(-3.61999e-06, 1, -1, -3.61999e-06, 0, -44)
 
 [node name="RightArm" type="Bone2D" parent="Skeleton/Torso"]
-position = Vector2(0.999967, -9)
-rotation = -0.205395
+position = Vector2(-3, 13)
+rotation = -0.176709
 scale = Vector2(0.999987, 0.999987)
 rest = Transform2D(0.999998, 0, 0, 0.999998, -2.99995, 13)
 metadata/_local_pose_override_enabled_ = true
@@ -212,9 +212,9 @@ length = 8.0
 bone_angle = 0.0
 
 [node name="LeftArm" type="Bone2D" parent="Skeleton/Torso"]
-position = Vector2(-3.99997, 9.00001)
-rotation = -0.0344691
-scale = Vector2(0.999995, 0.999995)
+position = Vector2(-3, -8)
+rotation = -0.0356987
+scale = Vector2(0.999953, 0.999953)
 rest = Transform2D(1, 0, 0, 1, -3.00003, -7.99999)
 metadata/_local_pose_override_enabled_ = true
 
@@ -231,7 +231,7 @@ length = 8.0
 bone_angle = 0.0
 
 [node name="IKRightHandTarget" type="Node2D" parent="."]
-position = Vector2(14, -19)
+position = Vector2(3, -21)
 
 [node name="IKLeftHandTarget" type="Node2D" parent="."]
-position = Vector2(-8, -19)
+position = Vector2(14, -26)

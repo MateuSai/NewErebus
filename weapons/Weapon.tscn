@@ -8,7 +8,11 @@
 [node name="Pivot" type="Node2D" parent="."]
 
 [node name="LeftHand" type="Sprite2D" parent="Pivot"]
+unique_name_in_owner = true
 texture = ExtResource("1_ri7i4")
+offset = Vector2(5, 0)
 
 [node name="RightHand" type="Sprite2D" parent="Pivot"]
+unique_name_in_owner = true
 texture = ExtResource("2_mfply")
+offset = Vector2(5, 0)

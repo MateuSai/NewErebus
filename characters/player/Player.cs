@@ -1,5 +1,6 @@
 namespace Erebus.Characters.Player;
 
+using Erebus.Weapons;
 using Godot;
 using System;
 
@@ -23,7 +24,9 @@ public partial class Player : Character
 
     private Sprite2D _sprite;
     private AnimationPlayer _animationPlayer;
-    private Node2D _weapons;
+    private PlayerWeapons _weapons;
+    private Skeleton2D _skeleton2D;
+    private SkeletonModificationStack2D _skeletonModifications;
     private Bone2D _rightArm;
     private Bone2D _leftArm;
 
@@ -33,11 +36,15 @@ public partial class Player : Character
 
         _sprite = GetNode<Sprite2D>("Sprite2D");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        _weapons = GetNode<Node2D>("Weapons");
-        _rightArm = GetNode<Bone2D>("Skeleton/Torso/RightArm");
-        _leftArm = GetNode<Bone2D>("Skeleton/Torso/LeftArm");
+        _weapons = GetNode<PlayerWeapons>("Weapons");
+        _skeleton2D = GetNode<Skeleton2D>("Skeleton");
+        _skeletonModifications = _skeleton2D.GetModificationStack();
+        _rightArm = _skeleton2D.GetNode<Bone2D>("Torso/RightArm");
+        _leftArm = _skeleton2D.GetNode<Bone2D>("Torso/LeftArm");
 
         _stateMachine = new(this, _animationPlayer);
+
+        _weapons.Start();
     }
 
     public override void _Input(InputEvent @event)
@@ -81,6 +88,8 @@ public partial class Player : Character
         _stateMachine.Update(delta);
 
         base._PhysicsProcess(delta);
+
+        _weapons.MoveCurrentWeapon(MouseDirection);
     }
 
     public void UpdateShoulderBones(ShouldersDir shouldersDir)
@@ -96,5 +105,11 @@ public partial class Player : Character
                 _leftArm.Position = new Vector2(-4, 9);
                 break;
         }
+    }
+
+    public void SetIKTargets(NodePath right, NodePath left)
+    {
+        ((SkeletonModification2DTwoBoneIK)_skeletonModifications.GetModification(0)).TargetNodePath = right;
+        ((SkeletonModification2DTwoBoneIK)_skeletonModifications.GetModification(1)).TargetNodePath = left;
     }
 }
