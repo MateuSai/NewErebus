@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dasthchgn5yht"]
+[gd_scene load_steps=7 format=3 uid="uid://dasthchgn5yht"]
 
 [ext_resource type="PackedScene" uid="uid://pkbne2608xm8" path="res://weapons/melee/MeleeWeapon.tscn" id="1_kd3a7"]
 [ext_resource type="Script" path="res://weapons/melee/fists/Fists.cs" id="2_6ygpt"]
@@ -106,9 +106,63 @@ tracks/3/keys = {
 "values": [Vector2(9, 14)]
 }
 
+[sub_resource type="Animation" id="Animation_jx5le"]
+resource_name = "Move"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/LeftHand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.523599, -0.314159, 0.523599, 1.5708, 0.523599]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/LeftHand:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(13, 9), Vector2(18, 5), Vector2(13, 9), Vector2(3, 8), Vector2(13, 9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/RightHand:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-15, 11), Vector2(-19, 7), Vector2(-15, 11), Vector2(-2, 7), Vector2(-15, 11)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/RightHand:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.11701, 1.5708, 1.11701, -0.314159, 1.11701]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_heqd7"]
 _data = {
 "Idle": SubResource("Animation_h7y8o"),
+"Move": SubResource("Animation_jx5le"),
 "RESET": SubResource("Animation_nei2g")
 }
 
@@ -127,3 +181,4 @@ rotation = 1.11701
 libraries = {
 "": SubResource("AnimationLibrary_heqd7")
 }
+autoplay = "Move"
