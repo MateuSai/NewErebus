@@ -175,7 +175,7 @@ polygons = [PackedInt32Array(0, 1, 2, 3)]
 bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
 
 [node name="Weapons" type="Node2D" parent="."]
-position = Vector2(0, -42)
+position = Vector2(0, -44)
 script = ExtResource("8_f8lgk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
