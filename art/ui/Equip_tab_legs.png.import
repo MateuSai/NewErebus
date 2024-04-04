@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvsj7gp1qpos3"
-path="res://.godot/imported/Tiny_close_button_hover.png-9b27a47f89e13399f276a003431a0143.ctex"
+uid="uid://b0apq6w7ihff4"
+path="res://.godot/imported/Equip_tab_legs.png-023844469f9bd6c828a683774bfc0590.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/Tiny_close_button_hover.png"
-dest_files=["res://.godot/imported/Tiny_close_button_hover.png-9b27a47f89e13399f276a003431a0143.ctex"]
+source_file="res://art/ui/Equip_tab_legs.png"
+dest_files=["res://.godot/imported/Equip_tab_legs.png-023844469f9bd6c828a683774bfc0590.ctex"]
 
 [params]
 

@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4nvh50s8tpwp"]
+
+[ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_2elnn"]
+[ext_resource type="Script" path="res://ui/equip_window/EquipWindow.cs" id="2_3ncyi"]
+[ext_resource type="Texture2D" uid="uid://7va72nnpc3nm" path="res://art/ui/Equip_tab_main.png" id="2_l2jyt"]
+[ext_resource type="Texture2D" uid="uid://c0ha2jxonwrlh" path="res://art/ui/Equip_tab_header.png" id="4_w730l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fi5r7"]
+texture = ExtResource("2_l2jyt")
+
+[node name="EquipWindow" type="Window"]
+position = Vector2i(50, 80)
+size = Vector2i(310, 395)
+unresizable = true
+theme = ExtResource("1_2elnn")
+script = ExtResource("2_3ncyi")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(168, 213)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_fi5r7")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("4_w730l")
+expand_mode = 1
+stretch_mode = 2

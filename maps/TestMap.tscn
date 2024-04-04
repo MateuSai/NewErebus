@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bttv3nsynu7ip"]
+[gd_scene load_steps=4 format=3 uid="uid://bttv3nsynu7ip"]
 
 [ext_resource type="Texture2D" uid="uid://bdi368gdomqll" path="res://art/maps/Test_ground.png" id="1_wriod"]
 [ext_resource type="PackedScene" uid="uid://bipi44042cy2n" path="res://characters/player/Player.tscn" id="2_7e0oi"]
+[ext_resource type="PackedScene" uid="uid://b4nvh50s8tpwp" path="res://ui/equip_window/EquipWindow.tscn" id="3_xoi0k"]
 
 [node name="TestMap" type="Node2D"]
 
@@ -15,3 +16,5 @@ position = Vector2(281, 206)
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 zoom = Vector2(3, 3)
+
+[node name="EquipWindow" parent="." instance=ExtResource("3_xoi0k")]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwjef6nc10h10"
-path="res://.godot/imported/Inventory_tab.png-c012d671961d455e69f1661a8122650a.ctex"
+uid="uid://cfrlrg0r6epy3"
+path="res://.godot/imported/Equip_tab_tool.png-19e324ca498d119e273fa9c1e512d5ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/Inventory_tab.png"
-dest_files=["res://.godot/imported/Inventory_tab.png-c012d671961d455e69f1661a8122650a.ctex"]
+source_file="res://art/ui/Equip_tab_tool.png"
+dest_files=["res://.godot/imported/Equip_tab_tool.png-19e324ca498d119e273fa9c1e512d5ae.ctex"]
 
 [params]
 

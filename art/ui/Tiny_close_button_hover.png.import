@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6sbwvmbhftp3"
-path="res://.godot/imported/tiny_close_button_normal.png-1277fcabc6cff5ad9e29db83a4bf1fdb.ctex"
+uid="uid://bymh736yfe1s4"
+path="res://.godot/imported/Tiny_close_button_hover.png-ad2ae365ddf661b6fc68268d06473a2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/tiny_close_button_normal.png"
-dest_files=["res://.godot/imported/tiny_close_button_normal.png-1277fcabc6cff5ad9e29db83a4bf1fdb.ctex"]
+source_file="res://art/ui/Tiny_close_button_hover.png"
+dest_files=["res://.godot/imported/Tiny_close_button_hover.png-ad2ae365ddf661b6fc68268d06473a2e.ctex"]
 
 [params]
 
