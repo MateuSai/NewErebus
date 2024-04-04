@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0ha2jxonwrlh"
-path="res://.godot/imported/equip_tab_header.png-49f1cdde5658b17656103bf2a99c1210.ctex"
+uid="uid://hbuuhc0lumw0"
+path="res://.godot/imported/Equip_window.png-37ca5f85780e03201ab78cf986a3d25c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/equip_tab_header.png"
-dest_files=["res://.godot/imported/equip_tab_header.png-49f1cdde5658b17656103bf2a99c1210.ctex"]
+source_file="res://art/ui/Equip_window.png"
+dest_files=["res://.godot/imported/Equip_window.png-37ca5f85780e03201ab78cf986a3d25c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwjef6nc10h10"
-path="res://.godot/imported/Inventory_tab.png-c012d671961d455e69f1661a8122650a.ctex"
+uid="uid://cs41dbfx7nc1b"
+path="res://.godot/imported/Tiny_close_button_pressed.png-3e8d0b5eef312b847e50c64d6a06dd4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/Inventory_tab.png"
-dest_files=["res://.godot/imported/Inventory_tab.png-c012d671961d455e69f1661a8122650a.ctex"]
+source_file="res://art/ui/Tiny_close_button_pressed.png"
+dest_files=["res://.godot/imported/Tiny_close_button_pressed.png-3e8d0b5eef312b847e50c64d6a06dd4a.ctex"]
 
 [params]
 
