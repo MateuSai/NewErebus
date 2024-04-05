@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7va72nnpc3nm"
-path="res://.godot/imported/Equip_tab_main.png-25173374fd675aff229a0eec8dff4f2c.ctex"
+uid="uid://c4ryuqo1ff14s"
+path="res://.godot/imported/Inventory_bag_base_experimental.png-7f0f8792a2b961ad71df874c9370c0d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Equip_tab_main.png"
-dest_files=["res://.godot/imported/Equip_tab_main.png-25173374fd675aff229a0eec8dff4f2c.ctex"]
+source_file="res://art/ui/Inventory_bag_base_experimental.png"
+dest_files=["res://.godot/imported/Inventory_bag_base_experimental.png-7f0f8792a2b961ad71df874c9370c0d3.ctex"]
 
 [params]
 

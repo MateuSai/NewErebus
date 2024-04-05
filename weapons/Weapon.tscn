@@ -7,11 +7,20 @@
 [node name="Weapon" type="Node2D"]
 
 [node name="PlayerReference" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0.494118)
 position = Vector2(0, 14)
 texture = ExtResource("1_25vk0")
 hframes = 6
 vframes = 6
+
+[node name="PlayerReferenceUp" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.494118)
+position = Vector2(0, 14)
+texture = ExtResource("1_25vk0")
+hframes = 6
+vframes = 6
+frame = 6
 
 [node name="Pivot" type="Node2D" parent="."]
 
