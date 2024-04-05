@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dk1mj05dma4nr"
-path="res://.godot/imported/Equip_tab_medic.png-63f8290bed6d08d5a48a303ceed206e4.ctex"
+path="res://.godot/imported/Equip_tab_medic.png-37ccb01abb0fb13074dd2eecb666a98a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/Equip_tab_medic.png"
-dest_files=["res://.godot/imported/Equip_tab_medic.png-63f8290bed6d08d5a48a303ceed206e4.ctex"]
+source_file="res://art/ui/Equip_tab_medic.png"
+dest_files=["res://.godot/imported/Equip_tab_medic.png-37ccb01abb0fb13074dd2eecb666a98a.ctex"]
 
 [params]
 
