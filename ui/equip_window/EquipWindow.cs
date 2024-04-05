@@ -3,12 +3,11 @@ using System;
 
 namespace Erebus.UI.EquipWindow;
 
-public partial class EquipWindow : Window
+public partial class EquipWindow : VBoxContainer
 {
+
     public override void _Ready()
     {
         base._Ready();
-
-        CloseRequested += Hide;
     }
 }
