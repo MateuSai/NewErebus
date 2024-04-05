@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bofrr0x6ey4lu"
-path="res://.godot/imported/Equip_tab_weapon_ranged.png-d11e004c56df254a72352ad5043b114a.ctex"
+path="res://.godot/imported/Equip_tab_weapon_ranged.png-2e7ef01564ed219c8e2fe394f2d7fc5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/Equip_tab_weapon_ranged.png"
-dest_files=["res://.godot/imported/Equip_tab_weapon_ranged.png-d11e004c56df254a72352ad5043b114a.ctex"]
+source_file="res://art/ui/Equip_tab_weapon_ranged.png"
+dest_files=["res://.godot/imported/Equip_tab_weapon_ranged.png-2e7ef01564ed219c8e2fe394f2d7fc5e.ctex"]
 
 [params]
 

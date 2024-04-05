@@ -1,35 +1,58 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4nvh50s8tpwp"]
+[gd_scene load_steps=11 format=3 uid="uid://b4nvh50s8tpwp"]
 
 [ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_2elnn"]
 [ext_resource type="Script" path="res://ui/equip_window/EquipWindow.cs" id="2_3ncyi"]
-[ext_resource type="Texture2D" uid="uid://7va72nnpc3nm" path="res://art/ui/Equip_tab_main.png" id="2_l2jyt"]
+[ext_resource type="Texture2D" uid="uid://hbuuhc0lumw0" path="res://art/ui/Equip_window.png" id="2_m2sa6"]
+[ext_resource type="Script" path="res://ui/HideButton.cs" id="3_03ryd"]
+[ext_resource type="Texture2D" uid="uid://b5rcjp0q3pv5n" path="res://art/ui/Tiny_close_button_normal.png" id="3_jjxnx"]
+[ext_resource type="Texture2D" uid="uid://cs41dbfx7nc1b" path="res://art/ui/Tiny_close_button_pressed.png" id="4_fesjt"]
 [ext_resource type="Texture2D" uid="uid://c0ha2jxonwrlh" path="res://art/ui/Equip_tab_header.png" id="4_w730l"]
+[ext_resource type="Texture2D" uid="uid://bymh736yfe1s4" path="res://art/ui/Tiny_close_button_hover.png" id="5_svcl5"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fi5r7"]
-texture = ExtResource("2_l2jyt")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kvu7c"]
+texture = ExtResource("4_w730l")
 
-[node name="EquipWindow" type="Window"]
-position = Vector2i(50, 80)
-size = Vector2i(310, 395)
-unresizable = true
-theme = ExtResource("1_2elnn")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0rawd"]
+texture = ExtResource("2_m2sa6")
+
+[node name="EquipWindow" type="VBoxContainer"]
+offset_right = 168.0
+offset_bottom = 213.0
+theme_override_constants/separation = 0
 script = ExtResource("2_3ncyi")
+
+[node name="TitleBar" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_kvu7c")
+
+[node name="HideButton" type="TextureButton" parent="TitleBar"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture_normal = ExtResource("3_jjxnx")
+texture_pressed = ExtResource("4_fesjt")
+texture_hover = ExtResource("5_svcl5")
+script = ExtResource("3_03ryd")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(168, 213)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_fi5r7")
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 layout_mode = 2
-texture = ExtResource("4_w730l")
-expand_mode = 1
-stretch_mode = 2
+theme = ExtResource("1_2elnn")
+theme_override_styles/panel = SubResource("StyleBoxTexture_0rawd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ArmorHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="WeaponsVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox"]
+layout_mode = 2
+
+[node name="OthersVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox"]
+layout_mode = 2

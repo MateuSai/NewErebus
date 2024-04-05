@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bttv3nsynu7ip"]
+[gd_scene load_steps=5 format=3 uid="uid://bttv3nsynu7ip"]
 
 [ext_resource type="Texture2D" uid="uid://bdi368gdomqll" path="res://art/maps/Test_ground.png" id="1_wriod"]
 [ext_resource type="PackedScene" uid="uid://bipi44042cy2n" path="res://characters/player/Player.tscn" id="2_7e0oi"]
+[ext_resource type="Script" path="res://ui/UI.cs" id="3_tapsx"]
 [ext_resource type="PackedScene" uid="uid://b4nvh50s8tpwp" path="res://ui/equip_window/EquipWindow.tscn" id="3_xoi0k"]
 
 [node name="TestMap" type="Node2D"]
@@ -17,4 +18,8 @@ position = Vector2(281, 206)
 anchor_mode = 0
 zoom = Vector2(3, 3)
 
-[node name="EquipWindow" parent="." instance=ExtResource("3_xoi0k")]
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("3_tapsx")
+
+[node name="EquipWindow" parent="UI" instance=ExtResource("3_xoi0k")]
+offset_bottom = 225.0

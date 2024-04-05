@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dsuu0m7ngctip"
-path="res://.godot/imported/Equip_tab_legs.png-aed7c0640306b432701d1d7d66906f13.ctex"
+path="res://.godot/imported/Equip_tab_legs.png-023844469f9bd6c828a683774bfc0590.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/Equip_tab_legs.png"
-dest_files=["res://.godot/imported/Equip_tab_legs.png-aed7c0640306b432701d1d7d66906f13.ctex"]
+source_file="res://art/ui/Equip_tab_legs.png"
+dest_files=["res://.godot/imported/Equip_tab_legs.png-023844469f9bd6c828a683774bfc0590.ctex"]
 
 [params]
 
