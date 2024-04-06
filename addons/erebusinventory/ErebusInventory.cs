@@ -11,12 +11,14 @@ public partial class ErebusInventory : EditorPlugin
     {
         // Initialization of the plugin goes here.
         AddCustomType(nameof(ItemSlot), nameof(Container), GD.Load<Script>("res://addons/erebusinventory/ItemSlot.cs"), GD.Load<Texture2D>("res://icon.svg"));
+        AddAutoloadSingleton(nameof(InventorySystem), "res://addons/erebusinventory/InventorySystem.cs");
     }
 
     public override void _ExitTree()
     {
         // Clean-up of the plugin goes here.
         RemoveCustomType(nameof(ItemSlot));
+        RemoveAutoloadSingleton(nameof(InventorySystem));
     }
 }
 #endif
