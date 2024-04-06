@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bttv3nsynu7ip"]
+[gd_scene load_steps=6 format=3 uid="uid://bttv3nsynu7ip"]
 
 [ext_resource type="Texture2D" uid="uid://bdi368gdomqll" path="res://art/maps/Test_ground.png" id="1_wriod"]
 [ext_resource type="PackedScene" uid="uid://bipi44042cy2n" path="res://characters/player/Player.tscn" id="2_7e0oi"]
 [ext_resource type="Script" path="res://ui/UI.cs" id="3_tapsx"]
 [ext_resource type="PackedScene" uid="uid://b4nvh50s8tpwp" path="res://ui/equip_window/EquipWindow.tscn" id="3_xoi0k"]
+[ext_resource type="PackedScene" uid="uid://ch4auhdpo8ycc" path="res://ui/inventory_window/InventoryWindow.tscn" id="5_43ct4"]
 
 [node name="TestMap" type="Node2D"]
 
@@ -23,3 +24,9 @@ script = ExtResource("3_tapsx")
 
 [node name="EquipWindow" parent="UI" instance=ExtResource("3_xoi0k")]
 offset_bottom = 225.0
+
+[node name="InventoryWindow" parent="UI" instance=ExtResource("5_43ct4")]
+offset_left = 3.0
+offset_top = 227.0
+offset_right = 171.0
+offset_bottom = 411.0

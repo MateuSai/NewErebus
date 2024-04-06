@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bipi44042cy2n"]
+[gd_scene load_steps=20 format=3 uid="uid://bipi44042cy2n"]
 
 [ext_resource type="Script" path="res://characters/player/Player.cs" id="1_3m1rv"]
 [ext_resource type="Texture2D" uid="uid://bffdpfjlgx1ln" path="res://art/characters/player/Player_sprite_shet.png" id="1_ealcd"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bfse5m5ttjpgr" path="res://art/characters/char_arms/Left_forearm.png" id="3_qtt10"]
 [ext_resource type="Texture2D" uid="uid://bjbld6pbuidqc" path="res://art/characters/char_arms/Right_forearm.png" id="4_342y3"]
 [ext_resource type="Texture2D" uid="uid://4q46ei6s36co" path="res://art/characters/char_arms/Left_arm.png" id="4_ox27k"]
+[ext_resource type="Texture2D" uid="uid://wylw2s3ipedx" path="res://art/characters/hands/Left_hand_fists.png" id="5_783ab"]
 [ext_resource type="Script" path="res://weapons/PlayerWeapons.cs" id="8_f8lgk"]
+[ext_resource type="Texture2D" uid="uid://btt8mdsjnql2o" path="res://art/characters/hands/Right_hand_fists.png" id="9_s6vb7"]
 
 [sub_resource type="Animation" id="Animation_j6qrv"]
 length = 0.001
@@ -150,6 +152,11 @@ uv = PackedVector2Array(8, 12, 0, 12, 0, 0, 8, 0)
 polygons = [PackedInt32Array(0, 1, 2, 3)]
 bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
 
+[node name="LeftHand" type="Sprite2D" parent="."]
+position = Vector2(49, -24)
+texture = ExtResource("5_783ab")
+offset = Vector2(5, 0)
+
 [node name="PosicionManoIzq" type="Node2D" parent="."]
 position = Vector2(-1, 0)
 
@@ -176,6 +183,11 @@ polygon = PackedVector2Array(4, 6, -4, 6, -4, -6, 4, -6)
 uv = PackedVector2Array(8, 12, 0, 12, 0, 0, 8, 0)
 polygons = [PackedInt32Array(0, 1, 2, 3)]
 bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
+
+[node name="RightHand" type="Sprite2D" parent="."]
+position = Vector2(34, 3)
+texture = ExtResource("9_s6vb7")
+offset = Vector2(5, 0)
 
 [node name="Weapons" type="Node2D" parent="."]
 position = Vector2(0, -44)

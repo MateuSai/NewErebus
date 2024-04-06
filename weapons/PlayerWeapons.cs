@@ -31,5 +31,9 @@ public partial class PlayerWeapons : Weapons
         string pathToWeapon = "../".PathJoin(_player.GetPathTo(this)).PathJoin(CurrentWeapon.Name);
         //GD.Print(pathToWeapon.PathJoin(CurrentWeapon.GetPathTo(CurrentWeapon.RightHand)));
         _player.SetIKTargets(pathToWeapon.PathJoin(CurrentWeapon.GetPathTo(CurrentWeapon.RightHand)), pathToWeapon.PathJoin(CurrentWeapon.GetPathTo(CurrentWeapon.LeftHand)));
+        GD.Print(newWeapon.LeftHandRemoteTransform.GetNode("../../../../../LeftHand").Name);
+        newWeapon.LeftHandRemoteTransform.RemotePath = "../../../../../LeftHand";
+        newWeapon.RightHandRemoteTransform.RemotePath = "../../../../../RightHand";
+        //_player.SetHandRemotes("", "../../Weapons".PathJoin(newWeapon.Name).PathJoin(newWeapon.GetPathTo(newWeapon.LeftHand)));
     }
 }
