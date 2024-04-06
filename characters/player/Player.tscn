@@ -132,6 +132,15 @@ script = ExtResource("1_3m1rv")
 position = Vector2(0, 6)
 texture = ExtResource("2_itcvd")
 
+[node name="LeftArm" type="Polygon2D" parent="."]
+offset = Vector2(8, -42)
+texture = ExtResource("4_ox27k")
+skeleton = NodePath("../Skeleton")
+polygon = PackedVector2Array(5, 8.5, -5, 8.5, -5, -8.5, 5, -8.5)
+uv = PackedVector2Array(10, 17, 0, 17, 0, 0, 10, 0)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
+
 [node name="LeftForearm" type="Polygon2D" parent="."]
 offset = Vector2(8, -31)
 texture = ExtResource("3_qtt10")
@@ -141,14 +150,8 @@ uv = PackedVector2Array(8, 12, 0, 12, 0, 0, 8, 0)
 polygons = [PackedInt32Array(0, 1, 2, 3)]
 bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
 
-[node name="LeftArm" type="Polygon2D" parent="."]
-offset = Vector2(8, -42)
-texture = ExtResource("4_ox27k")
-skeleton = NodePath("../Skeleton")
-polygon = PackedVector2Array(5, 8.5, -5, 8.5, -5, -8.5, 5, -8.5)
-uv = PackedVector2Array(10, 17, 0, 17, 0, 0, 10, 0)
-polygons = [PackedInt32Array(0, 1, 2, 3)]
-bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
+[node name="PosicionManoIzq" type="Node2D" parent="."]
+position = Vector2(-1, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -29)
@@ -192,8 +195,7 @@ rotation = 1.5708
 rest = Transform2D(-3.61999e-06, 1, -1, -3.61999e-06, 0, -44)
 
 [node name="RightArm" type="Bone2D" parent="Skeleton/Torso"]
-position = Vector2(4.22001e-05, 12)
-rotation = -0.577902
+position = Vector2(-0.999954, 13)
 scale = Vector2(0.999987, 0.999987)
 rest = Transform2D(0.999998, 0, 0, 0.999998, -2.99995, 13)
 metadata/_local_pose_override_enabled_ = true
@@ -212,9 +214,9 @@ length = 8.0
 bone_angle = 0.0
 
 [node name="LeftArm" type="Bone2D" parent="Skeleton/Torso"]
-position = Vector2(-3.00004, -9.99999)
-rotation = 0.00922167
-scale = Vector2(0.999953, 0.999953)
+position = Vector2(-3.00003, -7.99999)
+rotation = -0.178422
+scale = Vector2(0.999952, 0.999952)
 rest = Transform2D(1, 0, 0, 1, -3.00003, -7.99999)
 metadata/_local_pose_override_enabled_ = true
 
@@ -231,7 +233,7 @@ length = 8.0
 bone_angle = 0.0
 
 [node name="IKRightHandTarget" type="Node2D" parent="."]
-position = Vector2(3, -21)
+position = Vector2(-13, -17)
 
 [node name="IKLeftHandTarget" type="Node2D" parent="."]
 position = Vector2(14, -26)
