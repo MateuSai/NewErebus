@@ -4,7 +4,7 @@ using System;
 namespace ErebusInventory;
 
 [Tool, GlobalClass]
-public partial class EquipmentItemSlot : CenterContainer, ITemSlot
+public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 {
     private ItemInfo _itemInfo;
 

@@ -3,7 +3,7 @@ using System;
 
 namespace ErebusInventory.Grid;
 
-public partial class GridItemSlot : Control, ITemSlot
+public partial class GridItemSlot : Control, IItemSlot
 {
     private readonly short _x;
     private readonly short _y;
@@ -14,10 +14,13 @@ public partial class GridItemSlot : Control, ITemSlot
 
     private InventorySystem _inventorySystem;
 
-    public GridItemSlot(short x, short y)
+    private GridInventory _gridInventory;
+
+    public GridItemSlot(short x, short y, GridInventory gridInventory)
     {
         _x = x;
         _y = y;
+        _gridInventory = gridInventory;
 
         Icon = new()
         {
@@ -41,6 +44,8 @@ public partial class GridItemSlot : Control, ITemSlot
 
     public void Equip(ItemInfo itemInfo)
     {
+        GD.Print(_x + " " + _y);
+
         _itemInfo = itemInfo;
 
         Icon.Texture = _itemInfo.Icon;

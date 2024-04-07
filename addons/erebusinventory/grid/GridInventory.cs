@@ -54,7 +54,7 @@ public partial class GridInventory : GridContainer
         {
             GridCell gridCell = new();
 
-            GridItemSlot gridItemSlot = new(0, 0);
+            GridItemSlot gridItemSlot = new((short)(j % _rows), (short)(j / Columns), this);
             gridCell.AddChild(gridItemSlot);
             _grid[j] = gridItemSlot;
 

@@ -2,7 +2,7 @@ using Godot;
 
 namespace ErebusInventory;
 
-public interface ITemSlot
+public interface IItemSlot
 {
     void Equip(ItemInfo itemInfo);
 

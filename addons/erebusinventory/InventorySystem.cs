@@ -7,11 +7,11 @@ namespace ErebusInventory;
 
 public partial class InventorySystem : CanvasLayer
 {
-    private ITemSlot _draggingItemSlot = null;
+    private IItemSlot _draggingItemSlot = null;
     private ItemInfo _draggingItem = null;
     private TextureRect _draggingIcon = null;
 
-    private readonly List<ITemSlot> _slotsUnderMouse = new();
+    private readonly List<IItemSlot> _slotsUnderMouse = new();
 
     public InventorySystem()
     {
@@ -93,7 +93,7 @@ public partial class InventorySystem : CanvasLayer
         _draggingItem = null;
     }
 
-    public void AddSlotUnderMouse(ITemSlot itemSlot)
+    public void AddSlotUnderMouse(IItemSlot itemSlot)
     {
         GD.Print("add slot under mouse " + ((Control)itemSlot).Name);
         _slotsUnderMouse.Add(itemSlot);
@@ -104,7 +104,7 @@ public partial class InventorySystem : CanvasLayer
         }*/
     }
 
-    public void RemoveSlotUnderMouse(ITemSlot itemSlot)
+    public void RemoveSlotUnderMouse(IItemSlot itemSlot)
     {
         GD.Print("remove slot under mouse " + ((Control)itemSlot).Name);
 
