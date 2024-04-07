@@ -4,7 +4,7 @@ using System;
 namespace ErebusInventory;
 
 [Tool, GlobalClass]
-public partial class EquipmentItemSlot : CenterContainer, ItemSlot
+public partial class EquipmentItemSlot : CenterContainer, ITemSlot
 {
     private ItemInfo _itemInfo;
 
@@ -53,5 +53,11 @@ public partial class EquipmentItemSlot : CenterContainer, ItemSlot
     public TextureRect GetIconTextureRect()
     {
         return (TextureRect)_icon.Duplicate();
+    }
+
+    public void Unequip()
+    {
+        _icon.Texture = null;
+        _itemInfo = null;
     }
 }

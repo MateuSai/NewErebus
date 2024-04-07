@@ -3,7 +3,7 @@ using System;
 
 namespace ErebusInventory.Grid;
 
-public partial class GridItemSlot : Control, ItemSlot
+public partial class GridItemSlot : Control, ITemSlot
 {
     private readonly short _x;
     private readonly short _y;
@@ -18,6 +18,13 @@ public partial class GridItemSlot : Control, ItemSlot
     {
         _x = x;
         _y = y;
+
+        Icon = new()
+        {
+            StretchMode = TextureRect.StretchModeEnum.Keep,
+            ZIndex = 1,
+        };
+        AddChild(Icon);
 
         SetAnchorsPreset(LayoutPreset.FullRect);
     }
@@ -41,16 +48,22 @@ public partial class GridItemSlot : Control, ItemSlot
 
     public TextureRect GetIconTextureRect()
     {
-        throw new NotImplementedException();
+        return (TextureRect)Icon.Duplicate();
     }
 
     public ItemInfo GetItemInfo()
     {
-        throw new NotImplementedException();
+        return _itemInfo;
     }
 
     public ItemInfo Grab()
     {
-        throw new NotImplementedException();
+        return _itemInfo;
+    }
+
+    public void Unequip()
+    {
+        Icon.Texture = null;
+        _itemInfo = null;
     }
 }

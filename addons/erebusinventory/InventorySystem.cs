@@ -7,11 +7,16 @@ namespace ErebusInventory;
 
 public partial class InventorySystem : CanvasLayer
 {
-    private ItemSlot _draggingItemSlot = null;
+    private ITemSlot _draggingItemSlot = null;
     private ItemInfo _draggingItem = null;
     private TextureRect _draggingIcon = null;
 
-    private List<ItemSlot> _slotsUnderMouse = new();
+    private readonly List<ITemSlot> _slotsUnderMouse = new();
+
+    public InventorySystem()
+    {
+        Layer = 2; // So the draggins texture appears on top of canvas layers with layer 1
+    }
 
     public override void _Ready()
     {
@@ -26,7 +31,7 @@ public partial class InventorySystem : CanvasLayer
 
         if (@event.IsActionPressed("grab") && _draggingIcon == null)
         {
-            //GD.Print("Grab");
+            GD.Print("Grab");
             if (Grab())
             {
                 SetProcess(true);
@@ -34,6 +39,7 @@ public partial class InventorySystem : CanvasLayer
         }
         else if (@event.IsActionReleased("grab") && _draggingIcon != null)
         {
+            GD.Print("release");
             Release();
             SetProcess(false);
         }
@@ -58,7 +64,8 @@ public partial class InventorySystem : CanvasLayer
         _draggingItemSlot = _slotsUnderMouse[0];
         _draggingItem = _draggingItemSlot.GetItemInfo();
         _draggingIcon = _draggingItemSlot.GetIconTextureRect();
-        _draggingIcon.ZIndex += 50;
+        _draggingIcon.MouseFilter = Control.MouseFilterEnum.Ignore;
+        //_draggingIcon.ZIndex += 50;
         AddChild(_draggingIcon);
 
         return true;
@@ -66,6 +73,7 @@ public partial class InventorySystem : CanvasLayer
 
     private void Release()
     {
+        GD.Print("Slots under mouse: " + _slotsUnderMouse.Count);
         if (_slotsUnderMouse.Count == 0)
         {
             Tween tween = CreateTween();
@@ -77,6 +85,7 @@ public partial class InventorySystem : CanvasLayer
         {
             _draggingIcon.QueueFree();
             _draggingIcon = null;
+            _draggingItemSlot.Unequip();
             _slotsUnderMouse[0].Equip(_draggingItem);
         }
 
@@ -84,9 +93,9 @@ public partial class InventorySystem : CanvasLayer
         _draggingItem = null;
     }
 
-    public void AddSlotUnderMouse(ItemSlot itemSlot)
+    public void AddSlotUnderMouse(ITemSlot itemSlot)
     {
-        GD.Print("add slot under mouse");
+        GD.Print("add slot under mouse " + ((Control)itemSlot).Name);
         _slotsUnderMouse.Add(itemSlot);
 
         /*if (!IsProcessing())
@@ -95,9 +104,9 @@ public partial class InventorySystem : CanvasLayer
         }*/
     }
 
-    public void RemoveSlotUnderMouse(ItemSlot itemSlot)
+    public void RemoveSlotUnderMouse(ITemSlot itemSlot)
     {
-        GD.Print("remove slot under mouse");
+        GD.Print("remove slot under mouse " + ((Control)itemSlot).Name);
 
         _slotsUnderMouse.Remove(itemSlot);
 

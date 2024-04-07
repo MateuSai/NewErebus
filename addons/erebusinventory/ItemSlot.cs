@@ -2,9 +2,11 @@ using Godot;
 
 namespace ErebusInventory;
 
-public interface ItemSlot
+public interface ITemSlot
 {
     void Equip(ItemInfo itemInfo);
+
+    void Unequip();
 
     public ItemInfo Grab();
 
