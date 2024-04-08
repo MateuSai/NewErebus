@@ -30,14 +30,16 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
         MouseEntered += () => _inventorySystem.AddSlotUnderMouse(this);
         MouseExited += () => _inventorySystem.RemoveSlotUnderMouse(this);
 
-        Equip(new ItemInfo("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 1, 1));
+        Equip(new ItemInfo("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 2, 2));
     }
 
-    public void Equip(ItemInfo itemInfo)
+    public bool Equip(ItemInfo itemInfo)
     {
         _itemInfo = itemInfo;
 
         _icon.Texture = _itemInfo.Icon;
+
+        return true;
     }
 
     public ItemInfo Grab()

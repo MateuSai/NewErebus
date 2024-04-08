@@ -40,8 +40,8 @@ public partial class InventorySystem : CanvasLayer
         else if (@event.IsActionReleased("grab") && _draggingIcon != null)
         {
             GD.Print("release");
-            Release();
             SetProcess(false);
+            Release();
         }
 
     }
@@ -73,8 +73,8 @@ public partial class InventorySystem : CanvasLayer
 
     private void Release()
     {
-        GD.Print("Slots under mouse: " + _slotsUnderMouse.Count);
-        if (_slotsUnderMouse.Count == 0)
+        //GD.Print("Slots under mouse: " + _slotsUnderMouse.Count);
+        if (_slotsUnderMouse.Count == 0 || !_slotsUnderMouse[0].Equip(_draggingItem))
         {
             Tween tween = CreateTween();
             tween.TweenProperty(_draggingIcon, "position", ((Control)_draggingItemSlot).GlobalPosition, 0.5f);
@@ -86,7 +86,7 @@ public partial class InventorySystem : CanvasLayer
             _draggingIcon.QueueFree();
             _draggingIcon = null;
             _draggingItemSlot.Unequip();
-            _slotsUnderMouse[0].Equip(_draggingItem);
+            //_slotsUnderMouse[0].Equip(_draggingItem);
         }
 
         _draggingItemSlot = null;
@@ -95,7 +95,7 @@ public partial class InventorySystem : CanvasLayer
 
     public void AddSlotUnderMouse(IItemSlot itemSlot)
     {
-        GD.Print("add slot under mouse " + ((Control)itemSlot).Name);
+        //GD.Print("add slot under mouse " + ((Control)itemSlot).Name);
         _slotsUnderMouse.Add(itemSlot);
 
         /*if (!IsProcessing())
@@ -106,7 +106,7 @@ public partial class InventorySystem : CanvasLayer
 
     public void RemoveSlotUnderMouse(IItemSlot itemSlot)
     {
-        GD.Print("remove slot under mouse " + ((Control)itemSlot).Name);
+        //GD.Print("remove slot under mouse " + ((Control)itemSlot).Name);
 
         _slotsUnderMouse.Remove(itemSlot);
 

@@ -20,4 +20,4 @@ theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 8
 script = ExtResource("2_eygh7")
-_rows = 8
+Rows = 8

@@ -42,13 +42,22 @@ public partial class GridItemSlot : Control, IItemSlot
         MouseExited += () => _inventorySystem.RemoveSlotUnderMouse(this);
     }
 
-    public void Equip(ItemInfo itemInfo)
+    public bool Equip(ItemInfo itemInfo)
     {
-        GD.Print(_x + " " + _y);
+        //GD.Print(_x + " " + _y);
+
+        bool couldInsert = _gridInventory.InsertItem(itemInfo, new Vector2I(_x, _y));
+
+        if (!couldInsert)
+        {
+            return false;
+        }
 
         _itemInfo = itemInfo;
 
         Icon.Texture = _itemInfo.Icon;
+
+        return true;
     }
 
     public TextureRect GetIconTextureRect()
@@ -70,5 +79,7 @@ public partial class GridItemSlot : Control, IItemSlot
     {
         Icon.Texture = null;
         _itemInfo = null;
+
+        _gridInventory.RemoveItem(_itemInfo, new Vector2I(_x, _y));
     }
 }

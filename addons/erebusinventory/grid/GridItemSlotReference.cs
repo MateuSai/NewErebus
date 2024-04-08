@@ -12,7 +12,7 @@ public partial class GridItemSlotReference : Control, IItemSlot
         _gridItemSlot = gridItemSlot;
     }
 
-    public void Equip(ItemInfo itemInfo)
+    public bool Equip(ItemInfo itemInfo)
     {
         throw new NotImplementedException();
     }
