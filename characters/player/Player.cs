@@ -1,5 +1,7 @@
 namespace Erebus.Characters.Player;
 
+using Erebus.Autoloads;
+using Erebus.UI.Inventory;
 using Erebus.Weapons;
 using Godot;
 using System;
@@ -52,6 +54,8 @@ public partial class Player : Character
         _stateMachine = new(this, _animationPlayer);
 
         _weapons.Start();
+
+        GetNode<Globals>("/root/Globals").Player = this;
     }
 
     public override void _Input(InputEvent @event)
@@ -169,5 +173,10 @@ public partial class Player : Character
     {
         _facingDir = newFacingDir;
         UpdateShoulderBones();
+    }
+
+    public void SetBackpack(Backpack backpack)
+    {
+        GD.Print(backpack);
     }
 }

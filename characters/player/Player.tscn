@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://bipi44042cy2n"]
+[gd_scene load_steps=21 format=3 uid="uid://bipi44042cy2n"]
 
 [ext_resource type="Script" path="res://characters/player/Player.cs" id="1_3m1rv"]
 [ext_resource type="Texture2D" uid="uid://bffdpfjlgx1ln" path="res://art/characters/player/Player_sprite_shet.png" id="1_ealcd"]
 [ext_resource type="Texture2D" uid="uid://c7o05w256inv7" path="res://art/New_simple_shadow.png" id="2_itcvd"]
+[ext_resource type="Texture2D" uid="uid://44r3o5tmxdoe" path="res://art/player_equipment/bags/Backpack_base.png" id="2_rq8e7"]
 [ext_resource type="Texture2D" uid="uid://n5dgpybg7awf" path="res://art/characters/char_arms/Right_arm.png" id="3_331if"]
 [ext_resource type="Texture2D" uid="uid://bfse5m5ttjpgr" path="res://art/characters/char_arms/Left_forearm.png" id="3_qtt10"]
 [ext_resource type="Texture2D" uid="uid://bjbld6pbuidqc" path="res://art/characters/char_arms/Right_forearm.png" id="4_342y3"]
@@ -25,6 +26,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Backpack:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_86dqd"]
 resource_name = "idle"
@@ -38,6 +51,18 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Backpack:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
@@ -129,6 +154,12 @@ modifications/1 = SubResource("SkeletonModification2DTwoBoneIK_m0nyc")
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3m1rv")
+
+[node name="Backpack" type="Sprite2D" parent="."]
+position = Vector2(-4, -38)
+texture = ExtResource("2_rq8e7")
+hframes = 6
+vframes = 6
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0, 6)

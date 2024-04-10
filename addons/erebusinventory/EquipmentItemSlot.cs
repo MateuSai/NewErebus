@@ -1,3 +1,4 @@
+using Erebus.UI.Inventory;
 using Godot;
 using System;
 
@@ -11,6 +12,9 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
     private InventorySystem _inventorySystem;
 
     private TextureRect _icon;
+
+    [Signal]
+    public delegate void ItemEquippedEventHandler(ItemInfo itemInfo);
 
     public EquipmentItemSlot()
     {
@@ -29,16 +33,16 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 
         MouseEntered += () => _inventorySystem.AddSlotUnderMouse(this);
         MouseExited += () => _inventorySystem.RemoveSlotUnderMouse(this);
-
-        Equip(new ItemInfo("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 2, 2));
     }
 
-    public bool Equip(ItemInfo itemInfo)
+    public virtual bool Equip(ItemInfo itemInfo)
     {
+        GD.Print("Equip");
         _itemInfo = itemInfo;
 
         _icon.Texture = _itemInfo.Icon;
 
+        EmitSignal(nameof(ItemEquipped), _itemInfo);
         return true;
     }
 
