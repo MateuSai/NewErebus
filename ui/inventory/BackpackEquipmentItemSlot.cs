@@ -12,12 +12,12 @@ public partial class BackpackEquipmentItemSlot : EquipmentItemSlot
         GD.Print("backpack equipment slot ready");
         base._Ready();
 
-        ItemEquipped += (ItemInfo itemInfo) =>
+        ItemInfoChanged += (ItemInfo itemInfo) =>
         {
             GetNode<Globals>("/root/Globals").Player.SetBackpack((Backpack)itemInfo);
         };
 
-        Equip(new Backpack("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 2, 2));
+        Equip(new Backpack("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 2, 2, GD.Load<Texture2D>("res://art/player_equipment/bags/Backpack_base.png")));
     }
 
     public override bool Equip(ItemInfo itemInfo)

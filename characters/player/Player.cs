@@ -27,6 +27,7 @@ public partial class Player : Character
     }
     private PlayerStateMachine _stateMachine;
 
+    private Sprite2D _backpackSprite;
     private Sprite2D _sprite;
     private AnimationPlayer _animationPlayer;
     private PlayerWeapons _weapons;
@@ -41,6 +42,7 @@ public partial class Player : Character
     {
         base._Ready();
 
+        _backpackSprite = GetNode<Sprite2D>("Backpack");
         _sprite = GetNode<Sprite2D>("Sprite2D");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _weapons = GetNode<PlayerWeapons>("Weapons");
@@ -177,6 +179,13 @@ public partial class Player : Character
 
     public void SetBackpack(Backpack backpack)
     {
-        GD.Print(backpack);
+        if (backpack == null)
+        {
+            _backpackSprite.Texture = null;
+        }
+        else
+        {
+            _backpackSprite.Texture = backpack.SpriteSheet;
+        }
     }
 }

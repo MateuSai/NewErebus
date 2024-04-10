@@ -8,13 +8,19 @@ namespace ErebusInventory;
 public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 {
     private ItemInfo _itemInfo;
+    private void SetItemInfo(ItemInfo itemInfo)
+    {
+        _itemInfo = itemInfo;
+        EmitSignal(nameof(ItemInfoChanged), itemInfo);
+    }
+
 
     private InventorySystem _inventorySystem;
 
     private TextureRect _icon;
 
     [Signal]
-    public delegate void ItemEquippedEventHandler(ItemInfo itemInfo);
+    public delegate void ItemInfoChangedEventHandler(ItemInfo itemInfo);
 
     public EquipmentItemSlot()
     {
@@ -38,11 +44,10 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
     public virtual bool Equip(ItemInfo itemInfo)
     {
         GD.Print("Equip");
-        _itemInfo = itemInfo;
+        SetItemInfo(itemInfo);
 
         _icon.Texture = _itemInfo.Icon;
 
-        EmitSignal(nameof(ItemEquipped), _itemInfo);
         return true;
     }
 
@@ -64,6 +69,6 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
     public void Unequip()
     {
         _icon.Texture = null;
-        _itemInfo = null;
+        SetItemInfo(null);
     }
 }
