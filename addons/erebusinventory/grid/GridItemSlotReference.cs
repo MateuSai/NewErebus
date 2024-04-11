@@ -10,6 +10,8 @@ public partial class GridItemSlotReference : Control, IItemSlot
     public GridItemSlotReference(GridItemSlot gridItemSlot)
     {
         _gridItemSlot = gridItemSlot;
+
+        SetAnchorsPreset(LayoutPreset.FullRect);
     }
 
     public bool Equip(ItemInfo itemInfo)
@@ -29,6 +31,7 @@ public partial class GridItemSlotReference : Control, IItemSlot
 
     public ItemInfo Grab()
     {
+        GD.Print("hoho");
         return _gridItemSlot.Grab();
     }
 

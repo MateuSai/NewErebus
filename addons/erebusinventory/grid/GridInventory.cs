@@ -63,10 +63,14 @@ public partial class GridInventory : GridContainer
 
         List<Vector2I> gridPositions = new();
 
-        for (int x = 1; x < itemInfo.BaseWidth; x++)
+        for (int x = 0; x < itemInfo.BaseWidth; x++)
         {
-            for (int y = 1; y < itemInfo.BaseHeight; y++)
+            for (int y = 0; y < itemInfo.BaseHeight; y++)
             {
+                if (x == 0 && y == 0)
+                {
+                    continue; // We ignore the grid item slot, since we only want to add references to the other occupied grids
+                }
                 gridPositions.Add(new Vector2I(atGridPos.X + x, atGridPos.Y + y));
             }
         }

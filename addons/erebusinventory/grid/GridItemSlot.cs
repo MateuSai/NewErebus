@@ -26,6 +26,7 @@ public partial class GridItemSlot : Control, IItemSlot
         {
             StretchMode = TextureRect.StretchModeEnum.Keep,
             ZIndex = 1,
+            MouseFilter = MouseFilterEnum.Ignore,
         };
         AddChild(Icon);
 
@@ -72,14 +73,15 @@ public partial class GridItemSlot : Control, IItemSlot
 
     public ItemInfo Grab()
     {
+        GD.Print(_x + " " + _y);
         return _itemInfo;
     }
 
     public void Unequip()
     {
+        _gridInventory.RemoveItem(_itemInfo, new Vector2I(_x, _y));
+
         Icon.Texture = null;
         _itemInfo = null;
-
-        _gridInventory.RemoveItem(_itemInfo, new Vector2I(_x, _y));
     }
 }

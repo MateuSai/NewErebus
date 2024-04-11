@@ -15,7 +15,7 @@ public partial class InventorySystem : CanvasLayer
 
     public InventorySystem()
     {
-        Layer = 2; // So the draggins texture appears on top of canvas layers with layer 1
+        Layer = 2; // So the dragging texture appears on top of canvas layers with layer 1
     }
 
     public override void _Ready()
@@ -58,11 +58,19 @@ public partial class InventorySystem : CanvasLayer
     {
         if (_slotsUnderMouse.Count == 0)
         {
+            GD.Print("No slots under mouse, cannot grab");
             return false;
         }
 
         _draggingItemSlot = _slotsUnderMouse[0];
-        _draggingItem = _draggingItemSlot.GetItemInfo();
+        _draggingItem = _draggingItemSlot.Grab();
+        if (_draggingItem == null)
+        {
+            _draggingItemSlot = null;
+            GD.Print("Empty slot, cannot grab");
+            return false;
+        }
+
         _draggingIcon = _draggingItemSlot.GetIconTextureRect();
         _draggingIcon.MouseFilter = Control.MouseFilterEnum.Ignore;
         //_draggingIcon.ZIndex += 50;
@@ -74,23 +82,35 @@ public partial class InventorySystem : CanvasLayer
     private void Release()
     {
         //GD.Print("Slots under mouse: " + _slotsUnderMouse.Count);
-        if (_slotsUnderMouse.Count == 0 || !_slotsUnderMouse[0].Equip(_draggingItem))
+        if (_slotsUnderMouse.Count == 0)
         {
-            Tween tween = CreateTween();
-            tween.TweenProperty(_draggingIcon, "position", ((Control)_draggingItemSlot).GlobalPosition, 0.5f);
-            tween.TweenCallback(Callable.From(_draggingIcon.QueueFree));
-            tween.TweenCallback(Callable.From(() => _draggingIcon = null));
+            TweenDraggingIconBack();
         }
         else
         {
-            _draggingIcon.QueueFree();
-            _draggingIcon = null;
-            _draggingItemSlot.Unequip();
+            if (_slotsUnderMouse[0].Equip(_draggingItem))
+            {
+                _draggingItemSlot.Unequip();
+                _draggingIcon.QueueFree();
+                _draggingIcon = null;
+            }
+            else
+            {
+                TweenDraggingIconBack();
+            }
             //_slotsUnderMouse[0].Equip(_draggingItem);
         }
 
         _draggingItemSlot = null;
         _draggingItem = null;
+    }
+
+    private void TweenDraggingIconBack()
+    {
+        Tween tween = CreateTween();
+        tween.TweenProperty(_draggingIcon, "position", ((Control)_draggingItemSlot).GlobalPosition, 0.5f);
+        tween.TweenCallback(Callable.From(_draggingIcon.QueueFree));
+        tween.TweenCallback(Callable.From(() => _draggingIcon = null));
     }
 
     public void AddSlotUnderMouse(IItemSlot itemSlot)
