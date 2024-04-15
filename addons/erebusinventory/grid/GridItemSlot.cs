@@ -79,6 +79,7 @@ public partial class GridItemSlot : Control, IItemSlot
 
     public void Unequip()
     {
+        //GD.Print("hey");
         _gridInventory.RemoveItem(_itemInfo, new Vector2I(_x, _y));
 
         Icon.Texture = null;
