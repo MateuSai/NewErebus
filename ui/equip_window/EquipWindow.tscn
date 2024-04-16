@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4nvh50s8tpwp"]
+[gd_scene load_steps=13 format=3 uid="uid://b4nvh50s8tpwp"]
 
 [ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_2elnn"]
 [ext_resource type="Script" path="res://ui/equip_window/EquipWindow.cs" id="2_3ncyi"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c0ha2jxonwrlh" path="res://art/ui/Equip_tab_header.png" id="4_w730l"]
 [ext_resource type="Texture2D" uid="uid://bymh736yfe1s4" path="res://art/ui/Tiny_close_button_hover.png" id="5_svcl5"]
 [ext_resource type="Script" path="res://ui/inventory/BackpackEquipmentItemSlot.cs" id="9_57fvi"]
+[ext_resource type="Script" path="res://ui/inventory/LegsArmorEquipmentItemSlot.cs" id="10_rx4n4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kvu7c"]
 texture = ExtResource("4_w730l")
@@ -47,30 +48,30 @@ theme_override_constants/separation = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 9
-theme_override_constants/margin_top = 18
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 16
 
 [node name="ArmorHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 8
 
 [node name="HelmetSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
-custom_minimum_size = Vector2(30, 29)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 script = ExtResource("9_57fvi")
 
-[node name="BodySlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
-custom_minimum_size = Vector2(30, 29)
+[node name="TorsoArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 script = ExtResource("9_57fvi")
 
-[node name="LegsSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
-custom_minimum_size = Vector2(30, 29)
+[node name="LegsArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-script = ExtResource("9_57fvi")
+script = ExtResource("10_rx4n4")
 
 [node name="BackpackSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
-custom_minimum_size = Vector2(30, 29)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 script = ExtResource("9_57fvi")
 

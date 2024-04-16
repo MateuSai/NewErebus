@@ -41,6 +41,7 @@ public partial class Player : Character
     private PlayerStateMachine _stateMachine;
 
     private Sprite2D _backpackSprite;
+    private Sprite2D _legsArmorSprite;
     private Sprite2D _sprite;
     private AnimationPlayer _animationPlayer;
     private PlayerWeapons _weapons;
@@ -56,6 +57,7 @@ public partial class Player : Character
         base._Ready();
 
         _backpackSprite = GetNode<Sprite2D>("Backpack");
+        _legsArmorSprite = GetNode<Sprite2D>("LegsArmorSprite");
         _sprite = GetNode<Sprite2D>("Sprite2D");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _weapons = GetNode<PlayerWeapons>("Weapons");
@@ -184,11 +186,11 @@ public partial class Player : Character
 
         if ((newFacingDir == FacingDir.TopLeft || newFacingDir == FacingDir.TopRight) && (_facingDir == FacingDir.BottomLeft || _facingDir == FacingDir.BottomRight))
         {
-            setVerticalFacingDir(VerticalFacingDir.Top);
+            SetVerticalFacingDir(VerticalFacingDir.Top);
         }
         else if ((newFacingDir == FacingDir.BottomLeft || newFacingDir == FacingDir.BottomRight) && (_facingDir == FacingDir.TopLeft || _facingDir == FacingDir.TopRight))
         {
-            setVerticalFacingDir(VerticalFacingDir.Bottom);
+            SetVerticalFacingDir(VerticalFacingDir.Bottom);
         }
 
         _facingDir = newFacingDir;
@@ -204,12 +206,14 @@ public partial class Player : Character
             case HorizontalFacingDir.Right:
                 _sprite.FlipH = false;
                 _backpackSprite.FlipH = false;
+                _legsArmorSprite.FlipH = false;
                 _rightIK.FlipBendDirection = true;
                 _leftIK.FlipBendDirection = true;
                 break;
             case HorizontalFacingDir.Left:
                 _sprite.FlipH = true;
                 _backpackSprite.FlipH = true;
+                _legsArmorSprite.FlipH = true;
                 _rightIK.FlipBendDirection = false;
                 _leftIK.FlipBendDirection = false;
                 break;
@@ -219,7 +223,7 @@ public partial class Player : Character
         }
     }
 
-    private void setVerticalFacingDir(VerticalFacingDir newVerticalFacingDir)
+    private void SetVerticalFacingDir(VerticalFacingDir newVerticalFacingDir)
     {
         _verticalFacingDir = newVerticalFacingDir;
 
@@ -246,6 +250,18 @@ public partial class Player : Character
         else
         {
             _backpackSprite.Texture = backpack.SpriteSheet;
+        }
+    }
+
+    public void SetLegsArmor(LegsArmor legsArmor)
+    {
+        if (legsArmor == null)
+        {
+            _legsArmorSprite.Texture = null;
+        }
+        else
+        {
+            _legsArmorSprite.Texture = legsArmor.SpriteSheet;
         }
     }
 }
