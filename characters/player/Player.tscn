@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bipi44042cy2n"]
+[gd_scene load_steps=22 format=3 uid="uid://bipi44042cy2n"]
 
 [ext_resource type="Script" path="res://characters/player/Player.cs" id="1_3m1rv"]
 [ext_resource type="Texture2D" uid="uid://bffdpfjlgx1ln" path="res://art/characters/player/Player_sprite_shet.png" id="1_ealcd"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://4q46ei6s36co" path="res://art/characters/char_arms/Left_arm.png" id="4_ox27k"]
 [ext_resource type="Texture2D" uid="uid://wylw2s3ipedx" path="res://art/characters/hands/Left_hand_fists.png" id="5_783ab"]
 [ext_resource type="Script" path="res://weapons/PlayerWeapons.cs" id="8_f8lgk"]
+[ext_resource type="Texture2D" uid="uid://jn2uxhy8bdwg" path="res://art/player_equipment/pants/Jeans_and_boots.png" id="8_ht6n1"]
 [ext_resource type="Texture2D" uid="uid://btt8mdsjnql2o" path="res://art/characters/hands/Right_hand_fists.png" id="9_s6vb7"]
 
 [sub_resource type="Animation" id="Animation_j6qrv"]
@@ -33,6 +34,18 @@ tracks/1/path = NodePath("Backpack:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LegsArmorSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -68,6 +81,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LegsArmorSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
 
 [sub_resource type="Animation" id="Animation_63xin"]
 resource_name = "idle_up"
@@ -93,6 +118,18 @@ tracks/1/path = NodePath("Backpack:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LegsArmorSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
@@ -127,6 +164,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [12, 13, 14, 15, 16, 17]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LegsArmorSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [17, 16, 15, 14, 13, 12]
+}
 
 [sub_resource type="Animation" id="Animation_kxpb0"]
 resource_name = "move_up"
@@ -155,6 +204,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [18, 19, 20, 21, 22, 23]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LegsArmorSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [23, 22, 21, 20, 19, 18]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s6xb1"]
@@ -202,6 +263,7 @@ position = Vector2(0, 6)
 texture = ExtResource("2_itcvd")
 
 [node name="LeftArm" type="Polygon2D" parent="."]
+visible = false
 offset = Vector2(8, -42)
 texture = ExtResource("4_ox27k")
 skeleton = NodePath("../Skeleton")
@@ -211,6 +273,7 @@ polygons = [PackedInt32Array(0, 1, 2, 3)]
 bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
 
 [node name="LeftForearm" type="Polygon2D" parent="."]
+visible = false
 offset = Vector2(8, -31)
 texture = ExtResource("3_qtt10")
 skeleton = NodePath("../Skeleton")
@@ -233,7 +296,14 @@ texture = ExtResource("1_ealcd")
 hframes = 6
 vframes = 6
 
+[node name="LegsArmorSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -29)
+texture = ExtResource("8_ht6n1")
+hframes = 6
+vframes = 5
+
 [node name="RightArm" type="Polygon2D" parent="."]
+visible = false
 offset = Vector2(-13, -41)
 texture = ExtResource("3_331if")
 skeleton = NodePath("../Skeleton")
@@ -243,6 +313,7 @@ polygons = [PackedInt32Array(0, 1, 2, 3)]
 bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
 
 [node name="RightForearm" type="Polygon2D" parent="."]
+visible = false
 offset = Vector2(-13, -29)
 texture = ExtResource("4_342y3")
 skeleton = NodePath("../Skeleton")
@@ -266,6 +337,7 @@ libraries = {
 }
 
 [node name="Skeleton" type="Skeleton2D" parent="."]
+visible = false
 modification_stack = SubResource("SkeletonModificationStack2D_7pqvl")
 
 [node name="Torso" type="Bone2D" parent="Skeleton"]
@@ -277,11 +349,13 @@ rest = Transform2D(-3.61999e-06, 1, -1, -3.61999e-06, 0, -44)
 position = Vector2(-0.999954, 13)
 scale = Vector2(0.999987, 0.999987)
 rest = Transform2D(0.999998, 0, 0, 0.999998, -2.99995, 13)
+metadata/_local_pose_override_enabled_ = true
 
 [node name="RightForearm" type="Bone2D" parent="Skeleton/Torso/RightArm"]
 position = Vector2(14, -5.07832e-05)
 scale = Vector2(0.999998, 0.999998)
 rest = Transform2D(0.999998, 0, 0, 0.999998, 14, -5.07832e-05)
+metadata/_local_pose_override_enabled_ = true
 
 [node name="RightHand" type="Bone2D" parent="Skeleton/Torso/RightArm/RightForearm"]
 position = Vector2(9, 0)
@@ -295,10 +369,12 @@ position = Vector2(-3.00003, -7.99999)
 rotation = -0.178422
 scale = Vector2(0.999952, 0.999952)
 rest = Transform2D(1, 0, 0, 1, -3.00003, -7.99999)
+metadata/_local_pose_override_enabled_ = true
 
 [node name="LeftForearm" type="Bone2D" parent="Skeleton/Torso/LeftArm"]
 position = Vector2(13, -4.70599e-05)
 rest = Transform2D(1, 0, 0, 1, 13, -4.70599e-05)
+metadata/_local_pose_override_enabled_ = true
 
 [node name="LeftHand" type="Bone2D" parent="Skeleton/Torso/LeftArm/LeftForearm"]
 position = Vector2(9, -3.25799e-05)
