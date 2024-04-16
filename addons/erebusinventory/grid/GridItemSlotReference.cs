@@ -7,12 +7,26 @@ public partial class GridItemSlotReference : Control, IItemSlot
 {
     private GridItemSlot _gridItemSlot;
 
+    private InventorySystem _inventorySystem;
+
     public GridItemSlotReference(GridItemSlot gridItemSlot)
     {
         _gridItemSlot = gridItemSlot;
+
+        SetAnchorsPreset(LayoutPreset.FullRect);
     }
 
-    public void Equip(ItemInfo itemInfo)
+    public override void _Ready()
+    {
+        base._Ready();
+
+        _inventorySystem = GetNode<InventorySystem>("/root/" + nameof(InventorySystem));
+
+        MouseEntered += () => _inventorySystem.AddSlotUnderMouse(this);
+        MouseExited += () => _inventorySystem.RemoveSlotUnderMouse(this);
+    }
+
+    public bool Equip(ItemInfo itemInfo)
     {
         throw new NotImplementedException();
     }
@@ -29,6 +43,7 @@ public partial class GridItemSlotReference : Control, IItemSlot
 
     public ItemInfo Grab()
     {
+        //GD.Print("hoho");
         return _gridItemSlot.Grab();
     }
 

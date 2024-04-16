@@ -4,7 +4,7 @@ namespace ErebusInventory;
 
 public interface IItemSlot
 {
-    void Equip(ItemInfo itemInfo);
+    bool Equip(ItemInfo itemInfo);
 
     void Unequip();
 

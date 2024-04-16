@@ -3,7 +3,7 @@ using System;
 
 namespace ErebusInventory;
 
-public partial class ItemInfo
+public partial class ItemInfo : Godot.GodotObject
 {
     public readonly string Id;
 

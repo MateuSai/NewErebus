@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cs41dbfx7nc1b" path="res://art/ui/Tiny_close_button_pressed.png" id="4_fesjt"]
 [ext_resource type="Texture2D" uid="uid://c0ha2jxonwrlh" path="res://art/ui/Equip_tab_header.png" id="4_w730l"]
 [ext_resource type="Texture2D" uid="uid://bymh736yfe1s4" path="res://art/ui/Tiny_close_button_hover.png" id="5_svcl5"]
-[ext_resource type="Script" path="res://addons/erebusinventory/EquipmentItemSlot.cs" id="9_0jnii"]
+[ext_resource type="Script" path="res://ui/inventory/BackpackEquipmentItemSlot.cs" id="9_57fvi"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kvu7c"]
 texture = ExtResource("4_w730l")
@@ -45,8 +45,34 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_0rawd")
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="ArmorHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 9
+theme_override_constants/margin_top = 18
+
+[node name="ArmorHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HelmetSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+custom_minimum_size = Vector2(30, 29)
+layout_mode = 2
+script = ExtResource("9_57fvi")
+
+[node name="BodySlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+custom_minimum_size = Vector2(30, 29)
+layout_mode = 2
+script = ExtResource("9_57fvi")
+
+[node name="LegsSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+custom_minimum_size = Vector2(30, 29)
+layout_mode = 2
+script = ExtResource("9_57fvi")
+
+[node name="BackpackSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+custom_minimum_size = Vector2(30, 29)
+layout_mode = 2
+script = ExtResource("9_57fvi")
 
 [node name="HBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -54,11 +80,6 @@ theme_override_constants/separation = 0
 
 [node name="WeaponsVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox"]
 layout_mode = 2
-
-[node name="ItemSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/WeaponsVBox"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-script = ExtResource("9_0jnii")
 
 [node name="OthersVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox"]
 layout_mode = 2

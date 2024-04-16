@@ -1,8 +1,11 @@
 namespace Erebus.Characters.Player;
 
+using Erebus.Autoloads;
+using Erebus.UI.Inventory;
 using Erebus.Weapons;
 using Godot;
 using System;
+using System.Reflection.Metadata;
 
 public partial class Player : Character
 {
@@ -17,6 +20,18 @@ public partial class Player : Character
         BottomRight,
     }
     private FacingDir _facingDir = FacingDir.BottomRight;
+    private enum HorizontalFacingDir
+    {
+        Left,
+        Right,
+    }
+    private HorizontalFacingDir _horizontalFacingDir = HorizontalFacingDir.Left;
+    private enum VerticalFacingDir
+    {
+        Top,
+        Bottom,
+    }
+    private VerticalFacingDir _verticalFacingDir = VerticalFacingDir.Bottom;
 
     public enum State
     {
@@ -25,6 +40,7 @@ public partial class Player : Character
     }
     private PlayerStateMachine _stateMachine;
 
+    private Sprite2D _backpackSprite;
     private Sprite2D _sprite;
     private AnimationPlayer _animationPlayer;
     private PlayerWeapons _weapons;
@@ -39,6 +55,7 @@ public partial class Player : Character
     {
         base._Ready();
 
+        _backpackSprite = GetNode<Sprite2D>("Backpack");
         _sprite = GetNode<Sprite2D>("Sprite2D");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _weapons = GetNode<PlayerWeapons>("Weapons");
@@ -52,6 +69,8 @@ public partial class Player : Character
         _stateMachine = new(this, _animationPlayer);
 
         _weapons.Start();
+
+        GetNode<Globals>("/root/Globals").Player = this;
     }
 
     public override void _Input(InputEvent @event)
@@ -78,19 +97,6 @@ public partial class Player : Character
 			_rightIK.FlipBendDirection = false;
 			_leftIK.FlipBendDirection = false;
 		} */
-
-        if (MousePosition.X > 1 && _sprite.FlipH)
-        {
-            _sprite.FlipH = false;
-            _rightIK.FlipBendDirection = true;
-            _leftIK.FlipBendDirection = true;
-        }
-        else if (MousePosition.X < -1 && !_sprite.FlipH)
-        {
-            _sprite.FlipH = true;
-            _rightIK.FlipBendDirection = false;
-            _leftIK.FlipBendDirection = false;
-        }
 
         if (MouseDirection.Y >= 0)
         {
@@ -167,7 +173,79 @@ public partial class Player : Character
 
     private void SetFacingDir(FacingDir newFacingDir)
     {
+        if ((newFacingDir == FacingDir.TopLeft || newFacingDir == FacingDir.BottomLeft) && (_facingDir == FacingDir.TopRight || _facingDir == FacingDir.BottomRight))
+        {
+            SetHorizontalFacingDir(HorizontalFacingDir.Left);
+        }
+        else if ((newFacingDir == FacingDir.TopRight || newFacingDir == FacingDir.BottomRight) && (_facingDir == FacingDir.TopLeft || _facingDir == FacingDir.BottomLeft))
+        {
+            SetHorizontalFacingDir(HorizontalFacingDir.Right);
+        }
+
+        if ((newFacingDir == FacingDir.TopLeft || newFacingDir == FacingDir.TopRight) && (_facingDir == FacingDir.BottomLeft || _facingDir == FacingDir.BottomRight))
+        {
+            setVerticalFacingDir(VerticalFacingDir.Top);
+        }
+        else if ((newFacingDir == FacingDir.BottomLeft || newFacingDir == FacingDir.BottomRight) && (_facingDir == FacingDir.TopLeft || _facingDir == FacingDir.TopRight))
+        {
+            setVerticalFacingDir(VerticalFacingDir.Bottom);
+        }
+
         _facingDir = newFacingDir;
         UpdateShoulderBones();
+    }
+
+    private void SetHorizontalFacingDir(HorizontalFacingDir newHorizontalFacingDir)
+    {
+        _horizontalFacingDir = newHorizontalFacingDir;
+
+        switch (_horizontalFacingDir)
+        {
+            case HorizontalFacingDir.Right:
+                _sprite.FlipH = false;
+                _backpackSprite.FlipH = false;
+                _rightIK.FlipBendDirection = true;
+                _leftIK.FlipBendDirection = true;
+                break;
+            case HorizontalFacingDir.Left:
+                _sprite.FlipH = true;
+                _backpackSprite.FlipH = true;
+                _rightIK.FlipBendDirection = false;
+                _leftIK.FlipBendDirection = false;
+                break;
+            default:
+                System.Diagnostics.Debug.Assert(false, "Invalid horizontal facing direction value");
+                break;
+        }
+    }
+
+    private void setVerticalFacingDir(VerticalFacingDir newVerticalFacingDir)
+    {
+        _verticalFacingDir = newVerticalFacingDir;
+
+        switch (_verticalFacingDir)
+        {
+            case VerticalFacingDir.Bottom:
+                MoveChild(_backpackSprite, _sprite.GetIndex() - 1);
+                break;
+            case VerticalFacingDir.Top:
+                MoveChild(_backpackSprite, _sprite.GetIndex() + 1);
+                break;
+            default:
+                System.Diagnostics.Debug.Assert(false, "Invalid vertical facing direction value");
+                break;
+        }
+    }
+
+    public void SetBackpack(Backpack backpack)
+    {
+        if (backpack == null)
+        {
+            _backpackSprite.Texture = null;
+        }
+        else
+        {
+            _backpackSprite.Texture = backpack.SpriteSheet;
+        }
     }
 }
