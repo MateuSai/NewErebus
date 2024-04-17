@@ -12,7 +12,9 @@ public partial class GridInventory : GridContainer
     [Export]
     private int _cellSize = 16;
 
-    private IItemSlot[] _grid;
+    private GridCell[] _grid;
+
+    private readonly List<GridCell> _selectedCells = new();
 
     private InventorySystem _inventorySystem;
 
@@ -38,19 +40,45 @@ public partial class GridInventory : GridContainer
             GetChild(i).QueueFree();
         }
 
-        _grid = new IItemSlot[Columns * Rows];
+        _grid = new GridCell[Columns * Rows];
 
-        for (int j = 0; j < Rows * Columns; j++)
+        for (int i = 0; i < Rows; i++)
         {
-            GridCell gridCell = new();
-
-            GridItemSlot gridItemSlot = new((short)(j % Rows), (short)(j / Columns), this);
-            gridCell.AddChild(gridItemSlot);
-            _grid[j] = gridItemSlot;
-
-            AddChild(gridCell);
+            for (int j = 0; j < Columns; j++)
+            {
+                GridCell gridCell = new((short)i, (short)j, this);
+                gridCell.MouseEntered += () =>
+                {
+                    GD.Print("hohohoho");
+                    if (_inventorySystem.DraggingItem != null)
+                    {
+                        GD.Print("i: " + i + "   j: " + j);
+                        GD.Print("ooooooo");
+                        for (int x = 0; x < _inventorySystem.DraggingItem.BaseWidth; x++)
+                        {
+                            GD.Print("x: " + x);
+                            for (int y = 0; y < _inventorySystem.DraggingItem.BaseHeight; y++)
+                            {
+                                GD.Print("y: " + y);
+                                if (i + x >= Columns || j + y >= Rows)
+                                {
+                                    continue;
+                                }
+                                GD.Print("hey");
+                                _selectedCells.Add(GetCellAt(new(i + x, j + y)));
+                            }
+                        }
+                        ColorSelectedCells();
+                    }
+                };
+                //GridItemSlot gridItemSlot = new((short)(j % Rows), (short)(j / Columns), this);
+                //gridCell.AddChild(gridItemSlot);
+                _grid[(int)(j * Columns + i)] = gridCell;
+                AddChild(gridCell);
+            }
         }
     }
+
 
     public bool InsertItem(ItemInfo itemInfo, Vector2I atGridPos)
     {
@@ -88,10 +116,11 @@ public partial class GridInventory : GridContainer
 
         foreach (Vector2I pos in gridPositions)
         {
-            GridItemSlotReference gridItemSlotReference = new((GridItemSlot)GetSlotAt(atGridPos));
-            ((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlotReference);
-            ((Control)GetSlotAt(pos)).QueueFree();
-            _grid[(int)(pos.Y * Columns + pos.X)] = gridItemSlotReference;
+            GetSlotAt(pos).ConfigureAsCellReference(GetSlotAt(atGridPos));
+            //GridItemSlotReference gridItemSlotReference = new((GridItemSlot)GetSlotAt(atGridPos));
+            //((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlotReference);
+            //((Control)GetSlotAt(pos)).QueueFree();
+            //_grid[(int)(pos.Y * Columns + pos.X)] = gridItemSlotReference;
         }
 
         return true;
@@ -115,10 +144,12 @@ public partial class GridInventory : GridContainer
 
         foreach (Vector2I pos in gridPositions)
         {
-            GridItemSlot gridItemSlot = new((short)pos.X, (short)pos.Y, this);
-            ((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlot);
-            ((Control)GetSlotAt(pos)).QueueFree();
-            _grid[(int)(pos.Y * Columns + pos.X)] = gridItemSlot;
+            GetSlotAt(pos).ConfigureAsItemHolder();
+
+            /*  GridItemSlot gridItemSlot = new((short)pos.X, (short)pos.Y, this);
+             ((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlot);
+             ((Control)GetSlotAt(pos)).QueueFree();
+             _grid[(int)(pos.Y * Columns + pos.X)] = gridItemSlot; */
         }
     }
 
@@ -130,7 +161,7 @@ public partial class GridInventory : GridContainer
             return false; // Grid position if not inside the grid
         }
 
-        if (GetSlotAt(gridPos) is GridItemSlotReference)
+        if (GetSlotAt(gridPos).CellMode == GridCell.Mode.ItemHolderReference)
         {
             return false; // This grid cell is already occupied with another item
         }
@@ -138,8 +169,31 @@ public partial class GridInventory : GridContainer
         return true;
     }
 
-    private IItemSlot GetSlotAt(Vector2 gridPos)
+    private GridCell GetSlotAt(Vector2 gridPos)
     {
         return _grid[(int)(gridPos.Y * Columns + gridPos.X)];
+    }
+
+    private GridCell GetCellAt(Vector2I gridPos)
+    {
+        return GetChild<GridCell>((int)(gridPos.Y * Columns + gridPos.X));
+    }
+
+    private void ColorSelectedCells()
+    {
+        GD.Print("ColorSelectedCells");
+        foreach (GridCell gridCell in _selectedCells)
+        {
+            GD.Print("aaaaaaa");
+            gridCell.SetInteriorColor(GridCell.InteriorColor.Green);
+        }
+    }
+
+    private void RestorePreviouslySelectedCellsColor()
+    {
+        foreach (GridCell gridCell in _selectedCells)
+        {
+            gridCell.SetInteriorColor(GridCell.InteriorColor.Default);
+        }
     }
 }

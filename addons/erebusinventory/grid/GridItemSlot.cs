@@ -21,6 +21,7 @@ public partial class GridItemSlot : Control, IItemSlot
         _x = x;
         _y = y;
         _gridInventory = gridInventory;
+        MouseFilter = MouseFilterEnum.Pass;
 
         Icon = new()
         {

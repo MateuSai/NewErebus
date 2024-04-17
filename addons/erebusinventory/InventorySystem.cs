@@ -8,7 +8,7 @@ namespace ErebusInventory;
 public partial class InventorySystem : CanvasLayer
 {
     private IItemSlot _draggingItemSlot = null;
-    private ItemInfo _draggingItem = null;
+    public ItemInfo DraggingItem = null;
     private TextureRect _draggingIcon = null;
 
     private readonly List<IItemSlot> _slotsUnderMouse = new();
@@ -63,8 +63,8 @@ public partial class InventorySystem : CanvasLayer
         }
 
         _draggingItemSlot = _slotsUnderMouse[0];
-        _draggingItem = _draggingItemSlot.Grab();
-        if (_draggingItem == null)
+        DraggingItem = _draggingItemSlot.Grab();
+        if (DraggingItem == null)
         {
             _draggingItemSlot = null;
             GD.Print("Empty slot, cannot grab");
@@ -88,7 +88,7 @@ public partial class InventorySystem : CanvasLayer
         }
         else
         {
-            if (_slotsUnderMouse[0].Equip(_draggingItem))
+            if (_slotsUnderMouse[0].Equip(DraggingItem))
             {
                 _draggingItemSlot.Unequip();
                 _draggingIcon.QueueFree();
@@ -102,7 +102,7 @@ public partial class InventorySystem : CanvasLayer
         }
 
         _draggingItemSlot = null;
-        _draggingItem = null;
+        DraggingItem = null;
     }
 
     private void TweenDraggingIconBack()
