@@ -2,22 +2,18 @@ using Erebus.Autoloads;
 using ErebusInventory;
 using Godot;
 using System;
+using System.Collections.Generic;
 
 namespace Erebus.UI.Inventory;
 
-public partial class BackpackEquipmentItemSlot : EquipmentItemSlot
+public partial class BackpackEquipmentItemSlot : BodyEquipmentEquipmentInventorySlot
 {
     public override void _Ready()
     {
         GD.Print("backpack equipment slot ready");
         base._Ready();
 
-        ItemInfoChanged += (ItemInfo itemInfo) =>
-        {
-            GetNode<Globals>("/root/Globals").Player.SetBackpack((Backpack)itemInfo);
-        };
-
-        Equip(new Backpack("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 2, 2, GD.Load<Texture2D>("res://art/player_equipment/bags/Backpack_base.png")));
+        Equip(new Backpack("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 2, 2, GD.Load<Texture2D>("res://art/player_equipment/bags/Backpack_base.png"), new List<Vector2I> { new(2, 3), new(5, 7), new(2, 3) }));
     }
 
     public override bool Equip(ItemInfo itemInfo)
@@ -29,5 +25,12 @@ public partial class BackpackEquipmentItemSlot : EquipmentItemSlot
         }
 
         return base.Equip(itemInfo);
+    }
+
+    protected override void OnItemInfoChanged(ItemInfo itemInfo)
+    {
+        base.OnItemInfoChanged(itemInfo);
+
+        GetNode<Globals>("/root/Globals").Player.SetBackpack((Backpack)itemInfo);
     }
 }
