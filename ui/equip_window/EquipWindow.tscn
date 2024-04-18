@@ -58,12 +58,10 @@ theme_override_constants/separation = 8
 [node name="HelmetSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-script = ExtResource("9_57fvi")
 
 [node name="TorsoArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-script = ExtResource("9_57fvi")
 
 [node name="LegsArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
 custom_minimum_size = Vector2(32, 32)

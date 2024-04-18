@@ -6,8 +6,8 @@ namespace ErebusInventory.Grid;
 [Tool]
 public partial class GridCell : TextureRect, IItemSlot
 {
-    private readonly short _x;
-    private readonly short _y;
+    public readonly short X;
+    public readonly short Y;
 
     private ItemInfo _itemInfo;
 
@@ -50,8 +50,8 @@ public partial class GridCell : TextureRect, IItemSlot
 
         SetInteriorColor(InteriorColor.Default);
 
-        _x = x;
-        _y = y;
+        X = x;
+        Y = y;
         _gridInventory = gridInventory;
     }
 
@@ -75,10 +75,10 @@ public partial class GridCell : TextureRect, IItemSlot
                 _interiorTexture.Modulate = new Color("1d1a1a");
                 break;
             case InteriorColor.Green:
-                _interiorTexture.Modulate = Colors.Green;
+                _interiorTexture.Modulate = new Color("1d3b1a");
                 break;
             case InteriorColor.Red:
-                _interiorTexture.Modulate = Colors.Red;
+                _interiorTexture.Modulate = new Color("5d1a1a");
                 break;
             default:
                 System.Diagnostics.Debug.Assert(false, "Invalid interior color value");
@@ -102,6 +102,8 @@ public partial class GridCell : TextureRect, IItemSlot
     }
     public void ConfigureAsCellReference(GridCell cellToReference)
     {
+        System.Diagnostics.Debug.Assert(cellToReference != null);
+
         CellMode = Mode.ItemHolderReference;
 
         Icon.QueueFree();
@@ -116,7 +118,7 @@ public partial class GridCell : TextureRect, IItemSlot
 
         //GD.Print(_x + " " + _y);
 
-        bool couldInsert = _gridInventory.InsertItem(itemInfo, new Vector2I(_x, _y));
+        bool couldInsert = _gridInventory.InsertItem(itemInfo, new Vector2I(X, Y));
 
         if (!couldInsert)
         {
@@ -156,13 +158,15 @@ public partial class GridCell : TextureRect, IItemSlot
 
     public ItemInfo Grab()
     {
-        GD.Print(_x + " " + _y);
+        GD.Print(X + " " + Y + "     " + (_itemHolderReference != null));
         if (_itemHolderReference == null)
         {
+            GD.Print("Returning item info");
             return _itemInfo;
         }
         else
         {
+            GD.Print("Redirecting to item holder...");
             return _itemHolderReference.Grab();
         }
     }
@@ -172,7 +176,7 @@ public partial class GridCell : TextureRect, IItemSlot
         if (_itemHolderReference == null)
         {
             //GD.Print("hey");
-            _gridInventory.RemoveItem(_itemInfo, new Vector2I(_x, _y));
+            _gridInventory.RemoveItem(_itemInfo, new Vector2I(X, Y));
 
             Icon.Texture = null;
             _itemInfo = null;

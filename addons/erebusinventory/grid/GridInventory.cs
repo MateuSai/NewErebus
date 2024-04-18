@@ -46,34 +46,39 @@ public partial class GridInventory : GridContainer
         {
             for (int j = 0; j < Columns; j++)
             {
-                GridCell gridCell = new((short)i, (short)j, this);
+                GridCell gridCell = new((short)j, (short)i, this);
                 gridCell.MouseEntered += () =>
                 {
-                    GD.Print("hohohoho");
+                    //GD.Print("hohohoho");
                     if (_inventorySystem.DraggingItem != null)
                     {
-                        GD.Print("i: " + i + "   j: " + j);
-                        GD.Print("ooooooo");
+                        GD.Print("x: " + gridCell.X + "   y: " + gridCell.Y);
+                        //GD.Print("ooooooo");
                         for (int x = 0; x < _inventorySystem.DraggingItem.BaseWidth; x++)
                         {
-                            GD.Print("x: " + x);
+                            //GD.Print("x: " + x);
                             for (int y = 0; y < _inventorySystem.DraggingItem.BaseHeight; y++)
                             {
-                                GD.Print("y: " + y);
-                                if (i + x >= Columns || j + y >= Rows)
+                                //GD.Print("y: " + y);
+                                if (gridCell.X + x >= Columns || gridCell.Y + y >= Rows)
                                 {
                                     continue;
                                 }
-                                GD.Print("hey");
-                                _selectedCells.Add(GetCellAt(new(i + x, j + y)));
+                                //GD.Print("hey");
+                                _selectedCells.Add(GetCellAt(new(gridCell.X + x, gridCell.Y + y)));
                             }
                         }
                         ColorSelectedCells();
                     }
                 };
+                gridCell.MouseExited += () =>
+                {
+                    RestorePreviouslySelectedCellsColor();
+                    _selectedCells.Clear();
+                };
                 //GridItemSlot gridItemSlot = new((short)(j % Rows), (short)(j / Columns), this);
                 //gridCell.AddChild(gridItemSlot);
-                _grid[(int)(j * Columns + i)] = gridCell;
+                _grid[(int)(i * Columns + j)] = gridCell;
                 AddChild(gridCell);
             }
         }
@@ -116,6 +121,7 @@ public partial class GridInventory : GridContainer
 
         foreach (Vector2I pos in gridPositions)
         {
+            GD.Print("Configuring " + pos + " cell as reference");
             GetSlotAt(pos).ConfigureAsCellReference(GetSlotAt(atGridPos));
             //GridItemSlotReference gridItemSlotReference = new((GridItemSlot)GetSlotAt(atGridPos));
             //((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlotReference);
@@ -155,12 +161,15 @@ public partial class GridInventory : GridContainer
 
     private bool IsGridPositionValid(Vector2 gridPos)
     {
+        GD.Print("Checking grid " + gridPos + " to see if it's valid");
+
         if (gridPos.X >= Columns || gridPos.Y >= Rows)
         {
             //GD.Print("hisds");
             return false; // Grid position if not inside the grid
         }
 
+        System.Diagnostics.Debug.Assert(GetSlotAt(gridPos) != null);
         if (GetSlotAt(gridPos).CellMode == GridCell.Mode.ItemHolderReference)
         {
             return false; // This grid cell is already occupied with another item
@@ -181,11 +190,27 @@ public partial class GridInventory : GridContainer
 
     private void ColorSelectedCells()
     {
-        GD.Print("ColorSelectedCells");
+        GridCell.InteriorColor interiorColor = GridCell.InteriorColor.Green;
+
+        if (_selectedCells.Count < (_inventorySystem.DraggingItem.BaseWidth * _inventorySystem.DraggingItem.BaseHeight))
+        {
+            interiorColor = GridCell.InteriorColor.Red;
+        }
+        else
+        {
+            foreach (GridCell gridCell in _selectedCells)
+            {
+                if (!IsGridPositionValid(new(gridCell.X, gridCell.Y)))
+                {
+                    interiorColor = GridCell.InteriorColor.Red;
+                    break;
+                }
+            }
+        }
+
         foreach (GridCell gridCell in _selectedCells)
         {
-            GD.Print("aaaaaaa");
-            gridCell.SetInteriorColor(GridCell.InteriorColor.Green);
+            gridCell.SetInteriorColor(interiorColor);
         }
     }
 
