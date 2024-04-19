@@ -5,13 +5,13 @@ namespace Erebus.UI;
 
 public partial class UI : CanvasLayer
 {
-    private Erebus.UI.EquipWindow.EquipWindow _equipWindow;
+    private EquipWindow.EquipWindow _equipWindow;
 
     public override void _Ready()
     {
         base._Ready();
 
-        _equipWindow = GetNode<Erebus.UI.EquipWindow.EquipWindow>("EquipWindow");
+        _equipWindow = GetNode<EquipWindow.EquipWindow>("VBoxContainer/EquipWindow");
     }
 
     public override void _UnhandledInput(InputEvent @event)

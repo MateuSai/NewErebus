@@ -11,9 +11,16 @@ public partial class BodyEquipment : ItemInfo
 
     public List<Vector2I> InventoryGrid;
 
-    public BodyEquipment(string id, Texture2D icon, int baseWidth, int baseHeight, Texture2D spriteSheet, List<Vector2I> inventoryGrid = null) : base(id, icon, baseWidth, baseHeight)
+    static public BodyEquipment FromParameters(string id, Texture2D icon, int baseWidth, int baseHeight, Texture2D spriteSheet, List<Vector2I> inventoryGrid = null)
     {
-        SpriteSheet = spriteSheet;
-        InventoryGrid = inventoryGrid;
+        return new()
+        {
+            Id = id,
+            Icon = icon,
+            BaseWidth = baseWidth,
+            BaseHeight = baseHeight,
+            SpriteSheet = spriteSheet,
+            InventoryGrid = inventoryGrid,
+        };
     }
 }

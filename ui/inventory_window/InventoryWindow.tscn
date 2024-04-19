@@ -1,27 +1,51 @@
-[gd_scene load_steps=3 format=3 uid="uid://ch4auhdpo8ycc"]
+[gd_scene load_steps=4 format=3 uid="uid://ch4auhdpo8ycc"]
 
 [ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_c4vhj"]
 [ext_resource type="Texture2D" uid="uid://brqqvsof5brw2" path="res://art/ui/Inventory_background_base.png" id="1_eyqm8"]
+[ext_resource type="Texture2D" uid="uid://dle5v3nbva3ok" path="res://art/ui/Inventory_background_header.png" id="2_508bp"]
 
 [node name="InventoryWindow" type="VBoxContainer"]
-offset_right = 83.0
-offset_bottom = 23.0
+offset_right = 85.0
+offset_bottom = 25.0
 theme = ExtResource("1_c4vhj")
 
 [node name="BackpackInventory" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-
-[node name="NinePatchRect" type="NinePatchRect" parent="BackpackInventory"]
-layout_mode = 2
-texture = ExtResource("1_eyqm8")
-patch_margin_left = 5
-patch_margin_top = 16
-patch_margin_right = 5
-patch_margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BackpackInventory"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="BackpackInventory/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="BackpackInventory/VBoxContainer"]
 layout_mode = 2
-text = "BACKPACK"
+texture = ExtResource("2_508bp")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="BackpackInventory/VBoxContainer/TextureRect"]
+layout_mode = 2
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 170.0
+offset_bottom = 10.0
+text = "BACK PACK"
+
+[node name="MarginContainer" type="MarginContainer" parent="BackpackInventory/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NinePatchRect" type="NinePatchRect" parent="BackpackInventory/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_eyqm8")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="BackpackInventory/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_bottom = 3

@@ -33,11 +33,14 @@ public partial class BackpackEquipmentItemSlot : BodyEquipmentEquipmentInventory
 
         GetNode<Globals>("/root/Globals").Player.SetBackpack((Backpack)itemInfo);
 
-        BodyEquipment bodyEquipment = (BodyEquipment)itemInfo;
-
-        if (bodyEquipment.InventoryGrid != null)
+        if (itemInfo != null)
         {
-            AddInventoryGrid(bodyEquipment.InventoryGrid, GetOwner<Control>().GetNode("../InventoryWindow/BackpackInventory/VBoxContainer"));
+            BodyEquipment bodyEquipment = (BodyEquipment)itemInfo;
+
+            if (bodyEquipment.InventoryGrid != null)
+            {
+                AddInventoryGrid(bodyEquipment.InventoryGrid, GetOwner<Control>().GetNode("../InventoryWindow/BackpackInventory/VBoxContainer/MarginContainer/MarginContainer"));
+            }
         }
     }
 }

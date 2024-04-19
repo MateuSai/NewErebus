@@ -3,20 +3,32 @@ using System;
 
 namespace ErebusInventory;
 
-public partial class ItemInfo : Godot.GodotObject
+[Tool]
+public partial class ItemInfo : Resource
 {
-    public readonly string Id;
+    [Export]
+    public string Id;
 
+    [Export]
     public Texture2D Icon;
 
-    public readonly int BaseWidth;
-    public readonly int BaseHeight;
+    [Export]
+    public int BaseWidth;
+    [Export]
+    public int BaseHeight;
 
-    public ItemInfo(string id, Texture2D icon, int baseWidth, int baseHeight)
+    public ItemInfo()
     {
-        this.Id = id;
-        this.Icon = icon;
-        this.BaseWidth = baseWidth;
-        this.BaseHeight = baseHeight;
+    }
+
+    static public ItemInfo FromParameters(string id, Texture2D icon, int baseWidth, int baseHeight)
+    {
+        return new()
+        {
+            Id = id,
+            Icon = icon,
+            BaseWidth = baseWidth,
+            BaseHeight = baseHeight,
+        };
     }
 }
