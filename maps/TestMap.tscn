@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bttv3nsynu7ip"]
+[gd_scene load_steps=9 format=3 uid="uid://bttv3nsynu7ip"]
 
 [ext_resource type="Texture2D" uid="uid://bdi368gdomqll" path="res://art/maps/Test_ground.png" id="1_wriod"]
 [ext_resource type="PackedScene" uid="uid://bipi44042cy2n" path="res://characters/player/Player.tscn" id="2_7e0oi"]
 [ext_resource type="Script" path="res://ui/UI.cs" id="3_tapsx"]
 [ext_resource type="PackedScene" uid="uid://b4nvh50s8tpwp" path="res://ui/equip_window/EquipWindow.tscn" id="3_xoi0k"]
 [ext_resource type="PackedScene" uid="uid://ch4auhdpo8ycc" path="res://ui/inventory_window/InventoryWindow.tscn" id="5_43ct4"]
+[ext_resource type="PackedScene" uid="uid://dob8r6xe21gjk" path="res://ui/loot_and_stash_window/LootAndStashWindow.tscn" id="6_125fm"]
+[ext_resource type="Script" path="res://items/ItemOnFloor.cs" id="6_yv527"]
+[ext_resource type="Resource" uid="uid://bpi872kfpv4at" path="res://items/Battery.tres" id="7_aj58k"]
 
 [node name="TestMap" type="Node2D"]
 
@@ -30,3 +33,14 @@ layout_mode = 2
 
 [node name="InventoryWindow" parent="UI/VBoxContainer" instance=ExtResource("5_43ct4")]
 layout_mode = 2
+
+[node name="LootAndStashWindow" parent="UI" instance=ExtResource("6_125fm")]
+offset_left = 693.0
+offset_top = 265.0
+offset_right = 693.0
+offset_bottom = 265.0
+
+[node name="ItemOnFloor" type="Area2D" parent="."]
+position = Vector2(432, 191)
+script = ExtResource("6_yv527")
+ItemInfo = ExtResource("7_aj58k")

@@ -15,7 +15,7 @@ public partial class BodyEquipmentEquipmentInventorySlot : EquipmentItemSlot
         ItemInfoChanged += OnItemInfoChanged;
     }
 
-    protected void AddInventoryGrid(List<Vector2I> inventoryGrid, Node to)
+    protected void AddInventoryGrid(Godot.Collections.Array<Vector2I> inventoryGrid, Node to)
     {
         HBoxContainer hBox = new()
         {

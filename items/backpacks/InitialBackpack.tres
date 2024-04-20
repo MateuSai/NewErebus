@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dech8hc6mtjq1"]
+
+[ext_resource type="Texture2D" uid="uid://ct6616sqhx00d" path="res://art/ui/inventory_icons/Backpack_base.png" id="1_fjnxh"]
+[ext_resource type="Script" path="res://ui/inventory/Backpack.cs" id="1_v4hxc"]
+[ext_resource type="Texture2D" uid="uid://44r3o5tmxdoe" path="res://art/player_equipment/bags/Backpack_base.png" id="2_vsdes"]
+
+[resource]
+script = ExtResource("1_v4hxc")
+SpriteSheet = ExtResource("2_vsdes")
+InventoryGrid = Array[Vector2i]([Vector2i(2, 3), Vector2i(5, 7), Vector2i(2, 3)])
+Id = "initial_backpack"
+Icon = ExtResource("1_fjnxh")
+BaseWidth = 2
+BaseHeight = 2

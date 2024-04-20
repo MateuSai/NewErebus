@@ -15,6 +15,12 @@ public partial class ItemOnFloor : Area2D
         set
         {
             _itemInfo = value;
+            // So it is not called before creating the sprite and collision shape.
+            // It will be called later on the _ready function
+            if (_sprite != null)
+            {
+                Initialize(_itemInfo);
+            }
         }
     }
 
@@ -25,13 +31,12 @@ public partial class ItemOnFloor : Area2D
     {
         base._Ready();
 
-        _sprite = GetNode<Sprite2D>("Sprite2D");
-        _collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+        _sprite = new();
+        AddChild(_sprite);
+        _collisionShape = new();
+        AddChild(_collisionShape);
 
-        if (_itemInfo != null)
-        {
-            Initialize(_itemInfo);
-        }
+        Initialize(_itemInfo);
     }
 
     /// <summary>
@@ -39,12 +44,35 @@ public partial class ItemOnFloor : Area2D
     /// </summary>
     public void Initialize(ItemInfo itemInfo)
     {
-        _sprite.Texture = itemInfo.Icon;
-
-        RectangleShape2D rectangleShape = new()
+        if (itemInfo != null)
         {
-            Size = itemInfo.Icon.GetSize()
-        };
-        _collisionShape.Shape = rectangleShape;
+            _sprite.Texture = itemInfo.Icon;
+
+            if (itemInfo.BaseWidth > itemInfo.BaseHeight)
+            {
+                CapsuleShape2D capsuleShape = new()
+                {
+                    Height = itemInfo.BaseWidth * 16,
+                    Radius = (float)(itemInfo.BaseHeight / 2.0) * 16
+                };
+                _collisionShape.Shape = capsuleShape;
+                RotationDegrees = 90;
+            }
+            else
+            {
+                CapsuleShape2D capsuleShape = new()
+                {
+                    Height = itemInfo.BaseHeight * 16,
+                    Radius = (float)(itemInfo.BaseWidth / 2.0) * 16
+                };
+                _collisionShape.Shape = capsuleShape;
+                RotationDegrees = 0;
+            }
+        }
+        else
+        {
+            _sprite.Texture = null;
+            _collisionShape.Shape = null;
+        }
     }
 }

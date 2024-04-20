@@ -13,7 +13,7 @@ public partial class BackpackEquipmentItemSlot : BodyEquipmentEquipmentInventory
         GD.Print("backpack equipment slot ready");
         base._Ready();
 
-        Equip(new Backpack("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 2, 2, GD.Load<Texture2D>("res://art/player_equipment/bags/Backpack_base.png"), new List<Vector2I> { new(2, 3), new(5, 7), new(2, 3) }));
+        Equip(GD.Load<Backpack>("res://items/backpacks/InitialBackpack.tres"));
     }
 
     public override bool Equip(ItemInfo itemInfo)

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://0cqc5l4eqfsm"
-path="res://.godot/imported/prueba3.ttf-b44e633fd254a44def13e574fbb4fe35.fontdata"
+uid="uid://cv4dibrdiprbl"
+path="res://.godot/imported/Erebus.ttf-e20c1c91177d47805ac0f7069d6d4852.fontdata"
 
 [deps]
 
-source_file="res://ui/fonts/prueba3.ttf"
-dest_files=["res://.godot/imported/prueba3.ttf-b44e633fd254a44def13e574fbb4fe35.fontdata"]
+source_file="res://ui/fonts/Erebus.ttf"
+dest_files=["res://.godot/imported/Erebus.ttf-e20c1c91177d47805ac0f7069d6d4852.fontdata"]
 
 [params]
 
