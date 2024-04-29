@@ -7,19 +7,19 @@ namespace Erebus.Items;
 [Tool, GlobalClass]
 public partial class ItemOnFloor : Area2D
 {
-    private ItemInfo _itemInfo = null;
+    private string _itemInfoId = null;
     [Export]
-    public ItemInfo ItemInfo
+    public string ItemInfoId
     {
-        get => _itemInfo;
+        get => _itemInfoId;
         set
         {
-            _itemInfo = value;
+            _itemInfoId = value;
             // So it is not called before creating the sprite and collision shape.
             // It will be called later on the _ready function
             if (_sprite != null)
             {
-                Initialize(_itemInfo);
+                Initialize(_itemInfoId);
             }
         }
     }
@@ -31,19 +31,34 @@ public partial class ItemOnFloor : Area2D
     {
         base._Ready();
 
+        CollisionLayer = 2; // Item
+        CollisionMask = 0;
+
         _sprite = new();
         AddChild(_sprite);
         _collisionShape = new();
         AddChild(_collisionShape);
 
-        Initialize(_itemInfo);
+        Initialize(_itemInfoId);
     }
 
     /// <summary>
     /// Call this after _ready
     /// </summary>
-    public void Initialize(ItemInfo itemInfo)
+    public void Initialize(string itemInfoId)
     {
+        ItemInfo itemInfo = null;
+
+        DirAccess itemsDir = DirAccess.Open("res://items");
+        foreach (String dirName in itemsDir.GetDirectories())
+        {
+            itemInfo = SearchDirForItemId(DirAccess.Open(itemsDir.GetCurrentDir().PathJoin(dirName)), itemInfoId);
+            if (itemInfo != null)
+            {
+                break;
+            }
+        }
+
         if (itemInfo != null)
         {
             _sprite.Texture = itemInfo.Icon;
@@ -74,5 +89,22 @@ public partial class ItemOnFloor : Area2D
             _sprite.Texture = null;
             _collisionShape.Shape = null;
         }
+    }
+
+    private ItemInfo SearchDirForItemId(DirAccess dir, string itemId)
+    {
+        ItemInfo itemInfo = null;
+
+        foreach (string filename in dir.GetFiles())
+        {
+            if (filename.GetBaseName() == itemId)
+            {
+                CSharpScript script = GD.Load<CSharpScript>(dir.GetCurrentDir().PathJoin(itemId) + ".cs");
+                itemInfo = (ItemInfo)script.New();
+                break;
+            }
+        }
+
+        return itemInfo;
     }
 }

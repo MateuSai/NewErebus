@@ -7,22 +7,13 @@ namespace Erebus.UI.Inventory;
 
 public partial class BodyEquipment : ItemInfo
 {
-    [Export]
     public Texture2D SpriteSheet;
 
-    [Export]
     public Godot.Collections.Array<Vector2I> InventoryGrid;
 
-    static public BodyEquipment FromParameters(string id, Texture2D icon, int baseWidth, int baseHeight, Texture2D spriteSheet, Godot.Collections.Array<Vector2I> inventoryGrid = null)
+    public BodyEquipment(string id, Texture2D icon, int baseWidth, int baseHeight, Texture2D spriteSheet, Godot.Collections.Array<Vector2I> inventoryGrid = null) : base(id, icon, baseWidth, baseHeight)
     {
-        return new()
-        {
-            Id = id,
-            Icon = icon,
-            BaseWidth = baseWidth,
-            BaseHeight = baseHeight,
-            SpriteSheet = spriteSheet,
-            InventoryGrid = inventoryGrid,
-        };
+        SpriteSheet = spriteSheet;
+        InventoryGrid = inventoryGrid;
     }
 }

@@ -393,6 +393,8 @@ position = Vector2(-13, -17)
 position = Vector2(14, -26)
 
 [node name="ItemsOnFloorDetected" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemsOnFloorDetected"]
 shape = SubResource("CircleShape2D_kms6e")

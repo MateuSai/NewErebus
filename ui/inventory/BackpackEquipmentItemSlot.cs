@@ -1,4 +1,5 @@
 using Erebus.Autoloads;
+using Erebus.Items.Backpacks;
 using ErebusInventory;
 using Godot;
 using System;
@@ -13,7 +14,7 @@ public partial class BackpackEquipmentItemSlot : BodyEquipmentEquipmentInventory
         GD.Print("backpack equipment slot ready");
         base._Ready();
 
-        Equip(GD.Load<Backpack>("res://items/backpacks/InitialBackpack.tres"));
+        Equip(new InitialBackpack());
     }
 
     public override bool Equip(ItemInfo itemInfo)
