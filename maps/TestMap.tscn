@@ -28,12 +28,15 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="EquipWindow" parent="UI/VBoxContainer" instance=ExtResource("3_xoi0k")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="InventoryWindow" parent="UI/VBoxContainer" instance=ExtResource("5_43ct4")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="LootAndStashWindow" parent="UI" instance=ExtResource("6_125fm")]
+unique_name_in_owner = true
 offset_left = 693.0
 offset_top = 265.0
 offset_right = 693.0
@@ -45,3 +48,24 @@ collision_layer = 2
 collision_mask = 0
 script = ExtResource("6_yv527")
 ItemInfoId = "Battery"
+_itemInfoId = "Battery"
+ItemInfo = Object(Object,"script":Resource("res://items/others/Battery.cs"),"Id":"battery","Icon":Resource("res://art/ui/inventory_icons/Battery_01.png"),"BaseWidth":1,"BaseHeight":1)
+
+_sprite = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://art/ui/inventory_icons/Battery_01.png"),"centered":true,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":null)
+
+_collisionShape = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"script":null)
+
+
+[node name="ItemOnFloor2" type="Area2D" parent="."]
+position = Vector2(457, 215)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("6_yv527")
+ItemInfoId = "InitialBackpack"
+_itemInfoId = "InitialBackpack"
+ItemInfo = Object(Object,"script":Resource("res://items/backpacks/InitialBackpack.cs"),"Id":"initial_backpack","Icon":Resource("res://art/ui/inventory_icons/Backpack_base.png"),"BaseWidth":2,"BaseHeight":2,"SpriteSheet":Resource("res://art/player_equipment/bags/Backpack_base.png"),"InventoryGrid":[Vector2i(2, 3), Vector2i(5, 7), Vector2i(2, 3)])
+
+_sprite = Object(Sprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"texture":Resource("res://art/ui/inventory_icons/Backpack_base.png"),"centered":true,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"region_filter_clip_enabled":false,"script":null)
+
+_collisionShape = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":false,"one_way_collision":false,"one_way_collision_margin":1.0,"script":null)
+

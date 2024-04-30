@@ -24,6 +24,8 @@ public partial class ItemOnFloor : Area2D
         }
     }
 
+    public ItemInfo ItemInfo = null;
+
     private Sprite2D _sprite;
     private CollisionShape2D _collisionShape;
 
@@ -47,28 +49,26 @@ public partial class ItemOnFloor : Area2D
     /// </summary>
     public void Initialize(string itemInfoId)
     {
-        ItemInfo itemInfo = null;
-
         DirAccess itemsDir = DirAccess.Open("res://items");
         foreach (String dirName in itemsDir.GetDirectories())
         {
-            itemInfo = SearchDirForItemId(DirAccess.Open(itemsDir.GetCurrentDir().PathJoin(dirName)), itemInfoId);
-            if (itemInfo != null)
+            ItemInfo = SearchDirForItemId(DirAccess.Open(itemsDir.GetCurrentDir().PathJoin(dirName)), itemInfoId);
+            if (ItemInfo != null)
             {
                 break;
             }
         }
 
-        if (itemInfo != null)
+        if (ItemInfo != null)
         {
-            _sprite.Texture = itemInfo.Icon;
+            _sprite.Texture = ItemInfo.Icon;
 
-            if (itemInfo.BaseWidth > itemInfo.BaseHeight)
+            if (ItemInfo.BaseWidth > ItemInfo.BaseHeight)
             {
                 CapsuleShape2D capsuleShape = new()
                 {
-                    Height = itemInfo.BaseWidth * 16,
-                    Radius = (float)(itemInfo.BaseHeight / 2.0) * 16
+                    Height = ItemInfo.BaseWidth * 16,
+                    Radius = (float)(ItemInfo.BaseHeight / 2.0) * 16
                 };
                 _collisionShape.Shape = capsuleShape;
                 RotationDegrees = 90;
@@ -77,8 +77,8 @@ public partial class ItemOnFloor : Area2D
             {
                 CapsuleShape2D capsuleShape = new()
                 {
-                    Height = itemInfo.BaseHeight * 16,
-                    Radius = (float)(itemInfo.BaseWidth / 2.0) * 16
+                    Height = ItemInfo.BaseHeight * 16,
+                    Radius = (float)(ItemInfo.BaseWidth / 2.0) * 16
                 };
                 _collisionShape.Shape = capsuleShape;
                 RotationDegrees = 0;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bipi44042cy2n"]
+[gd_scene load_steps=24 format=3 uid="uid://bipi44042cy2n"]
 
 [ext_resource type="Script" path="res://characters/player/Player.cs" id="1_3m1rv"]
 [ext_resource type="Texture2D" uid="uid://bffdpfjlgx1ln" path="res://art/characters/player/Player_sprite_shet.png" id="1_ealcd"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://weapons/PlayerWeapons.cs" id="8_f8lgk"]
 [ext_resource type="Texture2D" uid="uid://jn2uxhy8bdwg" path="res://art/player_equipment/pants/Jeans_and_boots.png" id="8_ht6n1"]
 [ext_resource type="Texture2D" uid="uid://btt8mdsjnql2o" path="res://art/characters/hands/Right_hand_fists.png" id="9_s6vb7"]
+[ext_resource type="Script" path="res://characters/player/ItemsOnFloorDetector.cs" id="13_bck7b"]
 
 [sub_resource type="Animation" id="Animation_j6qrv"]
 length = 0.001
@@ -392,9 +393,10 @@ position = Vector2(-13, -17)
 [node name="IKLeftHandTarget" type="Node2D" parent="."]
 position = Vector2(14, -26)
 
-[node name="ItemsOnFloorDetected" type="Area2D" parent="."]
+[node name="ItemsOnFloorDetector" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
+script = ExtResource("13_bck7b")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemsOnFloorDetected"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemsOnFloorDetector"]
 shape = SubResource("CircleShape2D_kms6e")

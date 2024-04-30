@@ -48,7 +48,7 @@ public partial class GridItemSlot : Control, IItemSlot
     {
         //GD.Print(_x + " " + _y);
 
-        bool couldInsert = _gridInventory.InsertItem(itemInfo, new Vector2I(_x, _y));
+        bool couldInsert = _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(_x, _y));
 
         if (!couldInsert)
         {

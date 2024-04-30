@@ -16,6 +16,9 @@ public partial class GridInventory : GridContainer
 
     private readonly List<GridCell> _selectedCells = new();
 
+    public readonly List<Vector2I> GridsWithItems = new();
+    public readonly List<ItemInfo> Items = new();
+
     private InventorySystem _inventorySystem;
 
     public GridInventory()
@@ -84,8 +87,29 @@ public partial class GridInventory : GridContainer
         }
     }
 
+    public void InsertItemAutomatically(ItemInfo itemInfo)
+    {
+        Vector2I gridPos = new(0, 0);
+        GridCell gridCell;
+        while (true)
+        {
+            gridCell = GetSlotAt(gridPos);
+            if (gridCell.IsEmpty())
+            {
+                break;
+            }
+            else
+            {
+                gridPos.Y += 1;
+                //gridPos = new(gridCell.X + 1, gridCell.Y);
+            }
+        }
 
-    public bool InsertItem(ItemInfo itemInfo, Vector2I atGridPos)
+        gridCell.Equip(itemInfo);
+    }
+
+
+    public bool InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
     {
         //GD.Print("Inserting " + itemInfo + " at " + atGridPos);
 
@@ -129,6 +153,9 @@ public partial class GridInventory : GridContainer
             //_grid[(int)(pos.Y * Columns + pos.X)] = gridItemSlotReference;
         }
 
+        GridsWithItems.Add(atGridPos);
+        Items.Add(itemInfo);
+
         return true;
     }
 
@@ -157,6 +184,9 @@ public partial class GridInventory : GridContainer
              ((Control)GetSlotAt(pos)).QueueFree();
              _grid[(int)(pos.Y * Columns + pos.X)] = gridItemSlot; */
         }
+
+        GridsWithItems.Remove(atGridPos);
+        Items.Remove(itemInfo);
     }
 
     private bool IsGridPositionValid(Vector2 gridPos)
