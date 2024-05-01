@@ -20,12 +20,9 @@ public partial class LootTab : ScrollContainer
 
         GetVScrollBar().CustomMinimumSize = new(9, 0);
 
-        VisibilityChanged += () =>
+        Draw += () =>
         {
-            if (Visible)
-            {
-                FillGrid();
-            }
+            FillGrid();
         };
         Hidden += ClearGrid;
     }
@@ -35,16 +32,19 @@ public partial class LootTab : ScrollContainer
         List<ItemOnFloor> nearItemsOnFloor = GetNode<Globals>("/root/Globals").Player.GetCloseItemsOnFloor();
         foreach (ItemOnFloor itemOnFloor in nearItemsOnFloor)
         {
+            GD.Print("Adding " + itemOnFloor.ItemInfo.Id);
             _grid.InsertItemAutomatically(itemOnFloor.ItemInfo);
         }
     }
 
     private void ClearGrid()
     {
-        GD.Print("sdfd");
+        GD.Print("clearing grid with " + _grid.Items.Count + " items...");
         for (int i = _grid.Items.Count - 1; i >= 0; i--)
         {
-            _grid.RemoveItem(_grid.Items[i], _grid.GridsWithItems[i]);
+            GD.Print(i + ": " + _grid.Items[index: i] + "  at " + _grid.GridsWithItems[i]);
+            _grid.GetCellAt(_grid.GridsWithItems[i]).Unequip();
+            //_grid.RemoveItem(_grid.Items[index: i], _grid.GridsWithItems[i]);
         }
     }
 }

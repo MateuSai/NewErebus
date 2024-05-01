@@ -90,18 +90,45 @@ public partial class GridInventory : GridContainer
     public void InsertItemAutomatically(ItemInfo itemInfo)
     {
         Vector2I gridPos = new(0, 0);
-        GridCell gridCell;
+        GridCell gridCell = null;
         while (true)
         {
-            gridCell = GetSlotAt(gridPos);
-            if (gridCell.IsEmpty())
+            bool suitablePositionFound = true;
+
+            for (int x = 0; x < Columns; x++)
+            {
+                suitablePositionFound = true;
+
+                GD.Print("Checking column " + x);
+                gridPos.X = x;
+                for (int widthX = 0; widthX < itemInfo.BaseWidth; widthX++)
+                {
+                    gridPos.X = x + widthX;
+                    GD.Print("Checking " + gridPos);
+                    gridCell = GetCellAt(gridPos);
+                    if (gridCell == null || !gridCell.IsEmpty())
+                    {
+                        GD.Print("Cell not available");
+                        suitablePositionFound = false;
+                        break;
+                    }
+                }
+
+                if (suitablePositionFound)
+                {
+                    gridPos.X = x; // So the grid position if at the top left, not the rop right
+                    gridCell = GetCellAt(gridPos);
+                    break;
+                }
+            }
+
+            if (suitablePositionFound)
             {
                 break;
             }
             else
             {
                 gridPos.Y += 1;
-                //gridPos = new(gridCell.X + 1, gridCell.Y);
             }
         }
 
@@ -146,7 +173,7 @@ public partial class GridInventory : GridContainer
         foreach (Vector2I pos in gridPositions)
         {
             GD.Print("Configuring " + pos + " cell as reference");
-            GetSlotAt(pos).ConfigureAsCellReference(GetSlotAt(atGridPos));
+            GetCellAt(pos).ConfigureAsCellReference(GetCellAt(atGridPos));
             //GridItemSlotReference gridItemSlotReference = new((GridItemSlot)GetSlotAt(atGridPos));
             //((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlotReference);
             //((Control)GetSlotAt(pos)).QueueFree();
@@ -177,7 +204,7 @@ public partial class GridInventory : GridContainer
 
         foreach (Vector2I pos in gridPositions)
         {
-            GetSlotAt(pos).ConfigureAsItemHolder();
+            GetCellAt(pos).ConfigureAsItemHolder();
 
             /*  GridItemSlot gridItemSlot = new((short)pos.X, (short)pos.Y, this);
              ((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlot);
@@ -199,8 +226,8 @@ public partial class GridInventory : GridContainer
             return false; // Grid position if not inside the grid
         }
 
-        System.Diagnostics.Debug.Assert(GetSlotAt(gridPos) != null);
-        if (GetSlotAt(gridPos).CellMode == GridCell.Mode.ItemHolderReference)
+        System.Diagnostics.Debug.Assert(GetCellAt(gridPos) != null);
+        if (GetCellAt(gridPos).CellMode == GridCell.Mode.ItemHolderReference)
         {
             return false; // This grid cell is already occupied with another item
         }
@@ -208,14 +235,9 @@ public partial class GridInventory : GridContainer
         return true;
     }
 
-    private GridCell GetSlotAt(Vector2 gridPos)
+    public GridCell GetCellAt(Vector2 gridPos)
     {
-        return _grid[(int)(gridPos.Y * Columns + gridPos.X)];
-    }
-
-    private GridCell GetCellAt(Vector2I gridPos)
-    {
-        return GetChild<GridCell>((int)(gridPos.Y * Columns + gridPos.X));
+        return (gridPos.X < Columns && gridPos.Y < Rows) ? _grid[(int)(gridPos.Y * Columns + gridPos.X)] : null;
     }
 
     private void ColorSelectedCells()
