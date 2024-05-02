@@ -61,8 +61,4 @@ public partial class BodyEquipmentEquipmentInventorySlot : EquipmentItemSlot
 
         to.CallDeferred("add_child", hBox);
     }
-
-    protected virtual void OnItemInfoChanged(ItemInfo itemInfo)
-    {
-    }
 }

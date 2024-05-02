@@ -14,4 +14,14 @@ public partial class LootAndStashWindow : TabContainer
         _lootTab = GetNode<LootTab>("LOOT");
         SetTabIcon(0, GD.Load<Texture2D>("res://art/ui/Loot_tab_floor_icon.png"));
     }
+
+    public void OnShow()
+    {
+        _lootTab.FillGrid();
+    }
+
+    public void OnHide()
+    {
+        _lootTab.ClearGrid();
+    }
 }

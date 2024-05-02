@@ -227,7 +227,7 @@ public partial class GridInventory : GridContainer
         }
 
         System.Diagnostics.Debug.Assert(GetCellAt(gridPos) != null);
-        if (GetCellAt(gridPos).CellMode == GridCell.Mode.ItemHolderReference)
+        if (!GetCellAt(gridPos).IsEmpty())
         {
             return false; // This grid cell is already occupied with another item
         }
