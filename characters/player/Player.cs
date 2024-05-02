@@ -1,10 +1,12 @@
 namespace Erebus.Characters.Player;
 
 using Erebus.Autoloads;
+using Erebus.Items;
 using Erebus.UI.Inventory;
 using Erebus.Weapons;
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Reflection.Metadata;
 
 public partial class Player : Character
@@ -51,6 +53,7 @@ public partial class Player : Character
     private SkeletonModification2DTwoBoneIK _leftIK;
     private Bone2D _rightArm;
     private Bone2D _leftArm;
+    private ItemsOnFloorDetector _itemsOnFloorDetector;
 
     public override void _Ready()
     {
@@ -67,6 +70,7 @@ public partial class Player : Character
         _leftIK = ((SkeletonModification2DTwoBoneIK)_skeletonModifications.GetModification(1));
         _rightArm = _skeleton2D.GetNode<Bone2D>("Torso/RightArm");
         _leftArm = _skeleton2D.GetNode<Bone2D>("Torso/LeftArm");
+        _itemsOnFloorDetector = GetNode<ItemsOnFloorDetector>("ItemsOnFloorDetector");
 
         _stateMachine = new(this, _animationPlayer);
 
@@ -263,5 +267,10 @@ public partial class Player : Character
         {
             _legsArmorSprite.Texture = legsArmor.SpriteSheet;
         }
+    }
+
+    public List<ItemOnFloor> GetCloseItemsOnFloor()
+    {
+        return _itemsOnFloorDetector.GetItemsOnFloor();
     }
 }

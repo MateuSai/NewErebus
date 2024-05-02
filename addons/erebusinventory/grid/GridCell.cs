@@ -118,7 +118,7 @@ public partial class GridCell : TextureRect, IItemSlot
 
         //GD.Print(_x + " " + _y);
 
-        bool couldInsert = _gridInventory.InsertItem(itemInfo, new Vector2I(X, Y));
+        bool couldInsert = _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
 
         if (!couldInsert)
         {
@@ -185,5 +185,10 @@ public partial class GridCell : TextureRect, IItemSlot
         {
             _itemHolderReference.Unequip();
         }
+    }
+
+    public bool IsEmpty()
+    {
+        return _itemInfo == null && CellMode == Mode.ItemHolder;
     }
 }
