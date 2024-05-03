@@ -140,7 +140,7 @@ public partial class GridInventory : GridContainer
     {
         //GD.Print("Inserting " + itemInfo + " at " + atGridPos);
 
-        if (!IsGridPositionValid(atGridPos))
+        if (!IsGridPositionValid(atGridPos, itemInfo))
         {
             return false;
         }
@@ -164,7 +164,7 @@ public partial class GridInventory : GridContainer
         foreach (Vector2I pos in gridPositions)
         {
             //GD.Print("Checking " + pos);
-            if (!IsGridPositionValid(pos))
+            if (!IsGridPositionValid(pos, itemInfo))
             {
                 return false;
             }
@@ -216,7 +216,7 @@ public partial class GridInventory : GridContainer
         Items.Remove(itemInfo);
     }
 
-    private bool IsGridPositionValid(Vector2 gridPos)
+    private bool IsGridPositionValid(Vector2 gridPos, ItemInfo draggingItemInfo)
     {
         GD.Print("Checking grid " + gridPos + " to see if it's valid");
 
@@ -227,12 +227,15 @@ public partial class GridInventory : GridContainer
         }
 
         System.Diagnostics.Debug.Assert(GetCellAt(gridPos) != null);
-        if (!GetCellAt(gridPos).IsEmpty())
+        GridCell cell = GetCellAt(gridPos);
+        if (cell.IsEmpty() || (draggingItemInfo != null && cell.GetItemInfo() == draggingItemInfo))
+        {
+            return true;
+        }
+        else
         {
             return false; // This grid cell is already occupied with another item
         }
-
-        return true;
     }
 
     public GridCell GetCellAt(Vector2 gridPos)
@@ -252,7 +255,7 @@ public partial class GridInventory : GridContainer
         {
             foreach (GridCell gridCell in _selectedCells)
             {
-                if (!IsGridPositionValid(new(gridCell.X, gridCell.Y)))
+                if (!IsGridPositionValid(new(gridCell.X, gridCell.Y), null))
                 {
                     interiorColor = GridCell.InteriorColor.Red;
                     break;

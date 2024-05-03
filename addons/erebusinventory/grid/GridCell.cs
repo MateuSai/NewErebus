@@ -51,6 +51,19 @@ public partial class GridCell : TextureRect, IItemSlot
 
         SetInteriorColor(InteriorColor.Default);
 
+        _itemBackgroundPanel = new()
+        {
+            Texture = GD.Load<Texture2D>("res://art/ui/Inventory_slot_2x2.png"),
+            PatchMarginLeft = 2,
+            PatchMarginTop = 2,
+            PatchMarginRight = 2,
+            PatchMarginBottom = 2,
+            ZIndex = 1,
+
+        };
+        AddChild(_itemBackgroundPanel);
+        _itemBackgroundPanel.Hide();
+
         X = x;
         Y = y;
         _gridInventory = gridInventory;
@@ -85,6 +98,32 @@ public partial class GridCell : TextureRect, IItemSlot
                 System.Diagnostics.Debug.Assert(false, "Invalid interior color value");
                 break;
         }
+
+        if (!IsEmpty())
+        {
+            if (CellMode == Mode.ItemHolderReference)
+            {
+                _itemHolderReference.SetInteriorColor(interiorColor);
+            }
+            else
+            {
+                switch (interiorColor)
+                {
+                    case InteriorColor.Default:
+                        Icon.Modulate = Colors.White;
+                        break;
+                    case InteriorColor.Green:
+                        Icon.Modulate = new Color("1d3b1a");
+                        break;
+                    case InteriorColor.Red:
+                        Icon.Modulate = new Color("5d1a1a");
+                        break;
+                    default:
+                        System.Diagnostics.Debug.Assert(false, "Invalid interior color value");
+                        break;
+                }
+            }
+        }
     }
 
     public void ConfigureAsItemHolder()
@@ -93,14 +132,10 @@ public partial class GridCell : TextureRect, IItemSlot
 
         _itemHolderReference = null;
 
-        _itemBackgroundPanel = new();
-        AddChild(_itemBackgroundPanel);
-        _itemBackgroundPanel.SetAnchorsPreset(LayoutPreset.FullRect);
-
         Icon = new()
         {
             StretchMode = StretchModeEnum.Keep,
-            ZIndex = 1,
+            ZIndex = 2,
             MouseFilter = MouseFilterEnum.Ignore,
         };
         AddChild(Icon);
@@ -119,10 +154,6 @@ public partial class GridCell : TextureRect, IItemSlot
 
     public bool Equip(ItemInfo itemInfo)
     {
-        System.Diagnostics.Debug.Assert(_itemHolderReference == null);
-
-        //GD.Print(_x + " " + _y);
-
         bool couldInsert = _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
 
         if (!couldInsert)
@@ -133,6 +164,9 @@ public partial class GridCell : TextureRect, IItemSlot
         _itemInfo = itemInfo;
 
         Icon.Texture = _itemInfo.Icon;
+
+        _itemBackgroundPanel.Size = new Vector2(16 * itemInfo.BaseWidth, 16 * itemInfo.BaseHeight);
+        _itemBackgroundPanel.Show();
 
         return true;
     }
@@ -185,6 +219,7 @@ public partial class GridCell : TextureRect, IItemSlot
 
             Icon.Texture = null;
             _itemInfo = null;
+            _itemBackgroundPanel.Hide();
         }
         else
         {

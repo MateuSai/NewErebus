@@ -1,4 +1,5 @@
 using ErebusInventory;
+using ErebusLogger;
 using Godot;
 using System;
 
@@ -65,7 +66,7 @@ public partial class ItemOnFloor : Area2D
                     Radius = (float)(ItemInfo.BaseHeight / 2.0) * 16
                 };
                 _collisionShape.Shape = capsuleShape;
-                RotationDegrees = 90;
+                _collisionShape.RotationDegrees = 90;
             }
             else
             {
@@ -75,7 +76,7 @@ public partial class ItemOnFloor : Area2D
                     Radius = (float)(ItemInfo.BaseWidth / 2.0) * 16
                 };
                 _collisionShape.Shape = capsuleShape;
-                RotationDegrees = 0;
+                _collisionShape.RotationDegrees = 0;
             }
         }
         else
@@ -92,7 +93,7 @@ public partial class ItemOnFloor : Area2D
 
     private ItemInfo SearchSubDirsForItem(DirAccess dir, string itemInfoId)
     {
-        GD.Print("Checking " + dir.GetCurrentDir());
+        Log.Debug("Checking " + dir.GetCurrentDir());
 
         ItemInfo itemInfo = SearchDirForItem(DirAccess.Open(dir.GetCurrentDir()), itemInfoId);
 
