@@ -50,14 +50,8 @@ public partial class ItemOnFloor : Area2D
     public void Initialize(string itemInfoId)
     {
         DirAccess itemsDir = DirAccess.Open("res://items");
-        foreach (String dirName in itemsDir.GetDirectories())
-        {
-            ItemInfo = SearchDirForItemId(DirAccess.Open(itemsDir.GetCurrentDir().PathJoin(dirName)), itemInfoId);
-            if (ItemInfo != null)
-            {
-                break;
-            }
-        }
+        ItemInfo = SearchSubDirsForItem(itemsDir, itemInfoId);
+
 
         if (ItemInfo != null)
         {
@@ -88,10 +82,46 @@ public partial class ItemOnFloor : Area2D
         {
             _sprite.Texture = null;
             _collisionShape.Shape = null;
+
+            if (!Engine.IsEditorHint())
+            {
+                GD.PushError("Invalid item: " + ItemInfoId);
+            }
         }
     }
 
-    private ItemInfo SearchDirForItemId(DirAccess dir, string itemId)
+    private ItemInfo SearchSubDirsForItem(DirAccess dir, string itemInfoId)
+    {
+        GD.Print("Checking " + dir.GetCurrentDir());
+
+        ItemInfo itemInfo = SearchDirForItem(DirAccess.Open(dir.GetCurrentDir()), itemInfoId);
+
+        if (itemInfo != null)
+        {
+            return itemInfo;
+        }
+
+        foreach (String dirName in dir.GetDirectories())
+        {
+            //ItemInfo = SearchDirForItem(DirAccess.Open(dir.GetCurrentDir().PathJoin(dirName)), itemInfoId);
+            //if (ItemInfo != null)
+            //{
+            //  break;
+            //}
+            //else
+            //{
+            itemInfo = SearchSubDirsForItem(DirAccess.Open(dir.GetCurrentDir().PathJoin(dirName)), itemInfoId);
+            if (itemInfo != null)
+            {
+                break;
+            }
+            //}
+        }
+
+        return itemInfo;
+    }
+
+    private ItemInfo SearchDirForItem(DirAccess dir, string itemId)
     {
         ItemInfo itemInfo = null;
 

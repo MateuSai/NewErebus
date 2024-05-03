@@ -31,6 +31,7 @@ public partial class GridCell : TextureRect, IItemSlot
 
     private InventorySystem _inventorySystem;
     private GridInventory _gridInventory;
+    private NinePatchRect _itemBackgroundPanel;
     private TextureRect _interiorTexture;
 
     public GridCell(short x, short y, GridInventory gridInventory)
@@ -92,9 +93,13 @@ public partial class GridCell : TextureRect, IItemSlot
 
         _itemHolderReference = null;
 
+        _itemBackgroundPanel = new();
+        AddChild(_itemBackgroundPanel);
+        _itemBackgroundPanel.SetAnchorsPreset(LayoutPreset.FullRect);
+
         Icon = new()
         {
-            StretchMode = TextureRect.StretchModeEnum.Keep,
+            StretchMode = StretchModeEnum.Keep,
             ZIndex = 1,
             MouseFilter = MouseFilterEnum.Ignore,
         };

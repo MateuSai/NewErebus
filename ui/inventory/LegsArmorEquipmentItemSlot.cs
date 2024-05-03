@@ -17,7 +17,7 @@ public partial class LegsArmorEquipmentItemSlot : EquipmentItemSlot
             GetNode<Globals>("/root/Globals").Player.SetLegsArmor((LegsArmor)itemInfo);
         };
 
-        Equip(new LegsArmor("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Jeans_and_boots.png"), 2, 2, GD.Load<Texture2D>("res://art/player_equipment/pants/Jeans_and_boots.png")));
+        Equip(new LegsArmor(GD.Load<Texture2D>("res://art/ui/inventory_icons/Jeans_and_boots.png"), 2, 2, GD.Load<Texture2D>("res://art/player_equipment/pants/Jeans_and_boots.png")));
     }
 
     public override bool Equip(ItemInfo itemInfo)

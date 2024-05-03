@@ -108,7 +108,7 @@ public partial class InventorySystem : CanvasLayer
     private void TweenDraggingIconBack()
     {
         Tween tween = CreateTween();
-        tween.TweenProperty(_draggingIcon, "position", ((Control)_draggingItemSlot).GlobalPosition, 0.5f);
+        tween.TweenProperty(_draggingIcon, "position", ((Control)_draggingItemSlot).GlobalPosition, 0.1f);
         tween.TweenCallback(Callable.From(_draggingIcon.QueueFree));
         tween.TweenCallback(Callable.From(() => _draggingIcon = null));
     }

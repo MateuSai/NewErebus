@@ -8,7 +8,7 @@ namespace Erebus.UI.Inventory;
 
 public partial class Helmet : BodyEquipment
 {
-    public Helmet(string id, Texture2D icon, int baseWidth, int baseHeight, Texture2D spriteSheet, Array<Vector2I> inventoryGrid = null) : base(id, icon, baseWidth, baseHeight, spriteSheet, inventoryGrid)
+    public Helmet(Texture2D icon, int baseWidth, int baseHeight, Texture2D spriteSheet, Array<Vector2I> inventoryGrid = null) : base(icon, baseWidth, baseHeight, spriteSheet, inventoryGrid)
     {
     }
 }

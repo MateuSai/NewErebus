@@ -19,15 +19,9 @@ public partial class LootTab : ScrollContainer
         _grid = GetNode<GridInventory>("%GridInventory");
 
         GetVScrollBar().CustomMinimumSize = new(9, 0);
-
-        Draw += () =>
-        {
-            FillGrid();
-        };
-        Hidden += ClearGrid;
     }
 
-    private void FillGrid()
+    public void FillGrid()
     {
         List<ItemOnFloor> nearItemsOnFloor = GetNode<Globals>("/root/Globals").Player.GetCloseItemsOnFloor();
         foreach (ItemOnFloor itemOnFloor in nearItemsOnFloor)
@@ -37,7 +31,7 @@ public partial class LootTab : ScrollContainer
         }
     }
 
-    private void ClearGrid()
+    public void ClearGrid()
     {
         GD.Print("clearing grid with " + _grid.Items.Count + " items...");
         for (int i = _grid.Items.Count - 1; i >= 0; i--)

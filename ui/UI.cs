@@ -49,6 +49,7 @@ public partial class UI : CanvasLayer
         _equipWindow.Show();
         _inventoryWindow.Show();
         _lootAndStashWindow.Show();
+        _lootAndStashWindow.OnShow();
     }
 
     private void HideInventories()
@@ -57,5 +58,6 @@ public partial class UI : CanvasLayer
         _equipWindow.Hide();
         _inventoryWindow.Hide();
         _lootAndStashWindow.Hide();
+        _lootAndStashWindow.OnHide();
     }
 }

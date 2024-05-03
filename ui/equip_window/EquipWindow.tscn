@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b4nvh50s8tpwp"]
+[gd_scene load_steps=14 format=3 uid="uid://b4nvh50s8tpwp"]
 
 [ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_2elnn"]
 [ext_resource type="Script" path="res://ui/equip_window/EquipWindow.cs" id="2_3ncyi"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bymh736yfe1s4" path="res://art/ui/Tiny_close_button_hover.png" id="5_svcl5"]
 [ext_resource type="Script" path="res://ui/inventory/BackpackEquipmentItemSlot.cs" id="9_57fvi"]
 [ext_resource type="Script" path="res://ui/inventory/LegsArmorEquipmentItemSlot.cs" id="10_rx4n4"]
+[ext_resource type="Script" path="res://ui/inventory/FrequencyJammerEquipmentItemSlot.cs" id="11_256sj"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kvu7c"]
 texture = ExtResource("4_w730l")
@@ -78,7 +79,33 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="WeaponsVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox"]
+custom_minimum_size = Vector2(121, 0)
 layout_mode = 2
 
 [node name="OthersVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox"]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox"]
+layout_mode = 2
+theme_override_constants/margin_top = 17
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 17
+
+[node name="HealItemSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ThrowableSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="FrequencyJammerEquipmentItemSlot3" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("11_256sj")

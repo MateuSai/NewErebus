@@ -71,4 +71,8 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
         _icon.Texture = null;
         SetItemInfo(null);
     }
+
+    protected virtual void OnItemInfoChanged(ItemInfo itemInfo)
+    {
+    }
 }
