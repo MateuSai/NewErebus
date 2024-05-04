@@ -102,7 +102,7 @@ public partial class ItemOnFloor : Area2D
             return itemInfo;
         }
 
-        foreach (String dirName in dir.GetDirectories())
+        foreach (string dirName in dir.GetDirectories())
         {
             //ItemInfo = SearchDirForItem(DirAccess.Open(dir.GetCurrentDir().PathJoin(dirName)), itemInfoId);
             //if (ItemInfo != null)

@@ -1,6 +1,7 @@
 using Erebus.Autoloads;
 using Erebus.Items.Backpacks;
 using ErebusInventory;
+using ErebusLogger;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,15 @@ public partial class BackpackEquipmentItemSlot : BodyEquipmentEquipmentInventory
         Equip(new InitialBackpack());
     }
 
-    public override bool Equip(ItemInfo itemInfo)
+    public override bool CanEquip(ItemInfo itemInfo)
     {
         if (itemInfo is not Backpack)
         {
-            GD.Print("Item is not backpack");
+            Log.Debug("Item is not backpack");
             return false;
         }
 
-        return base.Equip(itemInfo);
+        return base.CanEquip(itemInfo);
     }
 
     protected override void OnItemInfoChanged(ItemInfo itemInfo)

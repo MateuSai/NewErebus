@@ -88,9 +88,10 @@ public partial class InventorySystem : CanvasLayer
         }
         else
         {
-            if (_slotsUnderMouse[0].Equip(DraggingItem))
+            if (_slotsUnderMouse[0].CanEquip(DraggingItem))
             {
                 _draggingItemSlot.Unequip();
+                _slotsUnderMouse[0].Equip(DraggingItem);
                 _draggingIcon.QueueFree();
                 _draggingIcon = null;
             }

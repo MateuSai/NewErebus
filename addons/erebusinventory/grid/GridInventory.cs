@@ -1,3 +1,4 @@
+using ErebusLogger;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -135,11 +136,8 @@ public partial class GridInventory : GridContainer
         gridCell.Equip(itemInfo);
     }
 
-
-    public bool InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    public bool CanInsertItemAt(ItemInfo itemInfo, Vector2I atGridPos)
     {
-        //GD.Print("Inserting " + itemInfo + " at " + atGridPos);
-
         if (!IsGridPositionValid(atGridPos, itemInfo))
         {
             return false;
@@ -170,9 +168,33 @@ public partial class GridInventory : GridContainer
             }
         }
 
+        return true;
+    }
+
+    public virtual void InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    {
+        if (!CanInsertItemAt(itemInfo, atGridPos))
+        {
+            Log.Fatal("CanInsertItemAt returns false but called InsertItemByDragging", GetTree());
+        }
+
+        List<Vector2I> gridPositions = new();
+
+        for (int x = 0; x < itemInfo.BaseWidth; x++)
+        {
+            for (int y = 0; y < itemInfo.BaseHeight; y++)
+            {
+                if (x == 0 && y == 0)
+                {
+                    continue; // We ignore the grid item slot, since we only want to add references to the other occupied grids
+                }
+                gridPositions.Add(new Vector2I(atGridPos.X + x, atGridPos.Y + y));
+            }
+        }
+
         foreach (Vector2I pos in gridPositions)
         {
-            GD.Print("Configuring " + pos + " cell as reference");
+            Log.Debug("Configuring " + pos + " cell as reference");
             GetCellAt(pos).ConfigureAsCellReference(GetCellAt(atGridPos));
             //GridItemSlotReference gridItemSlotReference = new((GridItemSlot)GetSlotAt(atGridPos));
             //((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlotReference);
@@ -182,11 +204,9 @@ public partial class GridInventory : GridContainer
 
         GridsWithItems.Add(atGridPos);
         Items.Add(itemInfo);
-
-        return true;
     }
 
-    public void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos)
+    public virtual void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos)
     {
         List<Vector2I> gridPositions = new();
 

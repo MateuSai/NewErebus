@@ -1,5 +1,6 @@
 using Erebus.Items;
 using ErebusInventory;
+using ErebusLogger;
 using Godot;
 using System;
 
@@ -19,15 +20,25 @@ public partial class FrequencyJammerEquipmentItemSlot : EquipmentItemSlot
         Equip(new FrequencyJammer());
     }
 
-    public override bool Equip(ItemInfo itemInfo)
+    public bool CanEquip(ItemInfo itemInfo)
     {
         if (itemInfo is not FrequencyJammer)
         {
-            GD.Print("Item is not frequency jammer");
+            Log.Debug("Item is not frequency jammer");
             return false;
         }
 
-        return base.Equip(itemInfo);
+        return true;
+    }
+
+    public override void Equip(ItemInfo itemInfo)
+    {
+        if (!CanEquip(itemInfo))
+        {
+            Log.Fatal("Tried to equip item on slot when CanEquip returns false", GetTree());
+        }
+
+        base.Equip(itemInfo);
     }
 
     protected override void OnItemInfoChanged(ItemInfo itemInfo)

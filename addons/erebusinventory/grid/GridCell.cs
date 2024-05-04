@@ -1,3 +1,4 @@
+using ErebusLogger;
 using Godot;
 using System;
 
@@ -152,14 +153,26 @@ public partial class GridCell : TextureRect, IItemSlot
         _itemHolderReference = cellToReference;
     }
 
-    public bool Equip(ItemInfo itemInfo)
+    public bool CanEquip(ItemInfo itemInfo)
     {
-        bool couldInsert = _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
+        bool couldInsert = _gridInventory.CanInsertItemAt(itemInfo, new Vector2I(X, Y));
 
         if (!couldInsert)
         {
             return false;
         }
+
+        return true;
+    }
+
+    public void Equip(ItemInfo itemInfo)
+    {
+        if (!CanEquip(itemInfo))
+        {
+            Log.Fatal("Tried to equip item on cell when CanEquip returns false", GetTree());
+        }
+
+        _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
 
         _itemInfo = itemInfo;
 
@@ -167,8 +180,6 @@ public partial class GridCell : TextureRect, IItemSlot
 
         _itemBackgroundPanel.Size = new Vector2(16 * itemInfo.BaseWidth, 16 * itemInfo.BaseHeight);
         _itemBackgroundPanel.Show();
-
-        return true;
     }
 
     public TextureRect GetIconTextureRect()
@@ -225,6 +236,8 @@ public partial class GridCell : TextureRect, IItemSlot
         {
             _itemHolderReference.Unequip();
         }
+
+        SetInteriorColor(InteriorColor.Default);
     }
 
     public bool IsEmpty()

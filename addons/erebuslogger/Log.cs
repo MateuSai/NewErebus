@@ -11,6 +11,7 @@ public static class Log
         Info,
         Warn,
         Error,
+        Fatal,
     }
 
     private static string GetLogLevelName(LogLevel level)
@@ -21,6 +22,7 @@ public static class Log
             LogLevel.Info => "INFO",
             LogLevel.Warn => "WARN",
             LogLevel.Error => "ERROR",
+            LogLevel.Fatal => "FATAL",
             _ => "UNKNOWN_LEVEL",
         };
     }
@@ -48,5 +50,11 @@ public static class Log
     public static void Error(string mes)
     {
         PrintLog(mes, LogLevel.Error);
+    }
+
+    public static void Fatal(string mes, SceneTree tree)
+    {
+        PrintLog($"[color=red]{mes}[/color]", LogLevel.Fatal);
+        tree.Quit(1);
     }
 }
