@@ -20,7 +20,7 @@ public partial class FrequencyJammerEquipmentItemSlot : EquipmentItemSlot
         Equip(new FrequencyJammer());
     }
 
-    public bool CanEquip(ItemInfo itemInfo)
+    public new bool CanEquip(ItemInfo itemInfo)
     {
         if (itemInfo is not FrequencyJammer)
         {

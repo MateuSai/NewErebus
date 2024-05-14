@@ -1,3 +1,4 @@
+using ErebusLogger;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,19 @@ namespace ErebusInventory;
 public partial class InventorySystem : CanvasLayer
 {
     private IItemSlot _draggingItemSlot = null;
-    public ItemInfo DraggingItem = null;
+    [Signal]
+    public delegate void DraggingItemChangedEventHandler(ItemInfo newValue);
+    private ItemInfo _draggingItemInfo = null;
+    public ItemInfo DraggingItem
+    {
+        get => _draggingItemInfo;
+        set
+        {
+            Log.Debug("Set DraggingItem");
+            _draggingItemInfo = value;
+            EmitSignal(nameof(DraggingItemChanged), _draggingItemInfo);
+        }
+    }
     private TextureRect _draggingIcon = null;
 
     private readonly List<IItemSlot> _slotsUnderMouse = new();

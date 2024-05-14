@@ -21,7 +21,7 @@ public partial class HelmetEquipmentItemSlot : EquipmentItemSlot
         //Equip(new Backpack("id", GD.Load<Texture2D>("res://art/ui/inventory_icons/Backpack_base.png"), 2, 2, GD.Load<Texture2D>("res://art/player_equipment/bags/Backpack_base.png")));
     }
 
-    public bool CanEquip(ItemInfo itemInfo)
+    public new bool CanEquip(ItemInfo itemInfo)
     {
         if (itemInfo is not Helmet)
         {

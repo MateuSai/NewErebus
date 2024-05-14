@@ -33,6 +33,11 @@ public partial class GridInventory : GridContainer
         base._Ready();
 
         _inventorySystem = GetNode<InventorySystem>("/root/" + nameof(InventorySystem));
+        _inventorySystem.DraggingItemChanged += (ItemInfo itemInfo) =>
+        {
+            Log.Debug("Holy shit");
+            RestorePreviouslySelectedCellsColor();
+        };
 
         CreateGrid();
     }
@@ -247,13 +252,17 @@ public partial class GridInventory : GridContainer
         }
 
         System.Diagnostics.Debug.Assert(GetCellAt(gridPos) != null);
-        GridCell cell = GetCellAt(gridPos);
+        GridCell cell = GetCellAt(gridPos: gridPos);
+        //Log.Debug("draggingItemInfo: " + draggingItemInfo);
+        //Log.Debug("cell ItemInfo: " + cell.GetItemInfo());
         if (cell.IsEmpty() || (draggingItemInfo != null && cell.GetItemInfo() == draggingItemInfo))
         {
+            //  Log.Debug("Grid position is valid");
             return true;
         }
         else
         {
+            //Log.Debug("Grid position is NOT valid");
             return false; // This grid cell is already occupied with another item
         }
     }
@@ -275,7 +284,7 @@ public partial class GridInventory : GridContainer
         {
             foreach (GridCell gridCell in _selectedCells)
             {
-                if (!IsGridPositionValid(new(gridCell.X, gridCell.Y), null))
+                if (!IsGridPositionValid(new(gridCell.X, gridCell.Y), _inventorySystem.DraggingItem))
                 {
                     interiorColor = GridCell.InteriorColor.Red;
                     break;
@@ -291,6 +300,7 @@ public partial class GridInventory : GridContainer
 
     private void RestorePreviouslySelectedCellsColor()
     {
+        Log.Debug("RestorePreviouslySelectedCellsColor: " + _selectedCells.Count);
         foreach (GridCell gridCell in _selectedCells)
         {
             gridCell.SetInteriorColor(GridCell.InteriorColor.Default);
