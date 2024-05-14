@@ -1,3 +1,4 @@
+using ErebusLogger;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,11 @@ public partial class GridInventory : GridContainer
         base._Ready();
 
         _inventorySystem = GetNode<InventorySystem>("/root/" + nameof(InventorySystem));
+        _inventorySystem.DraggingItemChanged += (ItemInfo itemInfo) =>
+        {
+            Log.Debug("Holy shit");
+            RestorePreviouslySelectedCellsColor();
+        };
 
         CreateGrid();
     }
@@ -135,12 +141,9 @@ public partial class GridInventory : GridContainer
         gridCell.Equip(itemInfo);
     }
 
-
-    public bool InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    public bool CanInsertItemAt(ItemInfo itemInfo, Vector2I atGridPos)
     {
-        //GD.Print("Inserting " + itemInfo + " at " + atGridPos);
-
-        if (!IsGridPositionValid(atGridPos))
+        if (!IsGridPositionValid(atGridPos, itemInfo))
         {
             return false;
         }
@@ -164,15 +167,39 @@ public partial class GridInventory : GridContainer
         foreach (Vector2I pos in gridPositions)
         {
             //GD.Print("Checking " + pos);
-            if (!IsGridPositionValid(pos))
+            if (!IsGridPositionValid(pos, itemInfo))
             {
                 return false;
             }
         }
 
+        return true;
+    }
+
+    public virtual void InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    {
+        if (!CanInsertItemAt(itemInfo, atGridPos))
+        {
+            Log.Fatal("CanInsertItemAt returns false but called InsertItemByDragging", GetTree());
+        }
+
+        List<Vector2I> gridPositions = new();
+
+        for (int x = 0; x < itemInfo.BaseWidth; x++)
+        {
+            for (int y = 0; y < itemInfo.BaseHeight; y++)
+            {
+                if (x == 0 && y == 0)
+                {
+                    continue; // We ignore the grid item slot, since we only want to add references to the other occupied grids
+                }
+                gridPositions.Add(new Vector2I(atGridPos.X + x, atGridPos.Y + y));
+            }
+        }
+
         foreach (Vector2I pos in gridPositions)
         {
-            GD.Print("Configuring " + pos + " cell as reference");
+            Log.Debug("Configuring " + pos + " cell as reference");
             GetCellAt(pos).ConfigureAsCellReference(GetCellAt(atGridPos));
             //GridItemSlotReference gridItemSlotReference = new((GridItemSlot)GetSlotAt(atGridPos));
             //((Control)GetSlotAt(pos)).GetParent().AddChild(gridItemSlotReference);
@@ -182,11 +209,9 @@ public partial class GridInventory : GridContainer
 
         GridsWithItems.Add(atGridPos);
         Items.Add(itemInfo);
-
-        return true;
     }
 
-    public void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos)
+    public virtual void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos)
     {
         List<Vector2I> gridPositions = new();
 
@@ -216,7 +241,7 @@ public partial class GridInventory : GridContainer
         Items.Remove(itemInfo);
     }
 
-    private bool IsGridPositionValid(Vector2 gridPos)
+    private bool IsGridPositionValid(Vector2 gridPos, ItemInfo draggingItemInfo)
     {
         GD.Print("Checking grid " + gridPos + " to see if it's valid");
 
@@ -227,12 +252,19 @@ public partial class GridInventory : GridContainer
         }
 
         System.Diagnostics.Debug.Assert(GetCellAt(gridPos) != null);
-        if (!GetCellAt(gridPos).IsEmpty())
+        GridCell cell = GetCellAt(gridPos: gridPos);
+        //Log.Debug("draggingItemInfo: " + draggingItemInfo);
+        //Log.Debug("cell ItemInfo: " + cell.GetItemInfo());
+        if (cell.IsEmpty() || (draggingItemInfo != null && cell.GetItemInfo() == draggingItemInfo))
         {
+            //  Log.Debug("Grid position is valid");
+            return true;
+        }
+        else
+        {
+            //Log.Debug("Grid position is NOT valid");
             return false; // This grid cell is already occupied with another item
         }
-
-        return true;
     }
 
     public GridCell GetCellAt(Vector2 gridPos)
@@ -252,7 +284,7 @@ public partial class GridInventory : GridContainer
         {
             foreach (GridCell gridCell in _selectedCells)
             {
-                if (!IsGridPositionValid(new(gridCell.X, gridCell.Y)))
+                if (!IsGridPositionValid(new(gridCell.X, gridCell.Y), _inventorySystem.DraggingItem))
                 {
                     interiorColor = GridCell.InteriorColor.Red;
                     break;
@@ -268,6 +300,7 @@ public partial class GridInventory : GridContainer
 
     private void RestorePreviouslySelectedCellsColor()
     {
+        Log.Debug("RestorePreviouslySelectedCellsColor: " + _selectedCells.Count);
         foreach (GridCell gridCell in _selectedCells)
         {
             gridCell.SetInteriorColor(GridCell.InteriorColor.Default);

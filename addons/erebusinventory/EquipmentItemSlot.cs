@@ -1,4 +1,5 @@
 using Erebus.UI.Inventory;
+using ErebusLogger;
 using Godot;
 using System;
 
@@ -41,14 +42,22 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
         MouseExited += () => _inventorySystem.RemoveSlotUnderMouse(this);
     }
 
-    public virtual bool Equip(ItemInfo itemInfo)
+    public virtual bool CanEquip(ItemInfo itemInfo)
     {
-        GD.Print("Equip");
+        return true;
+    }
+
+    public virtual void Equip(ItemInfo itemInfo)
+    {
+        Log.Debug("Equip");
+        if (!CanEquip(itemInfo))
+        {
+            Log.Fatal("Tried to equip item on slot when CanEquip returns false", GetTree());
+        }
+
         SetItemInfo(itemInfo);
 
         _icon.Texture = _itemInfo.Icon;
-
-        return true;
     }
 
     public ItemInfo Grab()

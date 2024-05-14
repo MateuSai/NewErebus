@@ -12,6 +12,9 @@ public partial class ItemInfo : GodotObject
     public int BaseWidth;
     public int BaseHeight;
 
+    public int Amount = 1;
+    public bool Rotated = false;
+
     public ItemInfo(Texture2D icon, int baseWidth, int baseHeight)
     {
         Id = ((CSharpScript)GetScript()).ResourcePath.GetBaseName().GetFile();

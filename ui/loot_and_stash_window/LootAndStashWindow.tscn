@@ -2,9 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_b4n0e"]
 [ext_resource type="Script" path="res://ui/loot_and_stash_window/LootAndStashWindow.cs" id="2_g6xqk"]
-[ext_resource type="Script" path="res://addons/erebusinventory/grid/GridInventory.cs" id="2_jncih"]
 [ext_resource type="Script" path="res://ui/loot_and_stash_window/LootTab.cs" id="3_601l3"]
 [ext_resource type="Texture2D" uid="uid://wngcdr5t2k7a" path="res://art/ui/Inventory_grid_frame.png" id="3_h2ej6"]
+[ext_resource type="Script" path="res://ui/loot_and_stash_window/LootGridInventory.cs" id="4_lotjw"]
 
 [node name="LootAndStashWindow" type="TabContainer"]
 anchors_preset = -1
@@ -46,8 +46,8 @@ layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 9
-script = ExtResource("2_jncih")
-Rows = 30
+script = ExtResource("4_lotjw")
+Rows = 16
 
 [node name="NinePatchRect" type="NinePatchRect" parent="LOOT/MarginContainer"]
 layout_mode = 2

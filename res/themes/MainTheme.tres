@@ -48,19 +48,31 @@ texture_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hsm5u"]
 texture = ExtResource("6_qpky4")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nmi0j"]
-texture = ExtResource("7_3omx5")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v0tsh"]
-texture = ExtResource("8_3jors")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6v1uf"]
-texture = ExtResource("6_g2x0r")
 texture_margin_left = 2.0
 texture_margin_top = 2.0
 texture_margin_right = 2.0
 texture_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nmi0j"]
+texture = ExtResource("7_3omx5")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v0tsh"]
+texture = ExtResource("8_3jors")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6v1uf"]
+texture = ExtResource("6_g2x0r")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
 
 [resource]
 default_font = ExtResource("1_8uvtk")
