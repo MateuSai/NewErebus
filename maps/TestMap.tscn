@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bttv3nsynu7ip"]
+[gd_scene load_steps=10 format=3 uid="uid://bttv3nsynu7ip"]
 
 [ext_resource type="Texture2D" uid="uid://bdi368gdomqll" path="res://art/maps/Test_ground.png" id="1_wriod"]
 [ext_resource type="PackedScene" uid="uid://bipi44042cy2n" path="res://characters/player/Player.tscn" id="2_7e0oi"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://ch4auhdpo8ycc" path="res://ui/inventory_window/InventoryWindow.tscn" id="5_43ct4"]
 [ext_resource type="PackedScene" uid="uid://dob8r6xe21gjk" path="res://ui/loot_and_stash_window/LootAndStashWindow.tscn" id="6_125fm"]
 [ext_resource type="Script" path="res://items/ItemOnFloor.cs" id="6_yv527"]
+[ext_resource type="Texture2D" uid="uid://cn7hmqn4kb1rh" path="res://art/ui/inventory_icons/Gas_can.png" id="8_kpmgs"]
+[ext_resource type="Texture2D" uid="uid://cfgjnb2av2457" path="res://art/ui/inventory_icons/Food_can.png" id="9_g4wd5"]
 
 [node name="TestMap" type="Node2D"]
 
@@ -76,3 +78,24 @@ collision_layer = 2
 collision_mask = 0
 script = ExtResource("6_yv527")
 ItemInfoId = "GasCan"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 521.0
+offset_top = 139.0
+offset_right = 569.0
+offset_bottom = 171.0
+rotation = -1.5708
+pivot_offset = Vector2(24, 24)
+texture = ExtResource("8_kpmgs")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 521.0
+offset_top = 139.0
+offset_right = 537.0
+offset_bottom = 171.0
+rotation = -1.5708
+pivot_offset = Vector2(8, 8)
+texture = ExtResource("9_g4wd5")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(521, 139)

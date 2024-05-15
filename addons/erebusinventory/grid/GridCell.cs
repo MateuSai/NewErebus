@@ -11,6 +11,8 @@ public partial class GridCell : TextureRect, IItemSlot
     public readonly short Y;
 
     private ItemInfo _itemInfo;
+    private int _width;
+    private int _height;
 
     public TextureRect Icon;
     private GridCell _itemHolderReference;
@@ -175,8 +177,12 @@ public partial class GridCell : TextureRect, IItemSlot
         _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
 
         _itemInfo = itemInfo;
+        _width = _itemInfo.BaseWidth;
+        _height = _itemInfo.BaseHeight;
 
         Icon.Texture = _itemInfo.Icon;
+        Icon.PivotOffset = Vector2.One * Icon.Texture.GetSize().X / 2;
+        Icon.Rotation = (float)(_itemInfo.Rotated ? -Math.PI / 2.0 : 0.0);
 
         _itemBackgroundPanel.Size = new Vector2(16 * itemInfo.BaseWidth, 16 * itemInfo.BaseHeight);
         _itemBackgroundPanel.Show();
@@ -226,7 +232,7 @@ public partial class GridCell : TextureRect, IItemSlot
         if (_itemHolderReference == null)
         {
             //GD.Print("hey");
-            _gridInventory.RemoveItem(_itemInfo, new Vector2I(X, Y));
+            _gridInventory.RemoveItem(_itemInfo, new Vector2I(X, Y), _width, _height);
 
             Icon.Texture = null;
             _itemInfo = null;

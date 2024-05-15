@@ -10,7 +10,7 @@ public partial class InventorySystem : CanvasLayer
 {
     private IItemSlot _draggingItemSlot = null;
     [Signal]
-    public delegate void DraggingItemChangedEventHandler(ItemInfo newValue);
+    public delegate void DraggingItemChangedEventHandler(ItemInfo oldItem, ItemInfo newItem);
     private ItemInfo _draggingItemInfo = null;
     public ItemInfo DraggingItem
     {
@@ -18,8 +18,8 @@ public partial class InventorySystem : CanvasLayer
         set
         {
             Log.Debug("Set DraggingItem");
+            EmitSignal(nameof(DraggingItemChanged), _draggingItemInfo, value);
             _draggingItemInfo = value;
-            EmitSignal(nameof(DraggingItemChanged), _draggingItemInfo);
         }
     }
     private TextureRect _draggingIcon = null;
@@ -55,6 +55,13 @@ public partial class InventorySystem : CanvasLayer
             GD.Print("release");
             SetProcess(false);
             Release();
+        }
+
+        if (@event is InputEventKey key && key.Keycode == Key.R && key.IsPressed() && _draggingItemInfo != null && _draggingItemInfo.BaseWidth != _draggingItemInfo.BaseHeight)
+        {
+            _draggingItemInfo.Rotated = !_draggingItemInfo.Rotated;
+            _draggingIcon.PivotOffset = Vector2.One * _draggingIcon.Texture.GetSize().X / 2;
+            _draggingIcon.Rotation = (float)(_draggingItemInfo.Rotated ? -Math.PI / 2.0 : 0.0);
         }
 
     }

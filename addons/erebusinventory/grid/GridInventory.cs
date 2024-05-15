@@ -15,6 +15,7 @@ public partial class GridInventory : GridContainer
 
     private GridCell[] _grid;
 
+    private GridCell _selectedCell = null;
     private readonly List<GridCell> _selectedCells = new();
 
     public readonly List<Vector2I> GridsWithItems = new();
@@ -33,8 +34,18 @@ public partial class GridInventory : GridContainer
         base._Ready();
 
         _inventorySystem = GetNode<InventorySystem>("/root/" + nameof(InventorySystem));
-        _inventorySystem.DraggingItemChanged += (ItemInfo itemInfo) =>
+        _inventorySystem.DraggingItemChanged += (ItemInfo oldItem, ItemInfo newItem) =>
         {
+            if (oldItem != null && oldItem.IsConnected(nameof(oldItem.ItemRotated), new Callable(this, nameof(OnItemRotated))))
+            {
+                oldItem.Disconnect(nameof(oldItem.ItemRotated), new Callable(this, nameof(OnItemRotated)));
+            }
+
+            if (newItem != null)
+            {
+                newItem.ItemRotated += OnItemRotated;
+            }
+
             Log.Debug("Holy shit");
             RestorePreviouslySelectedCellsColor();
         };
@@ -58,6 +69,10 @@ public partial class GridInventory : GridContainer
                 GridCell gridCell = new((short)j, (short)i, this);
                 gridCell.MouseEntered += () =>
                 {
+                    _selectedCell = gridCell;
+
+                    _selectedCells.Clear();
+
                     //GD.Print("hohohoho");
                     if (_inventorySystem.DraggingItem != null)
                     {
@@ -82,6 +97,8 @@ public partial class GridInventory : GridContainer
                 };
                 gridCell.MouseExited += () =>
                 {
+                    _selectedCell = null;
+
                     RestorePreviouslySelectedCellsColor();
                     _selectedCells.Clear();
                 };
@@ -211,13 +228,13 @@ public partial class GridInventory : GridContainer
         Items.Add(itemInfo);
     }
 
-    public virtual void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos)
+    public virtual void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos, int width, int height)
     {
         List<Vector2I> gridPositions = new();
 
-        for (int x = 0; x < itemInfo.BaseWidth; x++)
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < itemInfo.BaseHeight; y++)
+            for (int y = 0; y < height; y++)
             {
                 if (x == 0 && y == 0)
                 {
@@ -304,6 +321,16 @@ public partial class GridInventory : GridContainer
         foreach (GridCell gridCell in _selectedCells)
         {
             gridCell.SetInteriorColor(GridCell.InteriorColor.Default);
+        }
+    }
+
+    private void OnItemRotated()
+    {
+        if (_selectedCell != null)
+        {
+            GridCell cell = _selectedCell;
+            cell.EmitSignal("mouse_exited");
+            cell.EmitSignal("mouse_entered");
         }
     }
 }

@@ -44,7 +44,7 @@ public partial class LootGridInventory : GridInventory
         }
     }
 
-    public override void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos)
+    public override void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos, int width, int height)
     {
         Log.Debug("RemoveItem from LootGridInventory");
 
@@ -55,6 +55,6 @@ public partial class LootGridInventory : GridInventory
             itemOnFloor.QueueFree();
         }
 
-        base.RemoveItem(itemInfo, atGridPos);
+        base.RemoveItem(itemInfo, atGridPos, width, height);
     }
 }
