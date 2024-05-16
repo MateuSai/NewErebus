@@ -21,7 +21,19 @@ public partial class ItemInfo : GodotObject
         get => Rotated ? _baseWidth : _baseHeight;
     }
 
-    public int Amount = 1;
+    public short Capacity;
+    [Signal]
+    public delegate void AmountChangedEventHandler(int newAmount);
+    private int _amount = 1;
+    public int Amount
+    {
+        get => _amount;
+        set
+        {
+            _amount = value;
+            EmitSignal(SignalName.AmountChanged, _amount);
+        }
+    }
     [Signal]
     public delegate void ItemRotatedEventHandler();
     private bool _rotated = false;
@@ -35,11 +47,12 @@ public partial class ItemInfo : GodotObject
         }
     }
 
-    public ItemInfo(Texture2D icon, int baseWidth, int baseHeight)
+    public ItemInfo(Texture2D icon, int baseWidth, int baseHeight, short capacity = 1)
     {
         Id = ((CSharpScript)GetScript()).ResourcePath.GetBaseName().GetFile();
         Icon = icon;
         _baseWidth = baseWidth;
         _baseHeight = baseHeight;
+        Capacity = capacity;
     }
 }

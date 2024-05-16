@@ -99,3 +99,17 @@ texture = ExtResource("9_g4wd5")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(521, 139)
+
+[node name="ItemOnFloor6" type="Area2D" parent="."]
+position = Vector2(429, 295)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("6_yv527")
+ItemInfoId = "AmmoBox9x18"
+
+[node name="ItemOnFloor7" type="Area2D" parent="."]
+position = Vector2(471, 319)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("6_yv527")
+ItemInfoId = "AmmoBox9x18"

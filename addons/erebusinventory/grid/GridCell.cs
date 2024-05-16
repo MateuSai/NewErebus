@@ -36,6 +36,7 @@ public partial class GridCell : TextureRect, IItemSlot
     private GridInventory _gridInventory;
     private NinePatchRect _itemBackgroundPanel;
     private TextureRect _interiorTexture;
+    private Label _label;
 
     public GridCell(short x, short y, GridInventory gridInventory)
     {
@@ -66,6 +67,19 @@ public partial class GridCell : TextureRect, IItemSlot
         };
         AddChild(_itemBackgroundPanel);
         _itemBackgroundPanel.Hide();
+
+        _label = new()
+        {
+            ZIndex = 3,
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Bottom,
+            CustomMinimumSize = Vector2.One * 14,
+        };
+        _label.AddThemeColorOverride("font_outline_color", Colors.Black);
+        _label.AddThemeConstantOverride("outline_size", 1);
+        _label.AddThemeFontOverride("font", GD.Load<Font>("res://ui/fonts/Wekufupixelsmall.ttf"));
+        _label.AddThemeFontSizeOverride("font_size", 6);
+        AddChild(_label);
 
         X = x;
         Y = y;
@@ -150,7 +164,7 @@ public partial class GridCell : TextureRect, IItemSlot
         CellMode = Mode.ItemHolderReference;
 
         Icon.QueueFree();
-        _itemInfo = null;
+        SetItemInfo(null);
 
         _itemHolderReference = cellToReference;
     }
@@ -176,7 +190,8 @@ public partial class GridCell : TextureRect, IItemSlot
 
         _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
 
-        _itemInfo = itemInfo;
+        SetItemInfo(itemInfo);
+        //_itemInfo = itemInfo;
         _width = _itemInfo.BaseWidth;
         _height = _itemInfo.BaseHeight;
 
@@ -186,6 +201,8 @@ public partial class GridCell : TextureRect, IItemSlot
 
         _itemBackgroundPanel.Size = new Vector2(16 * itemInfo.BaseWidth, 16 * itemInfo.BaseHeight);
         _itemBackgroundPanel.Show();
+
+        _label.Position = _itemBackgroundPanel.Size - Vector2.One * 16;
     }
 
     public TextureRect GetIconTextureRect()
@@ -212,6 +229,21 @@ public partial class GridCell : TextureRect, IItemSlot
         }
     }
 
+    private void SetItemInfo(ItemInfo newItemInfo)
+    {
+        if (_itemInfo != null)
+        {
+            _itemInfo.AmountChanged -= OnItemAmountChanged;
+            _label.Text = "";
+        }
+        _itemInfo = newItemInfo;
+        if (_itemInfo != null)
+        {
+            _itemInfo.AmountChanged += OnItemAmountChanged;
+            OnItemAmountChanged(_itemInfo.Amount);
+        }
+    }
+
     public ItemInfo Grab()
     {
         GD.Print(X + " " + Y + "     " + (_itemHolderReference != null));
@@ -235,7 +267,7 @@ public partial class GridCell : TextureRect, IItemSlot
             _gridInventory.RemoveItem(_itemInfo, new Vector2I(X, Y), _width, _height);
 
             Icon.Texture = null;
-            _itemInfo = null;
+            SetItemInfo(null);
             _itemBackgroundPanel.Hide();
         }
         else
@@ -249,5 +281,10 @@ public partial class GridCell : TextureRect, IItemSlot
     public bool IsEmpty()
     {
         return _itemInfo == null && CellMode == Mode.ItemHolder;
+    }
+
+    private void OnItemAmountChanged(int newAmount)
+    {
+        _label.Text = newAmount.ToString();
     }
 }

@@ -23,6 +23,12 @@ public partial class GridInventory : GridContainer
 
     private InventorySystem _inventorySystem;
 
+    public enum InsertResult
+    {
+        Moved,
+        Stacked,
+    }
+
     public GridInventory()
     {
         AddThemeConstantOverride("h_separation", 0);
@@ -193,11 +199,18 @@ public partial class GridInventory : GridContainer
         return true;
     }
 
-    public virtual void InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    public virtual InsertResult InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
     {
         if (!CanInsertItemAt(itemInfo, atGridPos))
         {
             Log.Fatal("CanInsertItemAt returns false but called InsertItemByDragging", GetTree());
+        }
+
+        GridCell cell = GetCellAt(atGridPos);
+        if (cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id)
+        {
+            cell.GetItemInfo().Amount += itemInfo.Amount;
+            return InsertResult.Stacked;
         }
 
         List<Vector2I> gridPositions = new();
@@ -226,6 +239,8 @@ public partial class GridInventory : GridContainer
 
         GridsWithItems.Add(atGridPos);
         Items.Add(itemInfo);
+
+        return InsertResult.Moved;
     }
 
     public virtual void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos, int width, int height)
@@ -272,7 +287,7 @@ public partial class GridInventory : GridContainer
         GridCell cell = GetCellAt(gridPos: gridPos);
         //Log.Debug("draggingItemInfo: " + draggingItemInfo);
         //Log.Debug("cell ItemInfo: " + cell.GetItemInfo());
-        if (cell.IsEmpty() || (draggingItemInfo != null && cell.GetItemInfo() == draggingItemInfo))
+        if (cell.IsEmpty() || (draggingItemInfo != null && (cell.GetItemInfo() == draggingItemInfo || cell.GetItemInfo().Id == draggingItemInfo.Id)))
         {
             //  Log.Debug("Grid position is valid");
             return true;

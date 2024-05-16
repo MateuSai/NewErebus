@@ -24,11 +24,15 @@ public partial class LootGridInventory : GridInventory
         _globals = GetTree().Root.GetNode<Globals>("Globals");
     }
 
-    public override void InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    public override InsertResult InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
     {
         Log.Debug("InsertItemByDragging from LootGridInventory");
 
-        base.InsertItemByDragging(itemInfo, atGridPos);
+        InsertResult res = base.InsertItemByDragging(itemInfo, atGridPos);
+        if (res == InsertResult.Stacked)
+        {
+            return InsertResult.Stacked;
+        }
 
         if (!NotAddOrRemoveItemsOnFloor)
         {
@@ -42,6 +46,8 @@ public partial class LootGridInventory : GridInventory
 
             ItemsOnFloor.Add(itemOnFloor);
         }
+
+        return InsertResult.Moved;
     }
 
     public override void RemoveItem(ItemInfo itemInfo, Vector2I atGridPos, int width, int height)
