@@ -20,7 +20,7 @@ public partial class ItemOnFloor : Area2D
             // It will be called later on the _ready function
             if (_sprite != null)
             {
-                Initialize(_itemInfoId);
+                InitializeWithId(_itemInfoId);
             }
         }
     }
@@ -41,19 +41,36 @@ public partial class ItemOnFloor : Area2D
         AddChild(_sprite);
         _collisionShape = new();
         AddChild(_collisionShape);
+        if (ItemInfo == null)
+        {
+            InitializeWithId(_itemInfoId);
+        }
+        else
+        {
+            Initialize();
+        }
+    }
 
-        Initialize(_itemInfoId);
+    public void InitializeWithId(string itemInfoId)
+    {
+        DirAccess itemsDir = DirAccess.Open("res://items");
+        ItemInfo = SearchSubDirsForItem(itemsDir, itemInfoId);
+
+        Initialize();
+    }
+
+    public void InitializeWithItemInfo(ItemInfo itemInfo)
+    {
+        ItemInfo = itemInfo;
+
+        Initialize();
     }
 
     /// <summary>
     /// Call this after _ready
     /// </summary>
-    public void Initialize(string itemInfoId)
+    public void Initialize()
     {
-        DirAccess itemsDir = DirAccess.Open("res://items");
-        ItemInfo = SearchSubDirsForItem(itemsDir, itemInfoId);
-
-
         if (ItemInfo != null)
         {
             _sprite.Texture = ItemInfo.Icon;

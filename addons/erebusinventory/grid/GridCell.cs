@@ -1,6 +1,7 @@
 using ErebusLogger;
 using Godot;
 using System;
+using System.Diagnostics;
 
 namespace ErebusInventory.Grid;
 
@@ -188,7 +189,12 @@ public partial class GridCell : TextureRect, IItemSlot
             Log.Fatal("Tried to equip item on cell when CanEquip returns false", GetTree());
         }
 
-        _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
+        GridInventory.InsertResult res = _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
+        if (res == GridInventory.InsertResult.Stacked)
+        {
+            Debug.Assert(GetItemInfo() != null);
+            return;
+        }
 
         SetItemInfo(itemInfo);
         //_itemInfo = itemInfo;

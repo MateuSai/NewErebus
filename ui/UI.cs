@@ -8,6 +8,7 @@ public partial class UI : CanvasLayer
 {
     private bool _inventoriesOpen = false;
 
+    private ColorRect _darkBackground;
     private EquipWindow.EquipWindow _equipWindow;
     private VBoxContainer _inventoryWindow;
     private LootAndStashWindow.LootAndStashWindow _lootAndStashWindow;
@@ -16,6 +17,7 @@ public partial class UI : CanvasLayer
     {
         base._Ready();
 
+        _darkBackground = GetNode<ColorRect>("DarkBackground");
         _equipWindow = GetNode<EquipWindow.EquipWindow>("%EquipWindow");
         _inventoryWindow = GetNode<VBoxContainer>("%InventoryWindow");
         _lootAndStashWindow = GetNode<LootAndStashWindow.LootAndStashWindow>("%LootAndStashWindow");

@@ -24,6 +24,7 @@ public partial class LootTab : ScrollContainer
         _grid.NotAddOrRemoveItemsOnFloor = true;
 
         List<ItemOnFloor> nearItemsOnFloor = GetNode<Globals>("/root/Globals").Player.GetCloseItemsOnFloor();
+        Log.Debug("Number of near items on floor: " + nearItemsOnFloor.Count);
         foreach (ItemOnFloor itemOnFloor in nearItemsOnFloor)
         {
             Log.Debug("Adding " + itemOnFloor.ItemInfo.Id);

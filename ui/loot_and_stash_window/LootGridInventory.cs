@@ -39,7 +39,7 @@ public partial class LootGridInventory : GridInventory
             Log.Debug("Dropping item on floor...");
             ItemOnFloor itemOnFloor = new()
             {
-                ItemInfoId = itemInfo.Id,
+                ItemInfo = itemInfo,
                 Position = _globals.Player.Position
             };
             GetTree().CurrentScene.AddChild(itemOnFloor);
