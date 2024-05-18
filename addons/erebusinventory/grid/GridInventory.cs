@@ -1,7 +1,10 @@
+using Erebus.Autoloads;
+using Erebus.UI.Inventory.DivideStackWindow;
 using ErebusLogger;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ErebusInventory.Grid;
 
@@ -21,10 +24,14 @@ public partial class GridInventory : GridContainer
     public readonly List<Vector2I> GridsWithItems = new();
     public readonly List<ItemInfo> Items = new();
 
+    public bool CanSplitItems = true;
+
+    private Globals _globals;
     private InventorySystem _inventorySystem;
 
     public enum InsertResult
     {
+        Cancelled,
         Moved,
         Stacked,
     }
@@ -39,6 +46,7 @@ public partial class GridInventory : GridContainer
     {
         base._Ready();
 
+        _globals = GetTree().Root.GetNode<Globals>("Globals");
         _inventorySystem = GetNode<InventorySystem>("/root/" + nameof(InventorySystem));
         _inventorySystem.DraggingItemChanged += (ItemInfo oldItem, ItemInfo newItem) =>
         {
@@ -52,7 +60,7 @@ public partial class GridInventory : GridContainer
                 newItem.ItemRotated += OnItemRotated;
             }
 
-            Log.Debug("Holy shit");
+            //Log.Debug("Holy shit");
             RestorePreviouslySelectedCellsColor();
         };
 
@@ -199,7 +207,30 @@ public partial class GridInventory : GridContainer
         return true;
     }
 
-    public virtual InsertResult InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    public virtual async Task<InsertResult> InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    {
+        Log.Debug("InsertItemByDragging");
+
+        GridCell cell = GetCellAt(atGridPos);
+
+        if (CanSplitItems && cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id && cell.GetItemInfo().IsStackable())
+        {
+            Log.Debug("Opening window to split item...");
+            DivideStackWindow divideStackWindow = GD.Load<PackedScene>("res://ui/inventory/divide_stack_window/DivideStackWindow.tscn").Instantiate<DivideStackWindow>();
+            _globals.UI.AddChild(divideStackWindow);
+            divideStackWindow.Position = GetGlobalMousePosition();
+            await ToSignal(divideStackWindow, "tree_exiting");
+            if (divideStackWindow.AmountTextEdit.Text == "0" || divideStackWindow.AmountTextEdit.Text.Length == 0)
+            {
+                Log.Debug("Split cancelled!");
+                return InsertResult.Cancelled;
+            }
+        }
+
+        return InsertItem(itemInfo, atGridPos);
+    }
+
+    private InsertResult InsertItem(ItemInfo itemInfo, Vector2I atGridPos)
     {
         if (!CanInsertItemAt(itemInfo, atGridPos))
         {
@@ -287,7 +318,7 @@ public partial class GridInventory : GridContainer
         GridCell cell = GetCellAt(gridPos: gridPos);
         //Log.Debug("draggingItemInfo: " + draggingItemInfo);
         //Log.Debug("cell ItemInfo: " + cell.GetItemInfo());
-        if (cell.IsEmpty() || (draggingItemInfo != null && (cell.GetItemInfo() == draggingItemInfo || cell.GetItemInfo().Id == draggingItemInfo.Id)))
+        if (cell.IsEmpty() || (draggingItemInfo != null && (cell.GetItemInfo() == draggingItemInfo || (cell.GetItemInfo().Id == draggingItemInfo.Id && cell.GetItemInfo().IsStackable()))))
         {
             //  Log.Debug("Grid position is valid");
             return true;
@@ -332,7 +363,7 @@ public partial class GridInventory : GridContainer
 
     private void RestorePreviouslySelectedCellsColor()
     {
-        Log.Debug("RestorePreviouslySelectedCellsColor: " + _selectedCells.Count);
+        //Log.Debug("RestorePreviouslySelectedCellsColor: " + _selectedCells.Count);
         foreach (GridCell gridCell in _selectedCells)
         {
             gridCell.SetInteriorColor(GridCell.InteriorColor.Default);

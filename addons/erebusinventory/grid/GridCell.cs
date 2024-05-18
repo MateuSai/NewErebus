@@ -182,15 +182,15 @@ public partial class GridCell : TextureRect, IItemSlot
         return true;
     }
 
-    public void Equip(ItemInfo itemInfo)
+    public async void Equip(ItemInfo itemInfo)
     {
         if (!CanEquip(itemInfo))
         {
             Log.Fatal("Tried to equip item on cell when CanEquip returns false", GetTree());
         }
 
-        GridInventory.InsertResult res = _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
-        if (res == GridInventory.InsertResult.Stacked)
+        GridInventory.InsertResult res = await _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
+        if (res == GridInventory.InsertResult.Stacked || res == GridInventory.InsertResult.Cancelled)
         {
             Debug.Assert(GetItemInfo() != null);
             return;
@@ -208,7 +208,15 @@ public partial class GridCell : TextureRect, IItemSlot
         _itemBackgroundPanel.Size = new Vector2(16 * itemInfo.BaseWidth, 16 * itemInfo.BaseHeight);
         _itemBackgroundPanel.Show();
 
-        _label.Position = _itemBackgroundPanel.Size - Vector2.One * 16;
+        if (_itemInfo.IsStackable())
+        {
+            _label.Position = _itemBackgroundPanel.Size - Vector2.One * 16;
+            _label.Show();
+        }
+        else
+        {
+            _label.Hide();
+        }
     }
 
     public TextureRect GetIconTextureRect()

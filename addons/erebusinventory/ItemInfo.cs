@@ -55,4 +55,9 @@ public partial class ItemInfo : GodotObject
         _baseHeight = baseHeight;
         Capacity = capacity;
     }
+
+    public bool IsStackable()
+    {
+        return Capacity > 1;
+    }
 }

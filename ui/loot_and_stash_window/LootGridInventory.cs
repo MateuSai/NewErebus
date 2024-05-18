@@ -6,6 +6,7 @@ using ErebusLogger;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Erebus.UI.LootAndStashWindow;
 
@@ -24,12 +25,12 @@ public partial class LootGridInventory : GridInventory
         _globals = GetTree().Root.GetNode<Globals>("Globals");
     }
 
-    public override InsertResult InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    public override async Task<InsertResult> InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
     {
         Log.Debug("InsertItemByDragging from LootGridInventory");
 
-        InsertResult res = base.InsertItemByDragging(itemInfo, atGridPos);
-        if (res == InsertResult.Stacked)
+        InsertResult res = await base.InsertItemByDragging(itemInfo, atGridPos);
+        if (res == InsertResult.Stacked || res == InsertResult.Cancelled)
         {
             return InsertResult.Stacked;
         }
