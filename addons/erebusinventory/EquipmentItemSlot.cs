@@ -2,6 +2,7 @@ using Erebus.UI.Inventory;
 using ErebusLogger;
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 namespace ErebusInventory;
 
@@ -47,7 +48,7 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
         return true;
     }
 
-    public virtual void Equip(ItemInfo itemInfo)
+    public virtual Task<IItemSlot.EquipResult> Equip(ItemInfo itemInfo)
     {
         Log.Debug("Equip");
         if (!CanEquip(itemInfo))
@@ -58,6 +59,8 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
         SetItemInfo(itemInfo);
 
         _icon.Texture = _itemInfo.Icon;
+
+        return Task.FromResult(IItemSlot.EquipResult.Moved);
     }
 
     public ItemInfo Grab()

@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://bradqslws70qr"]
+[gd_scene load_steps=18 format=3 uid="uid://bradqslws70qr"]
 
+[ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_2ync0"]
 [ext_resource type="Texture2D" uid="uid://cbih0du5ky46q" path="res://art/ui/split_window.png" id="1_dqdrp"]
 [ext_resource type="Texture2D" uid="uid://bk720tr1k0pw8" path="res://art/ui/inventory_icons/9x18mm_ammo_box.png" id="2_askh6"]
 [ext_resource type="Texture2D" uid="uid://dche72n5rf1yq" path="res://art/ui/Split_window_slide_button_normal.png" id="2_ofb3n"]
@@ -33,9 +34,10 @@ anchor_bottom = 1.0
 offset_left = 1.0
 offset_top = -2.0
 offset_right = -910.0
-offset_bottom = -498.0
+offset_bottom = -480.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_2ync0")
 theme_override_styles/panel = SubResource("StyleBoxTexture_pnetb")
 script = ExtResource("2_pdog4")
 
@@ -84,7 +86,8 @@ stretch_mode = 2
 layout_mode = 2
 theme_override_constants/margin_top = 6
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+[node name="AmountSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -108,3 +111,22 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_40jnj")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_4ky3u")
 placeholder_text = "0"
 scroll_fit_content_height = true
+
+[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer5"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="AcceptButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer5/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "YES"
+
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer5/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "NO"

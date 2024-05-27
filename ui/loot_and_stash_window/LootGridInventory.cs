@@ -30,9 +30,9 @@ public partial class LootGridInventory : GridInventory
         Log.Debug("InsertItemByDragging from LootGridInventory");
 
         InsertResult res = await base.InsertItemByDragging(itemInfo, atGridPos);
-        if (res == InsertResult.Stacked || res == InsertResult.Cancelled)
+        if (res == InsertResult.Stacked || res == InsertResult.Cancelled || res == InsertResult.PartlyStacked)
         {
-            return InsertResult.Stacked;
+            return res;
         }
 
         if (!NotAddOrRemoveItemsOnFloor)

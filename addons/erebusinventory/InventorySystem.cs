@@ -99,8 +99,10 @@ public partial class InventorySystem : CanvasLayer
         return true;
     }
 
-    private void Release()
+    private async void Release()
     {
+        Disable();
+
         //GD.Print("Slots under mouse: " + _slotsUnderMouse.Count);
         if (_slotsUnderMouse.Count == 0)
         {
@@ -110,8 +112,12 @@ public partial class InventorySystem : CanvasLayer
         {
             if (_slotsUnderMouse[0].CanEquip(DraggingItem))
             {
-                _draggingItemSlot.Unequip();
-                _slotsUnderMouse[0].Equip(DraggingItem);
+                IItemSlot.EquipResult res = await _slotsUnderMouse[0].Equip(DraggingItem);
+                Log.Debug("Equip result: " + res);
+                if (res == IItemSlot.EquipResult.Moved || (res == IItemSlot.EquipResult.Stacked && _draggingItemInfo.Amount == 0))
+                {
+                    _draggingItemSlot.Unequip();
+                }
                 _draggingIcon.QueueFree();
                 _draggingIcon = null;
             }
@@ -124,6 +130,8 @@ public partial class InventorySystem : CanvasLayer
 
         _draggingItemSlot = null;
         DraggingItem = null;
+
+        Enable();
     }
 
     private void TweenDraggingIconBack()
@@ -155,5 +163,16 @@ public partial class InventorySystem : CanvasLayer
         {
             SetProcess(false);
         }*/
+    }
+
+    private void Disable()
+    {
+        SetProcess(false);
+        SetProcessInput(false);
+    }
+
+    private void Enable()
+    {
+        SetProcessInput(true);
     }
 }

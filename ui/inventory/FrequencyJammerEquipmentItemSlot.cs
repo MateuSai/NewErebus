@@ -3,6 +3,7 @@ using ErebusInventory;
 using ErebusLogger;
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 namespace Erebus.UI;
 
@@ -31,14 +32,14 @@ public partial class FrequencyJammerEquipmentItemSlot : EquipmentItemSlot
         return true;
     }
 
-    public override void Equip(ItemInfo itemInfo)
+    public override Task<IItemSlot.EquipResult> Equip(ItemInfo itemInfo)
     {
         if (!CanEquip(itemInfo))
         {
             Log.Fatal("Tried to equip item on slot when CanEquip returns false", GetTree());
         }
 
-        base.Equip(itemInfo);
+        return base.Equip(itemInfo);
     }
 
     protected override void OnItemInfoChanged(ItemInfo itemInfo)

@@ -34,6 +34,7 @@ public partial class GridInventory : GridContainer
         Cancelled,
         Moved,
         Stacked,
+        PartlyStacked,
     }
 
     public GridInventory()
@@ -124,7 +125,7 @@ public partial class GridInventory : GridContainer
         }
     }
 
-    public void InsertItemAutomatically(ItemInfo itemInfo)
+    public async void InsertItemAutomatically(ItemInfo itemInfo)
     {
         Vector2I gridPos = new(0, 0);
         GridCell gridCell = null;
@@ -169,7 +170,7 @@ public partial class GridInventory : GridContainer
             }
         }
 
-        gridCell.Equip(itemInfo);
+        await gridCell.Equip(itemInfo);
     }
 
     public bool CanInsertItemAt(ItemInfo itemInfo, Vector2I atGridPos)
@@ -218,12 +219,24 @@ public partial class GridInventory : GridContainer
             Log.Debug("Opening window to split item...");
             DivideStackWindow divideStackWindow = GD.Load<PackedScene>("res://ui/inventory/divide_stack_window/DivideStackWindow.tscn").Instantiate<DivideStackWindow>();
             _globals.UI.AddChild(divideStackWindow);
+            divideStackWindow.Setup(itemInfo);
             divideStackWindow.Position = GetGlobalMousePosition();
             await ToSignal(divideStackWindow, "tree_exiting");
-            if (divideStackWindow.AmountTextEdit.Text == "0" || divideStackWindow.AmountTextEdit.Text.Length == 0)
+            Log.Debug("Divide window amount: " + divideStackWindow.GetAmount());
+            if (divideStackWindow.GetAmount() == 0)
             {
                 Log.Debug("Split cancelled!");
                 return InsertResult.Cancelled;
+            }
+            else
+            {
+                Log.Debug("Amount to stack: " + divideStackWindow.GetAmount());
+                //if (cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id)
+                //{
+                itemInfo.Amount -= divideStackWindow.GetAmount();
+                cell.GetItemInfo().Amount += divideStackWindow.GetAmount();
+                return InsertResult.PartlyStacked;
+                //}
             }
         }
 

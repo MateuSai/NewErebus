@@ -2,6 +2,7 @@ using ErebusLogger;
 using Godot;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ErebusInventory.Grid;
 
@@ -182,7 +183,7 @@ public partial class GridCell : TextureRect, IItemSlot
         return true;
     }
 
-    public async void Equip(ItemInfo itemInfo)
+    public async Task<IItemSlot.EquipResult> Equip(ItemInfo itemInfo)
     {
         if (!CanEquip(itemInfo))
         {
@@ -190,10 +191,14 @@ public partial class GridCell : TextureRect, IItemSlot
         }
 
         GridInventory.InsertResult res = await _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
-        if (res == GridInventory.InsertResult.Stacked || res == GridInventory.InsertResult.Cancelled)
+        switch (res)
         {
-            Debug.Assert(GetItemInfo() != null);
-            return;
+            case GridInventory.InsertResult.Cancelled:
+                Debug.Assert(GetItemInfo() != null);
+                return IItemSlot.EquipResult.Cancelled;
+            case GridInventory.InsertResult.Stacked:
+            case GridInventory.InsertResult.PartlyStacked:
+                return IItemSlot.EquipResult.Stacked;
         }
 
         SetItemInfo(itemInfo);
@@ -217,6 +222,8 @@ public partial class GridCell : TextureRect, IItemSlot
         {
             _label.Hide();
         }
+
+        return IItemSlot.EquipResult.Moved;
     }
 
     public TextureRect GetIconTextureRect()

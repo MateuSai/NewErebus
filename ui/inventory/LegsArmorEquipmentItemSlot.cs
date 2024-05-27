@@ -4,6 +4,7 @@ using ErebusLogger;
 using Godot;
 using System;
 using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 
 namespace Erebus.UI.Inventory;
 
@@ -33,13 +34,13 @@ public partial class LegsArmorEquipmentItemSlot : EquipmentItemSlot
         return base.CanEquip(itemInfo);
     }
 
-    public override void Equip(ItemInfo itemInfo)
+    public override Task<IItemSlot.EquipResult> Equip(ItemInfo itemInfo)
     {
         if (!CanEquip(itemInfo))
         {
             Log.Fatal("Tried to equip item on slot when CanEquip returns false", GetTree());
         }
 
-        base.Equip(itemInfo);
+        return base.Equip(itemInfo);
     }
 }
