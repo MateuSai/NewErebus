@@ -56,6 +56,11 @@ public partial class ItemInfo : GodotObject
         Capacity = capacity;
     }
 
+    public ItemInfo Duplicate()
+    {
+        return new ItemInfo(Icon, BaseWidth, BaseHeight, Capacity);
+    }
+
     public bool IsStackable()
     {
         return Capacity > 1;

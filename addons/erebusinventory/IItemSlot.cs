@@ -5,9 +5,10 @@ namespace ErebusInventory;
 
 public interface IItemSlot
 {
-    enum EquipResult
+    public enum EquipResult
     {
         Moved,
+        PartlyMoved,
         Stacked,
         Cancelled,
     }

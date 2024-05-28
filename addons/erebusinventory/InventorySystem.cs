@@ -114,8 +114,9 @@ public partial class InventorySystem : CanvasLayer
             {
                 IItemSlot.EquipResult res = await _slotsUnderMouse[0].Equip(DraggingItem);
                 Log.Debug("Equip result: " + res);
-                if (res == IItemSlot.EquipResult.Moved || (res == IItemSlot.EquipResult.Stacked && _draggingItemInfo.Amount == 0))
+                if (res == IItemSlot.EquipResult.Moved || (res == IItemSlot.EquipResult.Stacked && _draggingItemInfo.Amount == 0) || (res == IItemSlot.EquipResult.PartlyMoved && _draggingItemInfo.Amount == 0))
                 {
+                    Log.Debug("Unequipping dragging item...");
                     _draggingItemSlot.Unequip();
                 }
                 _draggingIcon.QueueFree();

@@ -4,6 +4,7 @@ using ErebusLogger;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace ErebusInventory.Grid;
@@ -35,6 +36,7 @@ public partial class GridInventory : GridContainer
         Moved,
         Stacked,
         PartlyStacked,
+        PartlyMoved,
     }
 
     public GridInventory()
@@ -208,13 +210,13 @@ public partial class GridInventory : GridContainer
         return true;
     }
 
-    public virtual async Task<InsertResult> InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos)
+    public virtual async Task<InsertResult> InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos, bool skipDivideWindow = false)
     {
         Log.Debug("InsertItemByDragging");
 
         GridCell cell = GetCellAt(atGridPos);
 
-        if (CanSplitItems && cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id && cell.GetItemInfo().IsStackable())
+        if (!skipDivideWindow && CanSplitItems && Input.IsKeyPressed(Key.Ctrl) && ((cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id && cell.GetItemInfo().IsStackable()) || (cell.GetItemInfo() == null && itemInfo.IsStackable())))
         {
             Log.Debug("Opening window to split item...");
             DivideStackWindow divideStackWindow = GD.Load<PackedScene>("res://ui/inventory/divide_stack_window/DivideStackWindow.tscn").Instantiate<DivideStackWindow>();
@@ -230,13 +232,27 @@ public partial class GridInventory : GridContainer
             }
             else
             {
-                Log.Debug("Amount to stack: " + divideStackWindow.GetAmount());
-                //if (cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id)
-                //{
-                itemInfo.Amount -= divideStackWindow.GetAmount();
-                cell.GetItemInfo().Amount += divideStackWindow.GetAmount();
-                return InsertResult.PartlyStacked;
-                //}
+                if (cell.GetItemInfo() == null && itemInfo.IsStackable())
+                {
+                    Log.Debug("Amount moved to new slot: " + divideStackWindow.GetAmount());
+                    ItemInfo itemInfoToInsert = itemInfo.Duplicate();
+                    itemInfoToInsert.Amount = divideStackWindow.GetAmount();
+                    itemInfo.Amount -= divideStackWindow.GetAmount();
+                    IItemSlot.EquipResult equipResult = await cell.Equip(itemInfoToInsert);
+                    Log.Debug("Equip new partly moved item result: " + equipResult);
+                    return InsertResult.PartlyMoved;
+                    //itemInfo = itemInfoToInsert; // So this is the item that is inserted instead of the one we were dragging. It will be inserted on the InsertItem function
+                }
+                else
+                {
+                    Log.Debug("Amount to stack: " + divideStackWindow.GetAmount());
+                    //if (cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id)
+                    //{
+                    itemInfo.Amount -= divideStackWindow.GetAmount();
+                    cell.GetItemInfo().Amount += divideStackWindow.GetAmount();
+                    return InsertResult.PartlyStacked;
+                    //}
+                }
             }
         }
 
@@ -251,9 +267,13 @@ public partial class GridInventory : GridContainer
         }
 
         GridCell cell = GetCellAt(atGridPos);
-        if (cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id)
+        Log.Debug("cell item id: " + (cell.GetItemInfo() != null ? cell.GetItemInfo().Id : "no item on this cell") + "  dragging item id: " + itemInfo.Id);
+        Log.Debug("cell item: " + cell.GetItemInfo() + "  dragging item: " + itemInfo);
+        if (cell.GetItemInfo() != null && cell.GetItemInfo() != itemInfo && cell.GetItemInfo().Id == itemInfo.Id)
         {
+            Log.Debug("Stacking items...");
             cell.GetItemInfo().Amount += itemInfo.Amount;
+            itemInfo.Amount = 0;
             return InsertResult.Stacked;
         }
 

@@ -191,6 +191,7 @@ public partial class GridCell : TextureRect, IItemSlot
         }
 
         GridInventory.InsertResult res = await _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
+        Log.Debug("Insert item by dragging result: " + res);
         switch (res)
         {
             case GridInventory.InsertResult.Cancelled:
@@ -199,6 +200,8 @@ public partial class GridCell : TextureRect, IItemSlot
             case GridInventory.InsertResult.Stacked:
             case GridInventory.InsertResult.PartlyStacked:
                 return IItemSlot.EquipResult.Stacked;
+            case GridInventory.InsertResult.PartlyMoved:
+                return IItemSlot.EquipResult.PartlyMoved;
         }
 
         SetItemInfo(itemInfo);
