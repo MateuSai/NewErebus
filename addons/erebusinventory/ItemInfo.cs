@@ -1,10 +1,11 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Data;
 
 namespace ErebusInventory;
 
-public partial class ItemInfo : GodotObject
+public partial class ItemInfo : GodotObject, ICloneable
 {
     public readonly string Id;
 
@@ -64,5 +65,22 @@ public partial class ItemInfo : GodotObject
     public bool IsStackable()
     {
         return Capacity > 1;
+    }
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
+
+    public void DisconnectAllSignals()
+    {
+        foreach (Dictionary signalDic in GetSignalList())
+        {
+            Array<Dictionary> connectionList = GetSignalConnectionList((string)signalDic["name"]);
+            foreach (Dictionary connectionDic in connectionList)
+            {
+                connectionDic["signal"] -= (Callable)connectionDic["callable"];
+            }
+        }
     }
 }

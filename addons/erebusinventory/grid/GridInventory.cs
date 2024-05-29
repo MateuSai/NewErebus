@@ -179,6 +179,7 @@ public partial class GridInventory : GridContainer
     {
         if (!IsGridPositionValid(atGridPos, itemInfo))
         {
+            Log.Debug("Grid position not valid");
             return false;
         }
 
@@ -203,6 +204,7 @@ public partial class GridInventory : GridContainer
             //GD.Print("Checking " + pos);
             if (!IsGridPositionValid(pos, itemInfo))
             {
+                Log.Debug("Grid position not valid");
                 return false;
             }
         }
@@ -216,7 +218,7 @@ public partial class GridInventory : GridContainer
 
         GridCell cell = GetCellAt(atGridPos);
 
-        if (!skipDivideWindow && CanSplitItems && Input.IsKeyPressed(Key.Ctrl) && ((cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id && cell.GetItemInfo().IsStackable()) || (cell.GetItemInfo() == null && itemInfo.IsStackable())))
+        /*if (!skipDivideWindow && CanSplitItems && Input.IsKeyPressed(Key.Ctrl) && ((cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id && cell.GetItemInfo().IsStackable()) || (cell.GetItemInfo() == null && itemInfo.IsStackable())))
         {
             Log.Debug("Opening window to split item...");
             DivideStackWindow divideStackWindow = GD.Load<PackedScene>("res://ui/inventory/divide_stack_window/DivideStackWindow.tscn").Instantiate<DivideStackWindow>();
@@ -254,7 +256,7 @@ public partial class GridInventory : GridContainer
                     //}
                 }
             }
-        }
+        }*/
 
         return InsertItem(itemInfo, atGridPos);
     }
@@ -343,22 +345,29 @@ public partial class GridInventory : GridContainer
 
         if (gridPos.X >= Columns || gridPos.Y >= Rows)
         {
-            //GD.Print("hisds");
-            return false; // Grid position if not inside the grid
+            Log.Debug("Gris position outside grid!");
+            return false; // Grid position is not inside the grid
         }
 
         System.Diagnostics.Debug.Assert(GetCellAt(gridPos) != null);
         GridCell cell = GetCellAt(gridPos: gridPos);
-        //Log.Debug("draggingItemInfo: " + draggingItemInfo);
-        //Log.Debug("cell ItemInfo: " + cell.GetItemInfo());
+        Log.Debug("draggingItemInfo: " + draggingItemInfo);
+        Log.Debug("cell ItemInfo: " + cell.GetItemInfo());
+        Log.Debug("draggingItemInfo id: " + ((draggingItemInfo != null) ? draggingItemInfo.Id : "NULL"));
+        Log.Debug("cell ItemInfo id: " + ((cell.GetItemInfo() != null) ? cell.GetItemInfo().Id : "NULL"));
+        Log.Debug("cell is empty: " + cell.IsEmpty().ToString());
+        if (!cell.IsEmpty())
+        {
+            Log.Debug("(draggingItemInfo != null && (cell.GetItemInfo() == draggingItemInfo || (cell.GetItemInfo().Id == draggingItemInfo.Id && cell.GetItemInfo().IsStackable())): " + (draggingItemInfo != null && (cell.GetItemInfo() == draggingItemInfo || (cell.GetItemInfo().Id == draggingItemInfo.Id && cell.GetItemInfo().IsStackable()))).ToString());
+        }
         if (cell.IsEmpty() || (draggingItemInfo != null && (cell.GetItemInfo() == draggingItemInfo || (cell.GetItemInfo().Id == draggingItemInfo.Id && cell.GetItemInfo().IsStackable()))))
         {
-            //  Log.Debug("Grid position is valid");
+            Log.Debug("Grid position is valid");
             return true;
         }
         else
         {
-            //Log.Debug("Grid position is NOT valid");
+            Log.Debug("Grid position is NOT valid");
             return false; // This grid cell is already occupied with another item
         }
     }

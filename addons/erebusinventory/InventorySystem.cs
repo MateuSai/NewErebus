@@ -1,3 +1,5 @@
+using Erebus.Autoloads;
+using Erebus.UI.Inventory.DivideStackWindow;
 using ErebusLogger;
 using Godot;
 using System;
@@ -24,6 +26,8 @@ public partial class InventorySystem : CanvasLayer
     }
     private TextureRect _draggingIcon = null;
 
+    private Globals _globals;
+
     private readonly List<IItemSlot> _slotsUnderMouse = new();
 
     public InventorySystem()
@@ -34,6 +38,8 @@ public partial class InventorySystem : CanvasLayer
     public override void _Ready()
     {
         base._Ready();
+
+        _globals = GetTree().Root.GetNode<Globals>("Globals");
 
         SetProcess(false);
     }
@@ -110,14 +116,75 @@ public partial class InventorySystem : CanvasLayer
         }
         else
         {
-            if (_slotsUnderMouse[0].CanEquip(DraggingItem))
+            IItemSlot slot = _slotsUnderMouse[0];
+
+            if (slot.CanEquip(DraggingItem))
             {
-                IItemSlot.EquipResult res = await _slotsUnderMouse[0].Equip(DraggingItem);
-                Log.Debug("Equip result: " + res);
-                if (res == IItemSlot.EquipResult.Moved || (res == IItemSlot.EquipResult.Stacked && _draggingItemInfo.Amount == 0) || (res == IItemSlot.EquipResult.PartlyMoved && _draggingItemInfo.Amount == 0))
+                bool cancelledDivide = false;
+
+                if (Input.IsKeyPressed(Key.Ctrl))
                 {
-                    Log.Debug("Unequipping dragging item...");
-                    _draggingItemSlot.Unequip();
+                    Log.Debug("Opening window to split item...");
+                    DivideStackWindow divideStackWindow = GD.Load<PackedScene>("res://ui/inventory/divide_stack_window/DivideStackWindow.tscn").Instantiate<DivideStackWindow>();
+                    _globals.UI.AddChild(divideStackWindow);
+                    divideStackWindow.Setup(DraggingItem);
+                    divideStackWindow.Position = GetViewport().GetMousePosition();
+                    await ToSignal(divideStackWindow, "tree_exiting");
+
+                    if (divideStackWindow.GetAmount() == 0)
+                    {
+                        Log.Debug("Split cancelled!");
+                        cancelledDivide = true;
+                    }
+                    else
+                    {
+                        if (slot.GetItemInfo() == null && DraggingItem.IsStackable())
+                        {
+                            Log.Debug("Amount moved to new slot: " + divideStackWindow.GetAmount());
+                            ItemInfo itemInfoToInsert = (ItemInfo)DraggingItem.Clone();
+                            itemInfoToInsert.Amount = divideStackWindow.GetAmount();
+                            DraggingItem.Amount -= divideStackWindow.GetAmount();
+                            DraggingItem = itemInfoToInsert;
+                            //IItemSlot.EquipResult equipResult = await slot.Equip(itemInfoToInsert);
+                            //Log.Debug("Equip new partly moved item result: " + equipResult);
+                            // return InsertResult.PartlyMoved;
+                            //itemInfo = itemInfoToInsert; // So this is the item that is inserted instead of the one we were dragging. It will be inserted on the InsertItem function
+                        }
+                        else
+                        {
+                            Log.Debug("Amount to stack: " + divideStackWindow.GetAmount());
+                            //if (cell.GetItemInfo() != null && cell.GetItemInfo().Id == itemInfo.Id)
+                            //{
+                            DraggingItem.Amount -= divideStackWindow.GetAmount();
+                            slot.GetItemInfo().Amount += divideStackWindow.GetAmount();
+                            slot = null; // So no item is equipped
+                            //return InsertResult.PartlyStacked;
+                            //}
+                        }
+
+                        _draggingItemSlot = null;
+                    }
+                }
+
+                if (cancelledDivide)
+                {
+                    TweenDraggingIconBack();
+                }
+                else
+                {
+                    if (_draggingItemSlot != null)
+                    {
+                        Log.Debug("Unequipping dragging item...");
+                        _draggingItemSlot.Unequip();
+                    }
+                    if (slot != null)
+                    {
+                        IItemSlot.EquipResult res = await slot.Equip(DraggingItem);
+                        Log.Debug("Equip result: " + res);
+                    }
+                    //if (res == IItemSlot.EquipResult.Moved || (res == IItemSlot.EquipResult.Stacked && _draggingItemInfo.Amount == 0) || (res == IItemSlot.EquipResult.PartlyMoved && _draggingItemInfo.Amount == 0))
+                    //{
+                    //}
                 }
                 _draggingIcon.QueueFree();
                 _draggingIcon = null;
@@ -131,6 +198,8 @@ public partial class InventorySystem : CanvasLayer
 
         _draggingItemSlot = null;
         DraggingItem = null;
+
+        Log.Debug("Ended release");
 
         Enable();
     }
