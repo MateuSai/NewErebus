@@ -122,13 +122,14 @@ public partial class InventorySystem : CanvasLayer
             {
                 bool cancelledDivide = false;
 
-                if (Input.IsKeyPressed(Key.Ctrl))
+                if (Input.IsKeyPressed(Key.Ctrl) && DraggingItem.IsStackable())
                 {
                     Log.Debug("Opening window to split item...");
                     DivideStackWindow divideStackWindow = GD.Load<PackedScene>("res://ui/inventory/divide_stack_window/DivideStackWindow.tscn").Instantiate<DivideStackWindow>();
                     _globals.UI.AddChild(divideStackWindow);
                     divideStackWindow.Setup(DraggingItem);
                     divideStackWindow.Position = GetViewport().GetMousePosition();
+                    _draggingIcon.Hide();
                     await ToSignal(divideStackWindow, "tree_exiting");
 
                     if (divideStackWindow.GetAmount() == 0)
@@ -136,12 +137,16 @@ public partial class InventorySystem : CanvasLayer
                         Log.Debug("Split cancelled!");
                         cancelledDivide = true;
                     }
+                    else if (divideStackWindow.GetAmount() == DraggingItem.Amount)
+                    {
+                        // We do nothing, the item will me moved as if no split window was open
+                    }
                     else
                     {
                         if (slot.GetItemInfo() == null && DraggingItem.IsStackable())
                         {
                             Log.Debug("Amount moved to new slot: " + divideStackWindow.GetAmount());
-                            ItemInfo itemInfoToInsert = (ItemInfo)DraggingItem.Clone();
+                            ItemInfo itemInfoToInsert = (ItemInfo)DraggingItem.Duplicate();
                             itemInfoToInsert.Amount = divideStackWindow.GetAmount();
                             DraggingItem.Amount -= divideStackWindow.GetAmount();
                             DraggingItem = itemInfoToInsert;
@@ -179,8 +184,8 @@ public partial class InventorySystem : CanvasLayer
                     }
                     if (slot != null)
                     {
-                        IItemSlot.EquipResult res = await slot.Equip(DraggingItem);
-                        Log.Debug("Equip result: " + res);
+                        slot.Equip(DraggingItem);
+                        //Log.Debug("Equip result: " + res);
                     }
                     //if (res == IItemSlot.EquipResult.Moved || (res == IItemSlot.EquipResult.Stacked && _draggingItemInfo.Amount == 0) || (res == IItemSlot.EquipResult.PartlyMoved && _draggingItemInfo.Amount == 0))
                     //{

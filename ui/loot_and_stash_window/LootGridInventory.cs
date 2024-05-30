@@ -25,11 +25,11 @@ public partial class LootGridInventory : GridInventory
         _globals = GetTree().Root.GetNode<Globals>("Globals");
     }
 
-    public override async Task<InsertResult> InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos, bool skipDivideWindow = false)
+    public override InsertResult InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos, bool skipDivideWindow = false)
     {
         Log.Debug("InsertItemByDragging from LootGridInventory");
 
-        InsertResult res = await base.InsertItemByDragging(itemInfo, atGridPos, skipDivideWindow);
+        InsertResult res = base.InsertItemByDragging(itemInfo, atGridPos, skipDivideWindow);
         if (res == InsertResult.Stacked || res == InsertResult.Cancelled || res == InsertResult.PartlyStacked || res == InsertResult.PartlyMoved)
         {
             return res;

@@ -33,13 +33,13 @@ public partial class HelmetEquipmentItemSlot : EquipmentItemSlot
         return base.CanEquip(itemInfo);
     }
 
-    public override Task<IItemSlot.EquipResult> Equip(ItemInfo itemInfo)
+    public override void Equip(ItemInfo itemInfo)
     {
         if (!CanEquip(itemInfo))
         {
             Log.Fatal("Tried to equip item on slot when CanEquip returns false", GetTree());
         }
 
-        return base.Equip(itemInfo);
+        base.Equip(itemInfo);
     }
 }

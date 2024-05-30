@@ -183,25 +183,25 @@ public partial class GridCell : TextureRect, IItemSlot
         return true;
     }
 
-    public async Task<IItemSlot.EquipResult> Equip(ItemInfo itemInfo)
+    public void Equip(ItemInfo itemInfo)
     {
         if (!CanEquip(itemInfo))
         {
             Log.Fatal("Tried to equip item on cell when CanEquip returns false", GetTree());
         }
 
-        GridInventory.InsertResult res = await _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
+        GridInventory.InsertResult res = _gridInventory.InsertItemByDragging(itemInfo, new Vector2I(X, Y));
         Log.Debug("Insert item by dragging result: " + res);
         switch (res)
         {
             case GridInventory.InsertResult.Cancelled:
                 Debug.Assert(GetItemInfo() != null);
-                return IItemSlot.EquipResult.Cancelled;
+                return; //IItemSlot.EquipResult.Cancelled;
             case GridInventory.InsertResult.Stacked:
             case GridInventory.InsertResult.PartlyStacked:
-                return IItemSlot.EquipResult.Stacked;
+                return; //IItemSlot.EquipResult.Stacked;
             case GridInventory.InsertResult.PartlyMoved:
-                return IItemSlot.EquipResult.PartlyMoved;
+                return; //IItemSlot.EquipResult.PartlyMoved;
         }
 
         SetItemInfo(itemInfo);
@@ -226,7 +226,7 @@ public partial class GridCell : TextureRect, IItemSlot
             _label.Hide();
         }
 
-        return IItemSlot.EquipResult.Moved;
+        return; //IItemSlot.EquipResult.Moved;
     }
 
     public TextureRect GetIconTextureRect()

@@ -8,8 +8,12 @@ namespace Erebus.UI.Inventory.DivideStackWindow;
 
 public partial class DivideStackWindow : PanelContainer
 {
+    private int _previousCaretColumn = 0;
+    private string _previousAmountText = "0";
+
     private Globals _globals;
     private HideButton _hideButton;
+    private TextureRect _itemIcon;
     private HSlider _amountSlider;
     private TextEdit _amountTextEdit;
     private Button _acceptButton;
@@ -21,6 +25,7 @@ public partial class DivideStackWindow : PanelContainer
 
         _globals = GetTree().Root.GetNode<Globals>("Globals");
         _hideButton = GetNode<HideButton>("%HideButton");
+        _itemIcon = GetNode<TextureRect>("%ItemIcon");
         _amountSlider = GetNode<HSlider>("%AmountSlider");
         _amountTextEdit = GetNode<TextEdit>("%AmountTextEdit");
         _acceptButton = GetNode<Button>("%AcceptButton");
@@ -45,6 +50,20 @@ public partial class DivideStackWindow : PanelContainer
         {
             _amountTextEdit.Text = newValue.ToString();
         };
+
+        _amountTextEdit.TextChanged += () =>
+        {
+            if (!_amountTextEdit.Text.IsValidInt() || _amountTextEdit.Text.ToInt() < 0 || _amountTextEdit.Text.ToInt() > _amountSlider.MaxValue)
+            {
+                _amountTextEdit.Text = _previousAmountText;
+                _amountTextEdit.SetCaretColumn(_amountTextEdit.Text.Length);
+            }
+            else
+            {
+                _previousAmountText = _amountTextEdit.Text;
+                _amountSlider.Value = _amountTextEdit.Text.ToInt();
+            }
+        };
     }
 
     public override void _Input(InputEvent @event)
@@ -66,6 +85,7 @@ public partial class DivideStackWindow : PanelContainer
 
     public void Setup(ItemInfo item)
     {
+        _itemIcon.Texture = item.Icon;
         _amountSlider.MaxValue = item.Amount;
     }
 

@@ -17,7 +17,7 @@ public interface IItemSlot
     /// <summary>
     /// Equips item to the slot. Dependending on the situation, the item can be moved from one slot to the other, stacked...
     /// </summary>
-    Task<EquipResult> Equip(ItemInfo itemInfo);
+    void Equip(ItemInfo itemInfo);
 
     void Unequip();
 

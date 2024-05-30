@@ -127,7 +127,7 @@ public partial class GridInventory : GridContainer
         }
     }
 
-    public async void InsertItemAutomatically(ItemInfo itemInfo)
+    public void InsertItemAutomatically(ItemInfo itemInfo)
     {
         Vector2I gridPos = new(0, 0);
         GridCell gridCell = null;
@@ -172,7 +172,7 @@ public partial class GridInventory : GridContainer
             }
         }
 
-        await gridCell.Equip(itemInfo);
+        gridCell.Equip(itemInfo);
     }
 
     public bool CanInsertItemAt(ItemInfo itemInfo, Vector2I atGridPos)
@@ -212,7 +212,7 @@ public partial class GridInventory : GridContainer
         return true;
     }
 
-    public virtual async Task<InsertResult> InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos, bool skipDivideWindow = false)
+    public virtual InsertResult InsertItemByDragging(ItemInfo itemInfo, Vector2I atGridPos, bool skipDivideWindow = false)
     {
         Log.Debug("InsertItemByDragging");
 

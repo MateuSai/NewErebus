@@ -48,7 +48,7 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
         return true;
     }
 
-    public virtual Task<IItemSlot.EquipResult> Equip(ItemInfo itemInfo)
+    public virtual void Equip(ItemInfo itemInfo)
     {
         Log.Debug("Equip");
         if (!CanEquip(itemInfo))
@@ -60,7 +60,7 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 
         _icon.Texture = _itemInfo.Icon;
 
-        return Task.FromResult(IItemSlot.EquipResult.Moved);
+        return; //Task.FromResult(IItemSlot.EquipResult.Moved);
     }
 
     public ItemInfo Grab()

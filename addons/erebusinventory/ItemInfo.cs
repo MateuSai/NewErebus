@@ -5,7 +5,7 @@ using System.Data;
 
 namespace ErebusInventory;
 
-public partial class ItemInfo : GodotObject, ICloneable
+public partial class ItemInfo : Resource
 {
     public readonly string Id;
 
@@ -57,30 +57,25 @@ public partial class ItemInfo : GodotObject, ICloneable
         Capacity = capacity;
     }
 
-    public ItemInfo Duplicate()
+    /* public ItemInfo Duplicate()
     {
         return new ItemInfo(Icon, BaseWidth, BaseHeight, Capacity);
-    }
+    } */
 
     public bool IsStackable()
     {
         return Capacity > 1;
     }
 
-    public object Clone()
-    {
-        return MemberwiseClone();
-    }
-
-    public void DisconnectAllSignals()
+    /* public void DisconnectAllSignals()
     {
         foreach (Dictionary signalDic in GetSignalList())
         {
             Array<Dictionary> connectionList = GetSignalConnectionList((string)signalDic["name"]);
             foreach (Dictionary connectionDic in connectionList)
             {
-                connectionDic["signal"] -= (Callable)connectionDic["callable"];
+                ((Signal)connectionDic["signal"]) -= (Callable)connectionDic["callable"];
             }
         }
-    }
+    } */
 }
