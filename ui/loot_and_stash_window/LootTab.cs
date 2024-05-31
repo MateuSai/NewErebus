@@ -3,6 +3,7 @@ using Erebus.Items;
 using ErebusLogger;
 using Godot;
 using System.Collections.Generic;
+using Log = ErebusLogger.Log;
 
 namespace Erebus.UI.LootAndStashWindow;
 

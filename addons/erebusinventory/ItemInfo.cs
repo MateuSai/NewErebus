@@ -1,3 +1,4 @@
+using ErebusLogger;
 using Godot;
 using Godot.Collections;
 using System;
@@ -55,6 +56,33 @@ public partial class ItemInfo : Resource
         _baseWidth = baseWidth;
         _baseHeight = baseHeight;
         Capacity = capacity;
+    }
+
+    public static ItemInfo FromJsonFile(string path)
+    {
+        return FromDic(LoadDicFromJsonFile(path));
+    }
+
+    public static ItemInfo FromDic(Dictionary dic)
+    {
+        return new ItemInfo(
+            GD.Load<Texture2D>((string)dic["icon_path"]),
+            (int)dic["width"],
+            (int)dic["height"],
+            dic.ContainsKey("capacity") ? (short)dic["capacity"] : (short)1
+        );
+    }
+
+    private static Dictionary LoadDicFromJsonFile(string path)
+    {
+        FileAccess fileAccess = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+        if (fileAccess == null)
+        {
+            GD.PrintErr("Could not load json file");
+            return null;
+        }
+
+        return (Dictionary)((Dictionary)Json.ParseString(fileAccess.GetAsText()))["data"];
     }
 
     /* public ItemInfo Duplicate()

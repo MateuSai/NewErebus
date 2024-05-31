@@ -129,3 +129,10 @@ collision_layer = 2
 collision_mask = 0
 script = ExtResource("6_yv527")
 ItemInfoId = "SmallFoodCan"
+
+[node name="ItemOnFloor9" type="Area2D" parent="."]
+position = Vector2(275, 97)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("6_yv527")
+ItemInfoId = "tonic_bottle"

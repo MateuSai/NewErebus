@@ -3,6 +3,7 @@ using ErebusLogger;
 using Godot;
 using System;
 using System.Threading.Tasks;
+using Log = ErebusLogger.Log;
 
 namespace ErebusInventory;
 

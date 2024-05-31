@@ -1,7 +1,9 @@
+using Erebus.Autoloads;
 using ErebusInventory;
 using ErebusLogger;
 using Godot;
 using System;
+using Log = ErebusLogger.Log;
 
 namespace Erebus.Items;
 
@@ -27,12 +29,16 @@ public partial class ItemOnFloor : Area2D
 
     public ItemInfo ItemInfo = null;
 
+    private Globals _globals;
+
     private Sprite2D _sprite;
     private CollisionShape2D _collisionShape;
 
     public override void _Ready()
     {
         base._Ready();
+
+        _globals = GetTree().Root.GetNode<Globals>("Globals");
 
         CollisionLayer = 2; // Item
         CollisionMask = 0;
@@ -53,8 +59,16 @@ public partial class ItemOnFloor : Area2D
 
     public void InitializeWithId(string itemInfoId)
     {
-        DirAccess itemsDir = DirAccess.Open("res://items");
-        ItemInfo = SearchSubDirsForItem(itemsDir, itemInfoId);
+        ItemInfo modItem = _globals.GetModItem(itemInfoId);
+        if (modItem != null)
+        {
+            ItemInfo = modItem;
+        }
+        else
+        {
+            DirAccess itemsDir = DirAccess.Open("res://items");
+            ItemInfo = SearchSubDirsForItem(itemsDir, itemInfoId);
+        }
 
         Initialize();
     }

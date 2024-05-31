@@ -5,6 +5,7 @@ using Godot;
 using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using Log = ErebusLogger.Log;
 
 namespace Erebus.UI.Inventory;
 
