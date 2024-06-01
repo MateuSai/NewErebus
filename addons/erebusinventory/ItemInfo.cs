@@ -82,7 +82,7 @@ public partial class ItemInfo : Resource
             return null;
         }
 
-        return (Dictionary)((Dictionary)Json.ParseString(fileAccess.GetAsText()))["data"];
+        return (Dictionary)Json.ParseString(fileAccess.GetAsText());
     }
 
     /* public ItemInfo Duplicate()

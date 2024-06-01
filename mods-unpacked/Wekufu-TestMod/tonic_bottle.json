@@ -2,5 +2,5 @@
     "$schema": "../../items/schema.json",
     "icon_path": "res://art/ui/inventory_icons/Tonic_boottle.png",
     "width": 1,
-    "height": 1
+    "height": 2
 }

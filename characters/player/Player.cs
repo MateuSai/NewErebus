@@ -35,11 +35,6 @@ public partial class Player : Character
     }
     private VerticalFacingDir _verticalFacingDir = VerticalFacingDir.Bottom;
 
-    public enum State
-    {
-        Idle,
-        Move,
-    }
     private PlayerStateMachine _stateMachine;
 
     private Sprite2D _backpackSprite;
@@ -47,12 +42,6 @@ public partial class Player : Character
     private Sprite2D _sprite;
     private AnimationPlayer _animationPlayer;
     private PlayerWeapons _weapons;
-    private Skeleton2D _skeleton2D;
-    private SkeletonModificationStack2D _skeletonModifications;
-    private SkeletonModification2DTwoBoneIK _rightIK;
-    private SkeletonModification2DTwoBoneIK _leftIK;
-    private Bone2D _rightArm;
-    private Bone2D _leftArm;
     private ItemsOnFloorDetector _itemsOnFloorDetector;
 
     public override void _Ready()
@@ -64,15 +53,9 @@ public partial class Player : Character
         _sprite = GetNode<Sprite2D>("Sprite2D");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _weapons = GetNode<PlayerWeapons>("Weapons");
-        _skeleton2D = GetNode<Skeleton2D>("Skeleton");
-        _skeletonModifications = _skeleton2D.GetModificationStack();
-        _rightIK = ((SkeletonModification2DTwoBoneIK)_skeletonModifications.GetModification(0));
-        _leftIK = ((SkeletonModification2DTwoBoneIK)_skeletonModifications.GetModification(1));
-        _rightArm = _skeleton2D.GetNode<Bone2D>("Torso/RightArm");
-        _leftArm = _skeleton2D.GetNode<Bone2D>("Torso/LeftArm");
         _itemsOnFloorDetector = GetNode<ItemsOnFloorDetector>("ItemsOnFloorDetector");
 
-        _stateMachine = new(this, _animationPlayer);
+        _stateMachine = GetNode<PlayerStateMachine>("StateMachine");
 
         _weapons.Start();
 
@@ -148,28 +131,14 @@ public partial class Player : Character
         switch (_facingDir)
         {
             case FacingDir.BottomRight:
-                _rightArm.Position = new Vector2(-3, 13);
-                _leftArm.Position = new Vector2(-3, -8);
                 break;
             case FacingDir.TopRight:
-                _rightArm.Position = new Vector2(1, -9);
-                _leftArm.Position = new Vector2(-4, 9);
                 break;
             case FacingDir.BottomLeft:
-                _rightArm.Position = new Vector2(-2, -14);
-                _leftArm.Position = new Vector2(-3, 8);
                 break;
             case FacingDir.TopLeft:
-                _rightArm.Position = new Vector2(0, 12);
-                _leftArm.Position = new Vector2(-3, -10);
                 break;
         }
-    }
-
-    public void SetIKTargets(NodePath right, NodePath left)
-    {
-        ((SkeletonModification2DTwoBoneIK)_skeletonModifications.GetModification(0)).TargetNodePath = right;
-        ((SkeletonModification2DTwoBoneIK)_skeletonModifications.GetModification(1)).TargetNodePath = left;
     }
 
     private bool IsFacingRight()
@@ -211,15 +180,11 @@ public partial class Player : Character
                 _sprite.FlipH = false;
                 _backpackSprite.FlipH = false;
                 _legsArmorSprite.FlipH = false;
-                _rightIK.FlipBendDirection = true;
-                _leftIK.FlipBendDirection = true;
                 break;
             case HorizontalFacingDir.Left:
                 _sprite.FlipH = true;
                 _backpackSprite.FlipH = true;
                 _legsArmorSprite.FlipH = true;
-                _rightIK.FlipBendDirection = false;
-                _leftIK.FlipBendDirection = false;
                 break;
             default:
                 System.Diagnostics.Debug.Assert(false, "Invalid horizontal facing direction value");

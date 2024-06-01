@@ -3,8 +3,14 @@ using Godot;
 namespace Erebus.Characters.Player;
 
 
-public class PlayerStateMachine : StateMachine
+public partial class PlayerStateMachine : StateMachine
 {
+    public enum State
+    {
+        Idle,
+        Move,
+    }
+
     private enum MoveAnimationState
     {
         Move,
@@ -14,31 +20,31 @@ public class PlayerStateMachine : StateMachine
     }
     private MoveAnimationState _moveAnimationState;
 
-    private readonly Player _player;
-    private readonly AnimationPlayer _animationPlayer;
+    private Player _player;
+    private AnimationPlayer _animationPlayer;
 
-    public PlayerStateMachine(Player player, AnimationPlayer animationPlayer)
+    public override void _Ready()
     {
-        this._player = player;
-        this._animationPlayer = animationPlayer;
+        _player = GetParent<Player>();
+        _animationPlayer = _player.GetNode<AnimationPlayer>("AnimationPlayer");
 
-        SetState((int)Player.State.Idle);
+        SetState((int)State.Idle);
     }
 
     protected override int GetTransition()
     {
         switch (_state)
         {
-            case (int)Player.State.Idle:
+            case (int)State.Idle:
                 if (_player.Velocity.Length() > 10)
                 {
-                    return (int)Player.State.Move;
+                    return (int)State.Move;
                 }
                 break;
-            case (int)Player.State.Move:
+            case (int)State.Move:
                 if (_player.Velocity.Length() < 10)
                 {
-                    return (int)Player.State.Idle;
+                    return (int)State.Idle;
                 }
                 break;
         }
@@ -50,7 +56,7 @@ public class PlayerStateMachine : StateMachine
     {
         switch (_state)
         {
-            case (int)Player.State.Idle:
+            case (int)State.Idle:
                 //GD.Print("hi");
                 if (_player.MouseDirection.Y > 0)
                 {
@@ -61,7 +67,7 @@ public class PlayerStateMachine : StateMachine
                     _animationPlayer.Play("idle_up");
                 }
                 break;
-            case (int)Player.State.Move:
+            case (int)State.Move:
                 //GD.Print("ho");
                 if (_player.MouseDirection.Y >= 0)
                 {

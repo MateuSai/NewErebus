@@ -1,17 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://bipi44042cy2n"]
+[gd_scene load_steps=16 format=3 uid="uid://bipi44042cy2n"]
 
 [ext_resource type="Script" path="res://characters/player/Player.cs" id="1_3m1rv"]
 [ext_resource type="Texture2D" uid="uid://bffdpfjlgx1ln" path="res://art/characters/player/Player_sprite_shet.png" id="1_ealcd"]
+[ext_resource type="Script" path="res://characters/player/PlayerStateMachine.cs" id="2_06siv"]
 [ext_resource type="Texture2D" uid="uid://c7o05w256inv7" path="res://art/New_simple_shadow.png" id="2_itcvd"]
 [ext_resource type="Texture2D" uid="uid://44r3o5tmxdoe" path="res://art/player_equipment/bags/Backpack_base.png" id="2_rq8e7"]
-[ext_resource type="Texture2D" uid="uid://n5dgpybg7awf" path="res://art/characters/char_arms/Right_arm.png" id="3_331if"]
-[ext_resource type="Texture2D" uid="uid://bfse5m5ttjpgr" path="res://art/characters/char_arms/Left_forearm.png" id="3_qtt10"]
-[ext_resource type="Texture2D" uid="uid://bjbld6pbuidqc" path="res://art/characters/char_arms/Right_forearm.png" id="4_342y3"]
-[ext_resource type="Texture2D" uid="uid://4q46ei6s36co" path="res://art/characters/char_arms/Left_arm.png" id="4_ox27k"]
-[ext_resource type="Texture2D" uid="uid://wylw2s3ipedx" path="res://art/characters/hands/Left_hand_fists.png" id="5_783ab"]
 [ext_resource type="Script" path="res://weapons/PlayerWeapons.cs" id="8_f8lgk"]
 [ext_resource type="Texture2D" uid="uid://jn2uxhy8bdwg" path="res://art/player_equipment/pants/Jeans_and_boots.png" id="8_ht6n1"]
-[ext_resource type="Texture2D" uid="uid://btt8mdsjnql2o" path="res://art/characters/hands/Right_hand_fists.png" id="9_s6vb7"]
 [ext_resource type="Script" path="res://characters/player/ItemsOnFloorDetector.cs" id="13_bck7b"]
 
 [sub_resource type="Animation" id="Animation_j6qrv"]
@@ -49,7 +44,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [0]
 }
 
@@ -91,7 +86,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [0, 1, 2, 3, 4, 5]
 }
 
@@ -133,7 +128,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [6, 7, 8, 9, 10, 11]
 }
 
@@ -174,7 +169,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [17, 16, 15, 14, 13, 12]
 }
 
@@ -215,7 +210,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [23, 22, 21, 20, 19, 18]
 }
 
@@ -228,33 +223,14 @@ _data = {
 "move_up": SubResource("Animation_kxpb0")
 }
 
-[sub_resource type="SkeletonModification2DTwoBoneIK" id="SkeletonModification2DTwoBoneIK_nmkjf"]
-target_nodepath = NodePath("../IKRightHandTarget")
-flip_bend_direction = true
-joint_one_bone_idx = 1
-joint_one_bone2d_node = NodePath("Torso/RightArm")
-joint_two_bone_idx = 2
-joint_two_bone2d_node = NodePath("Torso/RightArm/RightForearm")
-
-[sub_resource type="SkeletonModification2DTwoBoneIK" id="SkeletonModification2DTwoBoneIK_m0nyc"]
-target_nodepath = NodePath("../IKLeftHandTarget")
-flip_bend_direction = true
-joint_one_bone_idx = 4
-joint_one_bone2d_node = NodePath("Torso/LeftArm")
-joint_two_bone_idx = 5
-joint_two_bone2d_node = NodePath("Torso/LeftArm/LeftForearm")
-
-[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_7pqvl"]
-enabled = true
-modification_count = 2
-modifications/0 = SubResource("SkeletonModification2DTwoBoneIK_nmkjf")
-modifications/1 = SubResource("SkeletonModification2DTwoBoneIK_m0nyc")
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_kms6e"]
 radius = 33.0151
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3m1rv")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_06siv")
 
 [node name="Backpack" type="Sprite2D" parent="."]
 position = Vector2(0, -29)
@@ -265,34 +241,6 @@ vframes = 5
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0, 6)
 texture = ExtResource("2_itcvd")
-
-[node name="LeftArm" type="Polygon2D" parent="."]
-visible = false
-offset = Vector2(8, -42)
-texture = ExtResource("4_ox27k")
-skeleton = NodePath("../Skeleton")
-polygon = PackedVector2Array(5, 8.5, -5, 8.5, -5, -8.5, 5, -8.5)
-uv = PackedVector2Array(10, 17, 0, 17, 0, 0, 10, 0)
-polygons = [PackedInt32Array(0, 1, 2, 3)]
-bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
-
-[node name="LeftForearm" type="Polygon2D" parent="."]
-visible = false
-offset = Vector2(8, -31)
-texture = ExtResource("3_qtt10")
-skeleton = NodePath("../Skeleton")
-polygon = PackedVector2Array(4, 6, -4, 6, -4, -6, 4, -6)
-uv = PackedVector2Array(8, 12, 0, 12, 0, 0, 8, 0)
-polygons = [PackedInt32Array(0, 1, 2, 3)]
-bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
-
-[node name="LeftHand" type="Sprite2D" parent="."]
-position = Vector2(49, -24)
-texture = ExtResource("5_783ab")
-offset = Vector2(5, 0)
-
-[node name="PosicionManoIzq" type="Node2D" parent="."]
-position = Vector2(-1, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -29)
@@ -306,31 +254,6 @@ texture = ExtResource("8_ht6n1")
 hframes = 6
 vframes = 5
 
-[node name="RightArm" type="Polygon2D" parent="."]
-visible = false
-offset = Vector2(-13, -41)
-texture = ExtResource("3_331if")
-skeleton = NodePath("../Skeleton")
-polygon = PackedVector2Array(5, 8.5, -5, 8.5, -5, -8.5, 5, -8.5)
-uv = PackedVector2Array(10, 17, 0, 17, 0, 0, 10, 0)
-polygons = [PackedInt32Array(0, 1, 2, 3)]
-bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/RightArm/RightForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
-
-[node name="RightForearm" type="Polygon2D" parent="."]
-visible = false
-offset = Vector2(-13, -29)
-texture = ExtResource("4_342y3")
-skeleton = NodePath("../Skeleton")
-polygon = PackedVector2Array(4, 6, -4, 6, -4, -6, 4, -6)
-uv = PackedVector2Array(8, 12, 0, 12, 0, 0, 8, 0)
-polygons = [PackedInt32Array(0, 1, 2, 3)]
-bones = ["Torso", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm", PackedFloat32Array(0, 0, 0, 0), "Torso/RightArm/RightForearm", PackedFloat32Array(0.5, 0.5, 0.5, 0.5), "Torso/RightArm/RightForearm/RightHand", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm", PackedFloat32Array(0, 0, 0, 0), "Torso/LeftArm/LeftForearm/LeftHand", PackedFloat32Array(0, 0, 0, 0)]
-
-[node name="RightHand" type="Sprite2D" parent="."]
-position = Vector2(34, 3)
-texture = ExtResource("9_s6vb7")
-offset = Vector2(5, 0)
-
 [node name="Weapons" type="Node2D" parent="."]
 position = Vector2(0, -44)
 script = ExtResource("8_f8lgk")
@@ -339,59 +262,6 @@ script = ExtResource("8_f8lgk")
 libraries = {
 "": SubResource("AnimationLibrary_s6xb1")
 }
-
-[node name="Skeleton" type="Skeleton2D" parent="."]
-visible = false
-modification_stack = SubResource("SkeletonModificationStack2D_7pqvl")
-
-[node name="Torso" type="Bone2D" parent="Skeleton"]
-position = Vector2(0, -44)
-rotation = 1.5708
-rest = Transform2D(-3.61999e-06, 1, -1, -3.61999e-06, 0, -44)
-
-[node name="RightArm" type="Bone2D" parent="Skeleton/Torso"]
-position = Vector2(-0.999954, 13)
-scale = Vector2(0.999987, 0.999987)
-rest = Transform2D(0.999998, 0, 0, 0.999998, -2.99995, 13)
-metadata/_local_pose_override_enabled_ = true
-
-[node name="RightForearm" type="Bone2D" parent="Skeleton/Torso/RightArm"]
-position = Vector2(14, -5.07832e-05)
-scale = Vector2(0.999998, 0.999998)
-rest = Transform2D(0.999998, 0, 0, 0.999998, 14, -5.07832e-05)
-metadata/_local_pose_override_enabled_ = true
-
-[node name="RightHand" type="Bone2D" parent="Skeleton/Torso/RightArm/RightForearm"]
-position = Vector2(9, 0)
-rest = Transform2D(1, 0, 0, 1, 9, 0)
-auto_calculate_length_and_angle = false
-length = 8.0
-bone_angle = 0.0
-
-[node name="LeftArm" type="Bone2D" parent="Skeleton/Torso"]
-position = Vector2(-3.00003, -7.99999)
-rotation = -0.178422
-scale = Vector2(0.999952, 0.999952)
-rest = Transform2D(1, 0, 0, 1, -3.00003, -7.99999)
-metadata/_local_pose_override_enabled_ = true
-
-[node name="LeftForearm" type="Bone2D" parent="Skeleton/Torso/LeftArm"]
-position = Vector2(13, -4.70599e-05)
-rest = Transform2D(1, 0, 0, 1, 13, -4.70599e-05)
-metadata/_local_pose_override_enabled_ = true
-
-[node name="LeftHand" type="Bone2D" parent="Skeleton/Torso/LeftArm/LeftForearm"]
-position = Vector2(9, -3.25799e-05)
-rest = Transform2D(1, 0, 0, 1, 9, -3.25799e-05)
-auto_calculate_length_and_angle = false
-length = 8.0
-bone_angle = 0.0
-
-[node name="IKRightHandTarget" type="Node2D" parent="."]
-position = Vector2(-13, -17)
-
-[node name="IKLeftHandTarget" type="Node2D" parent="."]
-position = Vector2(14, -26)
 
 [node name="ItemsOnFloorDetector" type="Area2D" parent="."]
 collision_layer = 0
