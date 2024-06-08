@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://b8yqsjx3to8rn"]
+
+[ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_8ro17"]
+[ext_resource type="Texture2D" uid="uid://brqqvsof5brw2" path="res://art/ui/Inventory_background_base.png" id="1_wbq4r"]
+[ext_resource type="Script" path="res://ui/item_menu/ItemMenu.cs" id="2_kxrb6"]
+[ext_resource type="StyleBox" uid="uid://dagsu4311yd5h" path="res://art/ui/Contextual_menu_text_label.tres" id="3_xmpyt"]
+[ext_resource type="StyleBox" uid="uid://6o88d555betx" path="res://art/ui/Contextual_menu_text_label_hover.tres" id="4_dn5hv"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jcpmh"]
+texture = ExtResource("1_wbq4r")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+
+[node name="ItemMenu" type="PanelContainer"]
+offset_right = 46.0
+offset_bottom = 18.0
+theme = ExtResource("1_8ro17")
+theme_override_styles/panel = SubResource("StyleBoxTexture_jcpmh")
+script = ExtResource("2_kxrb6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="InfoButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("3_xmpyt")
+theme_override_styles/hover = ExtResource("4_dn5hv")
+text = "INFO"

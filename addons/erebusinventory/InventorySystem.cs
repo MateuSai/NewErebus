@@ -1,5 +1,6 @@
 using Erebus.Autoloads;
 using Erebus.UI.Inventory.DivideStackWindow;
+using Erebus.UI.ItemMenu;
 using ErebusLogger;
 using Godot;
 using System;
@@ -26,6 +27,8 @@ public partial class InventorySystem : CanvasLayer
     }
     private TextureRect _draggingIcon = null;
 
+    private ItemMenu _currentItemMenu = null;
+
     private Globals _globals;
 
     private readonly List<IItemSlot> _slotsUnderMouse = new();
@@ -51,6 +54,13 @@ public partial class InventorySystem : CanvasLayer
         if (@event.IsActionPressed("grab") && _draggingIcon == null)
         {
             GD.Print("Grab");
+
+            if (_currentItemMenu != null)
+            {
+                _currentItemMenu.QueueFree();
+                _currentItemMenu = null;
+            }
+
             if (Grab())
             {
                 SetProcess(true);
@@ -68,6 +78,20 @@ public partial class InventorySystem : CanvasLayer
             _draggingItemInfo.Rotated = !_draggingItemInfo.Rotated;
             _draggingIcon.PivotOffset = Vector2.One * _draggingIcon.Texture.GetSize().X / 2;
             _draggingIcon.Rotation = (float)(_draggingItemInfo.Rotated ? -Math.PI / 2.0 : 0.0);
+        }
+
+        if (@event.IsActionPressed("ui_item_menu") && _draggingIcon == null)
+        {
+            if (_slotsUnderMouse.Count > 0 && _slotsUnderMouse[0].GetItemInfo() != null)
+            {
+                if (_currentItemMenu != null)
+                {
+                    _currentItemMenu.QueueFree();
+                    _currentItemMenu = null;
+                }
+
+                _currentItemMenu = _slotsUnderMouse[0].OpenItemMenu();
+            }
         }
 
     }

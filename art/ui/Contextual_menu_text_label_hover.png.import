@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< Updated upstream
 uid="uid://daj3py3qh48uj"
+=======
+uid="uid://dvbr5i47fiica"
+>>>>>>> Stashed changes
 path="res://.godot/imported/Contextual_menu_text_label_hover.png-47ef64e8d85dd4fa8ef6d13743671506.ctex"
 metadata={
 "vram_texture": false

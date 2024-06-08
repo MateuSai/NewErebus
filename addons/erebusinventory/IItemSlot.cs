@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Erebus.UI.ItemMenu;
 using Godot;
 
 namespace ErebusInventory;
@@ -26,4 +27,6 @@ public interface IItemSlot
     public ItemInfo GetItemInfo();
 
     public TextureRect GetIconTextureRect();
+
+    public ItemMenu OpenItemMenu();
 }

@@ -1,3 +1,4 @@
+using Erebus.UI.ItemMenu;
 using ErebusLogger;
 using Godot;
 using System;
@@ -311,5 +312,16 @@ public partial class GridCell : TextureRect, IItemSlot
     private void OnItemAmountChanged(int newAmount)
     {
         _label.Text = newAmount.ToString();
+    }
+
+    public ItemMenu OpenItemMenu()
+    {
+        ItemMenu itemMenu = GD.Load<PackedScene>("res://ui/item_menu/ItemMenu.tscn").Instantiate<ItemMenu>();
+        itemMenu.Initialize(_itemInfo);
+        itemMenu.ZIndex = 10;
+        itemMenu.Position = Vector2.One * 16;
+        AddChild(itemMenu);
+
+        return itemMenu;
     }
 }

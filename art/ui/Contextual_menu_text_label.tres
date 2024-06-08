@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dagsu4311yd5h"]
+
+[ext_resource type="Texture2D" uid="uid://f5rt3tf0ewb7" path="res://art/ui/Contextual_menu_text_label.png" id="1_372qf"]
+
+[resource]
+texture = ExtResource("1_372qf")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0

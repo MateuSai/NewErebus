@@ -1,4 +1,5 @@
 using Erebus.UI.Inventory;
+using Erebus.UI.ItemMenu;
 using ErebusLogger;
 using Godot;
 using System;
@@ -87,5 +88,10 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 
     protected virtual void OnItemInfoChanged(ItemInfo itemInfo)
     {
+    }
+
+    public ItemMenu OpenItemMenu()
+    {
+        throw new NotImplementedException();
     }
 }

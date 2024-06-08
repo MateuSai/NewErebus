@@ -18,6 +18,7 @@ offset_right = 17.0
 offset_bottom = 214.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 theme = ExtResource("1_b4n0e")
 script = ExtResource("2_g6xqk")
 metadata/_edit_use_anchors_ = true
