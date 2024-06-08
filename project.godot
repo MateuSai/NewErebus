@@ -26,6 +26,7 @@ Globals="*res://autoloads/Globals.cs"
 
 window/size/viewport_width=1024
 window/size/viewport_height=576
+window/size/mode=3
 window/stretch/mode="viewport"
 mouse_cursor/custom_image="res://art/ui/Cursor_2.png"
 mouse_cursor/tooltip_position_offset=Vector2(11, 16)
