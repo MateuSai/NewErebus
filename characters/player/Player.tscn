@@ -169,7 +169,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [17, 16, 15, 14, 13, 12]
 }
 
@@ -210,7 +210,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [23, 22, 21, 20, 19, 18]
 }
 
@@ -264,6 +264,7 @@ libraries = {
 }
 
 [node name="ItemsOnFloorDetector" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("13_bck7b")

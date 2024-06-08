@@ -24,7 +24,24 @@ public partial class PlayerWeapons : Weapons
         _player = GetNode<Player>("..");
     }
 
-    public override void _Input(InputEvent @event)
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        if (!CurrentWeapon.IsBusy())
+        {
+            if (_player.Velocity.Length() > 2 && CurrentWeapon.GetState() != Weapon.State.Move)
+            {
+                CurrentWeapon.StartMovingAnimation();
+            }
+            else if (_player.Velocity.Length() <= 2 && CurrentWeapon.GetState() != Weapon.State.Idle)
+            {
+                CurrentWeapon.StartIdleAnimation();
+            }
+        }
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
     {
         base._Input(@event);
 

@@ -5,9 +5,6 @@ using Erebus.Items;
 using Erebus.UI.Inventory;
 using Erebus.Weapons;
 using Godot;
-using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
 
 public partial class Player : Character
 {
@@ -234,7 +231,7 @@ public partial class Player : Character
         }
     }
 
-    public List<ItemOnFloor> GetCloseItemsOnFloor()
+    public System.Collections.Generic.List<ItemOnFloor> GetCloseItemsOnFloor()
     {
         return _itemsOnFloorDetector.GetItemsOnFloor();
     }

@@ -4,7 +4,6 @@ using ErebusLogger;
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Log = ErebusLogger.Log;
 
 namespace ErebusInventory;
