@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pcaa6h0txxup"
-path="res://.godot/imported/Contextual_menu_text_label_hover.png-47ef64e8d85dd4fa8ef6d13743671506.ctex"
+uid="uid://b506qxab7knxl"
+path="res://.godot/imported/Equip_tab_weapon_empty.png-5eaab6dc53a2961cdbb69212a8f9c8ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/ui/Contextual_menu_text_label_hover.png"
-dest_files=["res://.godot/imported/Contextual_menu_text_label_hover.png-47ef64e8d85dd4fa8ef6d13743671506.ctex"]
+source_file="res://art/ui/Equip_tab_weapon_empty.png"
+dest_files=["res://.godot/imported/Equip_tab_weapon_empty.png-5eaab6dc53a2961cdbb69212a8f9c8ed.ctex"]
 
 [params]
 
