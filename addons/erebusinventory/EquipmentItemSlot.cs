@@ -21,6 +21,7 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 
     private InventorySystem _inventorySystem;
 
+    protected TextureRect _emptyTextureRect;
     private TextureRect _icon;
 
     [Signal]
@@ -28,6 +29,13 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 
     public EquipmentItemSlot()
     {
+        _emptyTextureRect = new()
+        {
+            Texture = GD.Load<Texture2D>("res://art/ui/Equip_tab_misc_empty.png")
+        };
+        AddChild(_emptyTextureRect);
+        _emptyTextureRect.Hide();
+
         _icon = new()
         {
             MouseFilter = MouseFilterEnum.Ignore
@@ -60,6 +68,7 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 
         SetItemInfo(itemInfo);
 
+        _emptyTextureRect.Show();
         _icon.Texture = _itemInfo.Icon;
 
         return; //Task.FromResult(IItemSlot.EquipResult.Moved);
@@ -82,6 +91,7 @@ public partial class EquipmentItemSlot : CenterContainer, IItemSlot
 
     public void Unequip()
     {
+        _emptyTextureRect.Hide();
         _icon.Texture = null;
         SetItemInfo(null);
     }
