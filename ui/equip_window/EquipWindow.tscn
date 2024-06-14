@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b4nvh50s8tpwp"]
+[gd_scene load_steps=15 format=3 uid="uid://b4nvh50s8tpwp"]
 
 [ext_resource type="Theme" uid="uid://dmuqlh7et477u" path="res://res/themes/MainTheme.tres" id="1_2elnn"]
 [ext_resource type="Script" path="res://ui/equip_window/EquipWindow.cs" id="2_3ncyi"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c0ha2jxonwrlh" path="res://art/ui/Equip_tab_header.png" id="4_w730l"]
 [ext_resource type="Texture2D" uid="uid://bymh736yfe1s4" path="res://art/ui/Tiny_close_button_hover.png" id="5_svcl5"]
 [ext_resource type="Script" path="res://ui/inventory/BackpackEquipmentItemSlot.cs" id="9_57fvi"]
+[ext_resource type="Script" path="res://ui/inventory/TitlePlusSlot.cs" id="9_xwnb3"]
 [ext_resource type="Script" path="res://ui/inventory/LegsArmorEquipmentItemSlot.cs" id="10_rx4n4"]
 [ext_resource type="Script" path="res://ui/inventory/FrequencyJammerEquipmentItemSlot.cs" id="11_256sj"]
 
@@ -50,7 +51,7 @@ theme_override_constants/separation = 0
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 16
+theme_override_constants/margin_top = 6
 
 [node name="ArmorHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
@@ -64,7 +65,12 @@ layout_mode = 2
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="LegsArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+[node name="TitlePlusSlot" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+script = ExtResource("9_xwnb3")
+
+[node name="LegsArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/TitlePlusSlot"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 script = ExtResource("10_rx4n4")

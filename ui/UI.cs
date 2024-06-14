@@ -13,7 +13,7 @@ public partial class UI : CanvasLayer
     private ColorRect _darkBackground;
     private EquipWindow.EquipWindow _equipWindow;
     private VBoxContainer _inventoryWindow;
-    private LootAndStashWindow.LootAndStashWindow _lootAndStashWindow;
+    public LootAndStashWindow.LootAndStashWindow LootAndStashWindow;
 
     public override void _Ready()
     {
@@ -23,7 +23,7 @@ public partial class UI : CanvasLayer
         _darkBackground = GetNode<ColorRect>("DarkBackground");
         _equipWindow = GetNode<EquipWindow.EquipWindow>("%EquipWindow");
         _inventoryWindow = GetNode<VBoxContainer>("%InventoryWindow");
-        _lootAndStashWindow = GetNode<LootAndStashWindow.LootAndStashWindow>("%LootAndStashWindow");
+        LootAndStashWindow = GetNode<LootAndStashWindow.LootAndStashWindow>("%LootAndStashWindow");
 
         HideInventories();
         _darkBackground.Hide();
@@ -65,8 +65,8 @@ public partial class UI : CanvasLayer
         _inventoriesOpen = true;
         _equipWindow.Show();
         _inventoryWindow.Show();
-        _lootAndStashWindow.Show();
-        _lootAndStashWindow.OnShow();
+        LootAndStashWindow.Show();
+        LootAndStashWindow.OnShow();
     }
 
     private void HideInventories()
@@ -76,8 +76,8 @@ public partial class UI : CanvasLayer
         _inventoriesOpen = false;
         _equipWindow.Hide();
         _inventoryWindow.Hide();
-        _lootAndStashWindow.Hide();
-        _lootAndStashWindow.OnHide();
+        LootAndStashWindow.Hide();
+        LootAndStashWindow.OnHide();
     }
 
     public void MoveDarkBackground(int zIndex)

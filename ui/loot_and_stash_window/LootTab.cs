@@ -9,46 +9,46 @@ namespace Erebus.UI.LootAndStashWindow;
 
 public partial class LootTab : ScrollContainer
 {
-    private LootGridInventory _grid;
+    public LootGridInventory Grid;
 
     public override void _Ready()
     {
         base._Ready();
 
-        _grid = GetNode<LootGridInventory>("%GridInventory");
+        Grid = GetNode<LootGridInventory>("%GridInventory");
 
         GetVScrollBar().CustomMinimumSize = new(9, 0);
     }
 
     public void FillGrid()
     {
-        _grid.NotAddOrRemoveItemsOnFloor = true;
+        Grid.NotAddOrRemoveItemsOnFloor = true;
 
         List<ItemOnFloor> nearItemsOnFloor = GetNode<Globals>("/root/Globals").Player.GetCloseItemsOnFloor();
         Log.Debug("Number of near items on floor: " + nearItemsOnFloor.Count);
         foreach (ItemOnFloor itemOnFloor in nearItemsOnFloor)
         {
             Log.Debug("Adding " + itemOnFloor.ItemInfo.Id);
-            _grid.InsertItemAutomatically(itemOnFloor.ItemInfo);
-            _grid.ItemsOnFloor.Add(itemOnFloor);
+            Grid.InsertItemAutomatically(itemOnFloor.ItemInfo);
+            Grid.ItemsOnFloor.Add(itemOnFloor);
         }
 
-        _grid.NotAddOrRemoveItemsOnFloor = false;
+        Grid.NotAddOrRemoveItemsOnFloor = false;
     }
 
     public void ClearGrid()
     {
-        _grid.NotAddOrRemoveItemsOnFloor = true;
+        Grid.NotAddOrRemoveItemsOnFloor = true;
 
-        GD.Print("clearing grid with " + _grid.Items.Count + " items...");
-        for (int i = _grid.Items.Count - 1; i >= 0; i--)
+        GD.Print("clearing grid with " + Grid.Items.Count + " items...");
+        for (int i = Grid.Items.Count - 1; i >= 0; i--)
         {
-            GD.Print(i + ": " + _grid.Items[index: i] + "  at " + _grid.GridsWithItems[i]);
-            _grid.GetCellAt(_grid.GridsWithItems[i]).Unequip();
+            GD.Print(i + ": " + Grid.Items[index: i] + "  at " + Grid.GridsWithItems[i]);
+            Grid.GetCellAt(Grid.GridsWithItems[i]).Unequip();
             //_grid.RemoveItem(_grid.Items[index: i], _grid.GridsWithItems[i]);
         }
-        _grid.ItemsOnFloor.Clear();
+        Grid.ItemsOnFloor.Clear();
 
-        _grid.NotAddOrRemoveItemsOnFloor = false;
+        Grid.NotAddOrRemoveItemsOnFloor = false;
     }
 }

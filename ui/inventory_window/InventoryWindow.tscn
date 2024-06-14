@@ -29,7 +29,7 @@ offset_left = 2.0
 offset_top = 2.0
 offset_right = 170.0
 offset_bottom = 10.0
-text = "BACK PACK"
+text = "BACKPACK"
 
 [node name="MarginContainer" type="MarginContainer" parent="BackpackInventory/VBoxContainer"]
 layout_mode = 2

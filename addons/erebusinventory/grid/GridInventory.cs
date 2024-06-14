@@ -1,11 +1,6 @@
 using Erebus.Autoloads;
-using Erebus.UI.Inventory.DivideStackWindow;
-using ErebusLogger;
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Log = ErebusLogger.Log;
 
 namespace ErebusInventory.Grid;

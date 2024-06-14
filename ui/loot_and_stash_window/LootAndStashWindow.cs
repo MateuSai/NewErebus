@@ -5,23 +5,23 @@ namespace Erebus.UI.LootAndStashWindow;
 
 public partial class LootAndStashWindow : TabContainer
 {
-    private LootTab _lootTab;
+    public LootTab LootTab;
 
     public override void _Ready()
     {
         base._Ready();
 
-        _lootTab = GetNode<LootTab>("LOOT");
+        LootTab = GetNode<LootTab>("LOOT");
         SetTabIcon(0, GD.Load<Texture2D>("res://art/ui/Loot_tab_floor_icon.png"));
     }
 
     public void OnShow()
     {
-        _lootTab.FillGrid();
+        LootTab.FillGrid();
     }
 
     public void OnHide()
     {
-        _lootTab.ClearGrid();
+        LootTab.ClearGrid();
     }
 }

@@ -39,14 +39,7 @@ public partial class LootGridInventory : GridInventory
         if (!NotAddOrRemoveItemsOnFloor)
         {
             Log.Debug("Dropping item on floor...");
-            ItemOnFloor itemOnFloor = new()
-            {
-                ItemInfo = itemInfo,
-                Position = _globals.Player.Position
-            };
-            GetTree().CurrentScene.AddChild(itemOnFloor);
-
-            ItemsOnFloor.Add(itemOnFloor);
+            SpawnItemOnFlor(itemInfo);
         }
 
         return InsertResult.Moved;
@@ -64,5 +57,17 @@ public partial class LootGridInventory : GridInventory
         }
 
         base.RemoveItem(itemInfo, atGridPos, width, height);
+    }
+
+    public void SpawnItemOnFlor(ItemInfo itemInfo)
+    {
+        ItemOnFloor itemOnFloor = new()
+        {
+            ItemInfo = itemInfo,
+            Position = _globals.Player.Position
+        };
+        GetTree().CurrentScene.AddChild(itemOnFloor);
+
+        ItemsOnFloor.Add(itemOnFloor);
     }
 }
