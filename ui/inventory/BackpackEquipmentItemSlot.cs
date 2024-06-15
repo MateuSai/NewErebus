@@ -14,6 +14,9 @@ public partial class BackpackEquipmentItemSlot : BodyEquipmentEquipmentInventory
     public override void _Ready()
     {
         GD.Print("backpack equipment slot ready");
+
+        type = InventoryWindow.InventoryWindow.Type.Backpack;
+
         base._Ready();
 
         Equip(new InitialBackpack());

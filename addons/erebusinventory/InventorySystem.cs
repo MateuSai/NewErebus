@@ -1,6 +1,7 @@
 using Erebus.Autoloads;
 using Erebus.UI.Inventory.DivideStackWindow;
 using Erebus.UI.ItemMenu;
+using ErebusInventory.Grid;
 using ErebusLogger;
 using Godot;
 using System;
@@ -144,6 +145,8 @@ public partial class InventorySystem : CanvasLayer
 
             if (slot.CanEquip(DraggingItem))
             {
+                if (slot is GridInventory && (slot as GridInventory).BodyEquipmentThatGeneratedGrid == DraggingItem) { }
+
                 bool cancelledDivide = false;
 
                 if (Input.IsKeyPressed(Key.Ctrl) && DraggingItem.IsStackable())

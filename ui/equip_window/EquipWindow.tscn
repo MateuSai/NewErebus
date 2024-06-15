@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c0ha2jxonwrlh" path="res://art/ui/Equip_tab_header.png" id="4_w730l"]
 [ext_resource type="Texture2D" uid="uid://bymh736yfe1s4" path="res://art/ui/Tiny_close_button_hover.png" id="5_svcl5"]
 [ext_resource type="Script" path="res://ui/inventory/BackpackEquipmentItemSlot.cs" id="9_57fvi"]
-[ext_resource type="Script" path="res://ui/inventory/TitlePlusSlot.cs" id="9_xwnb3"]
+[ext_resource type="LabelSettings" uid="uid://6xx0kit6lopo" path="res://res/small_font.tres" id="9_l3h8f"]
 [ext_resource type="Script" path="res://ui/inventory/LegsArmorEquipmentItemSlot.cs" id="10_rx4n4"]
 [ext_resource type="Script" path="res://ui/inventory/FrequencyJammerEquipmentItemSlot.cs" id="11_256sj"]
 
@@ -57,25 +57,84 @@ theme_override_constants/margin_top = 6
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="HelmetSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+[node name="HeadVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/HeadVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/HeadVBox/MarginContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+text = "HEAD"
+label_settings = ExtResource("9_l3h8f")
+vertical_alignment = 1
+
+[node name="HelmetSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/HeadVBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="TorsoArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+[node name="TorsoVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/TorsoVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/TorsoVBox/MarginContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+text = "TORSO"
+label_settings = ExtResource("9_l3h8f")
+vertical_alignment = 1
+
+[node name="TorsoArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/TorsoVBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="TitlePlusSlot" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
-custom_minimum_size = Vector2(0, 42)
+[node name="LegsVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
 layout_mode = 2
-script = ExtResource("9_xwnb3")
+theme_override_constants/separation = 0
 
-[node name="LegsArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/TitlePlusSlot"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/LegsVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/LegsVBox/MarginContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+text = "LEGS"
+label_settings = ExtResource("9_l3h8f")
+vertical_alignment = 1
+
+[node name="LegsArmorSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/LegsVBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 script = ExtResource("10_rx4n4")
 
-[node name="BackpackSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+[node name="BackVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/BackVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/BackVBox/MarginContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+text = "BACK"
+label_settings = ExtResource("9_l3h8f")
+vertical_alignment = 1
+
+[node name="BackpackSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ArmorHBox/BackVBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 script = ExtResource("9_57fvi")
@@ -88,29 +147,82 @@ theme_override_constants/separation = 0
 custom_minimum_size = Vector2(121, 0)
 layout_mode = 2
 
-[node name="OthersVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 4
+
+[node name="OthersVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox"]
 layout_mode = 2
-theme_override_constants/margin_top = 17
+theme_override_constants/margin_top = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 17
+theme_override_constants/separation = 7
 
-[node name="HealItemSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox/MarginContainer/VBoxContainer"]
+[node name="HealVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/HealVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/HealVBox/MarginContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+text = "HEAL"
+label_settings = ExtResource("9_l3h8f")
+vertical_alignment = 1
+
+[node name="HealItemSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/HealVBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="ThrowableSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox/MarginContainer/VBoxContainer"]
+[node name="ThrowableVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/ThrowableVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/ThrowableVBox/MarginContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+text = "THROW"
+label_settings = ExtResource("9_l3h8f")
+vertical_alignment = 1
+
+[node name="ThrowableSlot" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/ThrowableVBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="FrequencyJammerEquipmentItemSlot3" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/OthersVBox/MarginContainer/VBoxContainer"]
+[node name="FreqVBox" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/FreqVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/FreqVBox/MarginContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+text = "ESP."
+label_settings = ExtResource("9_l3h8f")
+vertical_alignment = 1
+
+[node name="FrequencyJammerEquipmentItemSlot3" type="CenterContainer" parent="PanelContainer/VBoxContainer/HBox/MarginContainer/OthersVBox/MarginContainer/VBoxContainer/FreqVBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4

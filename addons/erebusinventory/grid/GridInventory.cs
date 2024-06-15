@@ -1,4 +1,5 @@
 using Erebus.Autoloads;
+using Erebus.UI.Inventory;
 using Godot;
 using System.Collections.Generic;
 using Log = ErebusLogger.Log;
@@ -12,6 +13,8 @@ public partial class GridInventory : GridContainer
     public int Rows;
     [Export]
     private int _cellSize = 16;
+
+    public BodyEquipment BodyEquipmentThatGeneratedGrid;
 
     private GridCell[] _grid;
 
@@ -178,6 +181,12 @@ public partial class GridInventory : GridContainer
             Log.Debug("Grid position not valid");
             return false;
         }
+
+        /*  if (BodyEquipmentThatGeneratedGrid == itemInfo)
+         {
+             Log.Debug("What are you doing?! Are you crazy?! You can put an item inside itself.");
+             return false;
+         } */
 
         List<Vector2I> gridPositions = new();
 

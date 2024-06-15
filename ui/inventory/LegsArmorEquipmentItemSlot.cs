@@ -9,11 +9,14 @@ using Log = ErebusLogger.Log;
 
 namespace Erebus.UI.Inventory;
 
-public partial class LegsArmorEquipmentItemSlot : EquipmentItemSlot
+public partial class LegsArmorEquipmentItemSlot : BodyEquipmentEquipmentInventorySlot
 {
     public override void _Ready()
     {
         //GD.Print("backpack equipment slot ready");
+
+        type = InventoryWindow.InventoryWindow.Type.Legs;
+
         base._Ready();
 
         ItemInfoChanged += (ItemInfo itemInfo) =>
@@ -21,7 +24,7 @@ public partial class LegsArmorEquipmentItemSlot : EquipmentItemSlot
             GetNode<Globals>("/root/Globals").Player.SetLegsArmor((LegsArmor)itemInfo);
         };
 
-        Equip(new LegsArmor(GD.Load<Texture2D>("res://art/ui/inventory_icons/Jeans_and_boots.png"), 2, 2, GD.Load<Texture2D>("res://art/player_equipment/pants/Jeans_and_boots.png")));
+        Equip(new JeansAndBoots());
     }
 
     public new bool CanEquip(ItemInfo itemInfo)
