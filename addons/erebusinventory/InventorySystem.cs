@@ -1,6 +1,7 @@
 using Erebus.Autoloads;
 using Erebus.UI.Inventory.DivideStackWindow;
 using Erebus.UI.ItemMenu;
+using Erebus.UI.LootAndStashWindow;
 using ErebusInventory.Grid;
 using ErebusLogger;
 using Godot;
@@ -145,7 +146,12 @@ public partial class InventorySystem : CanvasLayer
 
             if (slot.CanEquip(DraggingItem))
             {
-                if (slot is GridInventory && (slot as GridInventory).BodyEquipmentThatGeneratedGrid == DraggingItem) { }
+                if (slot is GridInventory && (slot as GridInventory).BodyEquipmentThatGeneratedGrid == DraggingItem)
+                {
+                    Log.Debug("Tried to put item inside itself!!");
+                    GetTree().CurrentScene.GetNode<LootAndStashWindow>("%LootAndStashWindow").LootTab.Grid.InsertItemAutomatically(_draggingItemInfo);
+                    return;
+                }
 
                 bool cancelledDivide = false;
 
@@ -209,11 +215,7 @@ public partial class InventorySystem : CanvasLayer
                         Log.Debug("Unequipping dragging item...");
                         _draggingItemSlot.Unequip();
                     }
-                    if (slot != null)
-                    {
-                        slot.Equip(DraggingItem);
-                        //Log.Debug("Equip result: " + res);
-                    }
+                    slot?.Equip(DraggingItem);
                     //if (res == IItemSlot.EquipResult.Moved || (res == IItemSlot.EquipResult.Stacked && _draggingItemInfo.Amount == 0) || (res == IItemSlot.EquipResult.PartlyMoved && _draggingItemInfo.Amount == 0))
                     //{
                     //}
